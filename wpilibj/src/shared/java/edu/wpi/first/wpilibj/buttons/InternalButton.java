@@ -8,9 +8,8 @@
 package edu.wpi.first.wpilibj.buttons;
 
 /**
- * This class is intended to be used within a program. The programmer can
- * manually set its value. Also includes a setting for whether or not it should
- * invert its value.
+ * This class is intended to be used within a program. The programmer can manually set its value.
+ * Also includes a setting for whether or not it should invert its value.
  *
  * @author Joe
  */
@@ -29,8 +28,8 @@ public class InternalButton extends Button {
   /**
    * Creates an InternalButton which is inverted depending on the input.
    *
-   * @param inverted if false, then this button is pressed when set to true,
-   *        otherwise it is pressed when set to false.
+   * @param inverted if false, then this button is pressed when set to true, otherwise it is pressed
+   *                 when set to false.
    */
   public InternalButton(boolean inverted) {
     this.pressed = this.inverted = inverted;

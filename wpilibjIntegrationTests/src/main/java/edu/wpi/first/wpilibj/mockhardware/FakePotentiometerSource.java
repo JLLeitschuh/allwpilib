@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.AnalogOutput;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public class FakePotentiometerSource {
   private AnalogOutput output;
@@ -33,8 +32,8 @@ public class FakePotentiometerSource {
   }
 
   /**
-   * Sets the maximum voltage output. If not the default is 5.0V
-   *$
+   * Sets the maximum voltage output. If not the default is 5.0V $
+   *
    * @param voltage The voltage that indicates that the pot is at the max value.
    */
   public void setMaxVoltage(double voltage) {
@@ -63,8 +62,8 @@ public class FakePotentiometerSource {
   }
 
   /**
-   * Returns the currently set angle
-   *$
+   * Returns the currently set angle $
+   *
    * @return the current angle
    */
   public double getAngle() {

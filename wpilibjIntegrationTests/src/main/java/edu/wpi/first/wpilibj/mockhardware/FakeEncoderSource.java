@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Emulates a quadrature encoder
+ *
  * @author Ryan O'Meara
  */
 public class FakeEncoderSource {
@@ -126,8 +127,8 @@ public class FakeEncoderSource {
   }
 
   /**
-   * Rate of pulses to send
-   *$
+   * Rate of pulses to send $
+   *
    * @param mSec Pulse Rate
    */
   public void setRate(int mSec) {
@@ -135,8 +136,8 @@ public class FakeEncoderSource {
   }
 
   /**
-   * Set the number of pulses to simulate
-   *$
+   * Set the number of pulses to simulate $
+   *
    * @param count Pulse count
    */
   public void setCount(int count) {
@@ -144,8 +145,8 @@ public class FakeEncoderSource {
   }
 
   /**
-   * Set which direction the encoder simulates motion in
-   *$
+   * Set which direction the encoder simulates motion in $
+   *
    * @param isForward Whether to simulate forward motion
    */
   public void setForward(boolean isForward) {
@@ -153,8 +154,8 @@ public class FakeEncoderSource {
   }
 
   /**
-   * Accesses whether the encoder is simulating forward motion
-   *$
+   * Accesses whether the encoder is simulating forward motion $
+   *
    * @return Whether the simulated motion is in the forward direction
    */
   public boolean isForward() {

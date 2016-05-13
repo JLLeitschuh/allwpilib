@@ -7,30 +7,33 @@
 
 package edu.wpi.first.wpilibj.can;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.logging.Logger;
+
+import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Timer;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import java.util.logging.Logger;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.Timer;
-
 /**
  * @author jonathanleitschuh
- *
  */
 public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
   private static final Logger logger = Logger.getLogger(CANPercentQuadEncoderModeTest.class
       .getName());
-  /** The stopped value in rev/min */
+  /**
+   * The stopped value in rev/min
+   */
   private static final double kStoppedValue = 0;
-  /** The running value in rev/min */
+  /**
+   * The running value in rev/min
+   */
   private static final double kRunningValue = 50;
 
   @Override
@@ -55,8 +58,7 @@ public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
 
 
   /**
-   * Test if we can drive the motor forward in Speed mode and get a position
-   * back
+   * Test if we can drive the motor forward in Speed mode and get a position back
    */
   @Test
   public void testRotateForwardSpeed() {
@@ -70,8 +72,7 @@ public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
   }
 
   /**
-   * Test if we can drive the motor backwards in Speed mode and get a position
-   * back
+   * Test if we can drive the motor backwards in Speed mode and get a position back
    */
   @Test
   public void testRotateReverseSpeed() {

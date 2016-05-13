@@ -101,14 +101,14 @@ public class AnalogOutput extends SensorBase implements LiveWindowSendable {
   }
 
   /**
-   * Analog Channels don't have to do anything special when entering the
-   * LiveWindow. {@inheritDoc}
+   * Analog Channels don't have to do anything special when entering the LiveWindow. {@inheritDoc}
    */
-  public void startLiveWindowMode() {}
+  public void startLiveWindowMode() {
+  }
 
   /**
-   * Analog Channels don't have to do anything special when exiting the
-   * LiveWindow. {@inheritDoc}
+   * Analog Channels don't have to do anything special when exiting the LiveWindow. {@inheritDoc}
    */
-  public void stopLiveWindowMode() {}
+  public void stopLiveWindowMode() {
+  }
 }

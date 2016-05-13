@@ -10,7 +10,6 @@ package edu.wpi.first.wpilibj.buttons;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
- *
  * @author Joe
  */
 public class NetworkButton extends Button {

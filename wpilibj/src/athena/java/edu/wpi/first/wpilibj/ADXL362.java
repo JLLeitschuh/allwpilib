@@ -7,10 +7,9 @@
 
 package edu.wpi.first.wpilibj;
 
-import java.nio.ByteOrder;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
-import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tInstances;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
@@ -41,7 +40,7 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
   private static final byte kPowerCtl_AutoSleep = 0x04;
   private static final byte kPowerCtl_Measure = 0x02;
 
-  public static enum Axes {
+  public enum Axes {
     kX((byte) 0x00),
     kY((byte) 0x02),
     kZ((byte) 0x04);
@@ -51,7 +50,7 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
      */
     public final byte value;
 
-    private Axes(byte value) {
+    Axes(byte value) {
       this.value = value;
     }
   }
@@ -78,7 +77,7 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
   /**
    * Constructor.
    *
-   * @param port The SPI port that the accelerometer is connected to
+   * @param port  The SPI port that the accelerometer is connected to
    * @param range The range (+ or -) that the accelerometer will measure.
    */
   public ADXL362(SPI.Port port, Range range) {
@@ -94,7 +93,7 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
     transferBuffer.put(0, kRegRead);
     transferBuffer.put(1, kPartIdRegister);
     m_spi.transaction(transferBuffer, transferBuffer, 3);
-    if (transferBuffer.get(2) != (byte)0xF2) {
+    if (transferBuffer.get(2) != (byte) 0xF2) {
       m_spi.free();
       m_spi = null;
       DriverStation.reportError("could not find ADXL362 on SPI port " + port.getValue(), false);
@@ -117,7 +116,9 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
     m_spi.free();
   }
 
-  /** {inheritdoc} */
+  /**
+   * {inheritdoc}
+   */
   @Override
   public void setRange(Range range) {
     byte value = 0;
@@ -125,37 +126,44 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
     switch (range) {
       case k2G:
         value = kFilterCtl_Range2G;
-	m_gsPerLSB = 0.001;
+        m_gsPerLSB = 0.001;
         break;
       case k4G:
         value = kFilterCtl_Range4G;
-	m_gsPerLSB = 0.002;
+        m_gsPerLSB = 0.002;
         break;
       case k8G:
       case k16G:  // 16G not supported; treat as 8G
         value = kFilterCtl_Range8G;
-	m_gsPerLSB = 0.004;
+        m_gsPerLSB = 0.004;
         break;
     }
 
     // Specify the data format to read
-    byte[] commands = new byte[] {kRegWrite, kFilterCtlRegister, (byte) (kFilterCtl_ODR_100Hz | value)};
+    byte[] commands = new byte[]{kRegWrite, kFilterCtlRegister, (byte) (kFilterCtl_ODR_100Hz |
+        value)};
     m_spi.write(commands, commands.length);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getX() {
     return getAcceleration(Axes.kX);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getY() {
     return getAcceleration(Axes.kY);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getZ() {
     return getAcceleration(Axes.kZ);
@@ -168,8 +176,9 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
    * @return Acceleration of the ADXL362 in Gs.
    */
   public double getAcceleration(ADXL362.Axes axis) {
-    if (m_spi == null)
+    if (m_spi == null) {
       return 0.0;
+    }
     ByteBuffer transferBuffer = ByteBuffer.allocateDirect(4);
     transferBuffer.put(0, kRegRead);
     transferBuffer.put(1, (byte) (kDataRegister + axis.value));
@@ -183,8 +192,7 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
   /**
    * Get the acceleration of all axes in Gs.
    *
-   * @return An object containing the acceleration measured on each axis of the
-   *         ADXL362 in Gs.
+   * @return An object containing the acceleration measured on each axis of the ADXL362 in Gs.
    */
   public ADXL362.AllAxes getAccelerations() {
     ADXL362.AllAxes data = new ADXL362.AllAxes();
@@ -210,13 +218,17 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
 
   private ITable m_table;
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void initTable(ITable subtable) {
     m_table = subtable;
     updateTable();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void updateTable() {
     if (m_table != null) {
       m_table.putNumber("X", getX());
@@ -225,12 +237,16 @@ public class ADXL362 extends SensorBase implements Accelerometer, LiveWindowSend
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public ITable getTable() {
     return m_table;
   }
 
-  public void startLiveWindowMode() {}
+  public void startLiveWindowMode() {
+  }
 
-  public void stopLiveWindowMode() {}
+  public void stopLiveWindowMode() {
+  }
 }

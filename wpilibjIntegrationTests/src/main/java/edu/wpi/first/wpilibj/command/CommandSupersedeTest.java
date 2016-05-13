@@ -7,19 +7,19 @@
 
 package edu.wpi.first.wpilibj.command;
 
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.mocks.MockCommand;
 
 /**
- * Ported from the old CrioTest Classes
- *$
+ * Ported from the old CrioTest Classes $
+ *
  * @author Mitchell
  * @author Jonathan Leitschuh
  */
@@ -34,25 +34,29 @@ public class CommandSupersedeTest extends AbstractCommandTest {
    * @throws java.lang.Exception
    */
   @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+  public static void setUpBeforeClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @AfterClass
-  public static void tearDownAfterClass() throws Exception {}
+  public static void tearDownAfterClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   /**
    * Testing one command superseding another because of dependencies
@@ -108,8 +112,8 @@ public class CommandSupersedeTest extends AbstractCommandTest {
   }
 
   /**
-   * Testing one command failing superseding another because of dependencies
-   * because the first command cannot be interrupted"
+   * Testing one command failing superseding another because of dependencies because the first
+   * command cannot be interrupted"
    */
   @Test
   public void testCommandFailingSupersedingBecauseFirstCanNotBeInterrupted() {

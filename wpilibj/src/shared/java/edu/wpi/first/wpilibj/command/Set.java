@@ -11,23 +11,24 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 /**
- *
  * @author Greg
  */
 class Set {
   Vector set = new Vector();
 
-  public Set() {}
+  public Set() {
+  }
 
   public void add(Object o) {
-    if (set.contains(o))
+    if (set.contains(o)) {
       return;
+    }
     set.addElement(o);
   }
 
   public void add(Set s) {
     Enumeration stuff = s.getElements();
-    for (Enumeration e = stuff; e.hasMoreElements();) {
+    for (Enumeration e = stuff; e.hasMoreElements(); ) {
       add(e.nextElement());
     }
   }

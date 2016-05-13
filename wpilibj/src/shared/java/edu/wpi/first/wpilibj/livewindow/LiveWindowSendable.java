@@ -15,16 +15,16 @@ public interface LiveWindowSendable extends Sendable {
   /**
    * Update the table for this sendable object with the latest values.
    */
-  public void updateTable();
+  void updateTable();
 
   /**
-   * Start having this sendable object automatically respond to value changes
-   * reflect the value on the table.
+   * Start having this sendable object automatically respond to value changes reflect the value on
+   * the table.
    */
-  public void startLiveWindowMode();
+  void startLiveWindowMode();
 
   /**
    * Stop having this sendable object automatically respond to value changes.
    */
-  public void stopLiveWindowMode();
+  void stopLiveWindowMode();
 }

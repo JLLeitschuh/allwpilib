@@ -7,21 +7,19 @@
 
 package edu.wpi.first.wpilibj.command;
 
-import static org.junit.Assert.*;
-
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.mocks.MockCommand;
 
 /**
- * Ported from the old CrioTest Classes
- *$
+ * Ported from the old CrioTest Classes $
+ *
  * @author Mitchell
  * @author Jonathan Leitschuh
  */
@@ -36,29 +34,32 @@ public class CommandScheduleTest extends AbstractCommandTest {
    * @throws java.lang.Exception
    */
   @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+  public static void setUpBeforeClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @AfterClass
-  public static void tearDownAfterClass() throws Exception {}
+  public static void tearDownAfterClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   /**
-   * Simple scheduling of a command and making sure the command is run and
-   * successfully terminates
+   * Simple scheduling of a command and making sure the command is run and successfully terminates
    */
   @Test
   public void testRunAndTerminate() {
@@ -80,8 +81,7 @@ public class CommandScheduleTest extends AbstractCommandTest {
   }
 
   /**
-   * Simple scheduling of a command and making sure the command is run and
-   * cancels correctly
+   * Simple scheduling of a command and making sure the command is run and cancels correctly
    */
   @Test
   public void testRunAndCancel() {

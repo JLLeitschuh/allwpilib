@@ -15,13 +15,11 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.test.TestBench;
 
 /**
- * Represents a filterphysically connected Motor and Encoder to allow for unit tests
- * on these different pairs<br>
- * Designed to allow the user to easily setup and tear down the fixture to allow
- * for reuse. This class should be explicitly instantiated in the TestBed class
- * to allow any test to access this fixture. This allows tests to be mailable so
- * that you can easily reconfigure the physical testbed without breaking the
- * tests.
+ * Represents a filterphysically connected Motor and Encoder to allow for unit tests on these
+ * different pairs<br> Designed to allow the user to easily setup and tear down the fixture to allow
+ * for reuse. This class should be explicitly instantiated in the TestBed class to allow any test to
+ * access this fixture. This allows tests to be mailable so that you can easily reconfigure the
+ * physical testbed without breaking the tests.
  */
 public abstract class FilterOutputFixture<T extends PIDSource> implements ITestFixture {
   private static final Logger logger = Logger.getLogger(FilterOutputFixture.class.getName());
@@ -43,9 +41,7 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
   }
 
   /**
-   * Where the implementer of this class should pass the filter constructor
-   *$
-   * @return
+   * Where the implementer of this class should pass the filter constructor $
    */
   abstract protected T giveFilter(PIDSource source);
 
@@ -72,8 +68,8 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
   }
 
   /**
-   * Gets the filter for this Object
-   *$
+   * Gets the filter for this Object $
+   *
    * @return the filter this object refers too
    */
   public T getFilter() {
@@ -82,8 +78,8 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
   }
 
   /**
-   * Gets the data wrapper for this object
-   *$
+   * Gets the data wrapper for this object $
+   *
    * @return the data wrapper  that this object refers too
    */
   public DataWrapper getDataWrapper() {
@@ -92,8 +88,8 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
   }
 
   /**
-   * Retrieves the name of the filter that this object refers to
-   *$
+   * Retrieves the name of the filter that this object refers to $
+   *
    * @return The simple name of the filter {@link Class#getSimpleName()}
    */
   public String getType() {
@@ -118,7 +114,8 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
     // Get the generic type as a class
     @SuppressWarnings("unchecked")
     Class<T> class1 =
-        (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments
+            ()[0];
     string.append(class1.getSimpleName());
     string.append(">");
     return string.toString();
@@ -134,7 +131,8 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
      * {@inheritDoc}
      */
     @Override
-    public void setPIDSourceType(PIDSourceType pidSource) {}
+    public void setPIDSourceType(PIDSourceType pidSource) {
+    }
 
     /**
      * {@inheritDoc}

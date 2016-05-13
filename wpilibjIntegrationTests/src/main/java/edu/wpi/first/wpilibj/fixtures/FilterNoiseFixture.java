@@ -8,21 +8,19 @@
 package edu.wpi.first.wpilibj.fixtures;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.logging.Logger;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.test.TestBench;
 
 /**
- * Represents a physically connected Motor and Encoder to allow for unit tests
- * on these different pairs<br>
- * Designed to allow the user to easily setup and tear down the fixture to allow
- * for reuse. This class should be explicitly instantiated in the TestBed class
- * to allow any test to access this fixture. This allows tests to be mailable so
- * that you can easily reconfigure the physical testbed without breaking the
- * tests.
+ * Represents a physically connected Motor and Encoder to allow for unit tests on these different
+ * pairs<br> Designed to allow the user to easily setup and tear down the fixture to allow for
+ * reuse. This class should be explicitly instantiated in the TestBed class to allow any test to
+ * access this fixture. This allows tests to be mailable so that you can easily reconfigure the
+ * physical testbed without breaking the tests.
  */
 public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFixture {
   private static final Logger logger = Logger.getLogger(FilterNoiseFixture.class.getName());
@@ -32,9 +30,7 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
   private NoiseGenerator data;
 
   /**
-   * Where the implementer of this class should pass the filter constructor
-   *$
-   * @return
+   * Where the implementer of this class should pass the filter constructor $
    */
   abstract protected T giveFilter(PIDSource source);
 
@@ -61,8 +57,8 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
   }
 
   /**
-   * Gets the filter for this Object
-   *$
+   * Gets the filter for this Object $
+   *
    * @return the filter this object refers too
    */
   public T getFilter() {
@@ -71,8 +67,8 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
   }
 
   /**
-   * Gets the noise generator for this object
-   *$
+   * Gets the noise generator for this object $
+   *
    * @return the noise generator that this object refers too
    */
   public NoiseGenerator getNoiseGenerator() {
@@ -81,8 +77,8 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
   }
 
   /**
-   * Retrieves the name of the filter that this object refers to
-   *$
+   * Retrieves the name of the filter that this object refers to $
+   *
    * @return The simple name of the filter {@link Class#getSimpleName()}
    */
   public String getType() {
@@ -108,15 +104,16 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
     // Get the generic type as a class
     @SuppressWarnings("unchecked")
     Class<T> class1 =
-        (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments
+            ()[0];
     string.append(class1.getSimpleName());
     string.append(">");
     return string.toString();
   }
 
   /**
-   * Adds Gaussian white noise to a function returning data. The noise will have
-   * the standard deviation provided in the constructor.
+   * Adds Gaussian white noise to a function returning data. The noise will have the standard
+   * deviation provided in the constructor.
    */
   public abstract class NoiseGenerator implements PIDSource {
     private double noise = 0.0;
@@ -137,7 +134,8 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
      * {@inheritDoc}
      */
     @Override
-    public void setPIDSourceType(PIDSourceType pidSource) {}
+    public void setPIDSourceType(PIDSourceType pidSource) {
+    }
 
     /**
      * {@inheritDoc}

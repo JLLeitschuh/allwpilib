@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.mockhardware.FakePotentiometerSource;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJaguar> implements
     ITestFixture {
@@ -39,7 +38,8 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
 
   protected abstract Relay givePowerCycleRelay();
 
-  public CANMotorEncoderFixture() {}
+  public CANMotorEncoderFixture() {
+  }
 
   private void initialize() {
     synchronized (this) {
@@ -56,7 +56,7 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
         reverseLimit.set(false);
         potSource = giveFakePotentiometerSource();
         Timer.delay(RELAY_POWER_UP_TIME); // Delay so the relay has time to boot
-                                          // up
+        // up
       }
     }
   }
@@ -75,7 +75,7 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
     forwardLimit.set(false);
     reverseLimit.set(false);
     getMotor().setPercentMode(); // Get the Jaguar into a mode where setting the
-                                 // speed means stop
+    // speed means stop
     return super.reset();
   }
 
@@ -85,20 +85,23 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
     if (potSource != null) {
       potSource.free();
       potSource = null;
-    } else
+    } else {
       wasNull = true;
+    }
     if (forwardLimit != null) {
       forwardLimit.set(false);
       forwardLimit.free();
       forwardLimit = null;
-    } else
+    } else {
       wasNull = true;
+    }
     if (reverseLimit != null) {
       reverseLimit.set(false);
       reverseLimit.free();
       reverseLimit = null;
-    } else
+    } else {
       wasNull = true;
+    }
     boolean superTornDown = false;
     try {
       superTornDown = super.teardown();
@@ -107,14 +110,16 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
         if (getMotor() != null) {
           getMotor().disableControl();
           getMotor().free();
-        } else
+        } else {
           wasNull = true;
+        }
       } finally {
         if (powerCycler != null) {
           powerCycler.free();
           powerCycler = null;
-        } else
+        } else {
           wasNull = true;
+        }
       }
     }
     if (wasNull) {

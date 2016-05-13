@@ -7,20 +7,22 @@
 
 package edu.wpi.first.wpilibj.test;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * This JUnit Rule allows you to apply this rule to any test to allow it to run
- * multiple times. This is important if you have a test that fails only
- * "sometimes" and needs to be rerun to find the issue.
+ * This JUnit Rule allows you to apply this rule to any test to allow it to run multiple times. This
+ * is important if you have a test that fails only "sometimes" and needs to be rerun to find the
+ * issue.
  *
- * This code was originally found here: <a href="http://www.codeaffine.com/2013/04/10/running-junit-tests-repeatedly-without-loops/">Running JUnit Tests Repeatedly Without Loops</a>
+ * This code was originally found here:
+ * <a href="http://www.codeaffine.com/2013/04/10/running-junit-tests-repeatedly-without-loops/">Running
+ * JUnit Tests Repeatedly Without Loops</a>
  *
  * @author Frank Appel
  */
@@ -28,7 +30,7 @@ public class RepeatRule implements TestRule {
   @Retention(RetentionPolicy.RUNTIME)
   @Target({java.lang.annotation.ElementType.METHOD})
   public @interface Repeat {
-    public abstract int times();
+    int times();
   }
 
 

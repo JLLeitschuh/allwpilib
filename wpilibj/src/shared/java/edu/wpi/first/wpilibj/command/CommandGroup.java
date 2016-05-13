@@ -13,25 +13,17 @@ import java.util.Vector;
 /**
  * A {@link CommandGroup} is a list of commands which are executed in sequence.
  *
- * <p>
- * Commands in a {@link CommandGroup} are added using the
- * {@link CommandGroup#addSequential(Command) addSequential(...)} method and are
- * called sequentially. {@link CommandGroup CommandGroups} are themselves
- * {@link Command commands} and can be given to other {@link CommandGroup
- * CommandGroups}.
- * </p>
+ * <p> Commands in a {@link CommandGroup} are added using the {@link
+ * CommandGroup#addSequential(Command) addSequential(...)} method and are called sequentially.
+ * {@link CommandGroup CommandGroups} are themselves {@link Command commands} and can be given to
+ * other {@link CommandGroup CommandGroups}. </p>
  *
- * <p>
- * {@link CommandGroup CommandGroups} will carry all of the requirements of
- * their {@link Command subcommands}. Additional requirements can be specified
- * by calling {@link CommandGroup#requires(Subsystem) requires(...)} normally in
- * the constructor.
- * </P>
+ * <p> {@link CommandGroup CommandGroups} will carry all of the requirements of their {@link Command
+ * subcommands}. Additional requirements can be specified by calling {@link
+ * CommandGroup#requires(Subsystem) requires(...)} normally in the constructor. </P>
  *
- * <p>
- * CommandGroups can also execute commands in parallel, simply by adding them
- * using {@link CommandGroup#addParallel(Command) addParallel(...)}.
- * </p>
+ * <p> CommandGroups can also execute commands in parallel, simply by adding them using {@link
+ * CommandGroup#addParallel(Command) addParallel(...)}. </p>
  *
  * @author Brad Miller
  * @author Joe Grinstead
@@ -41,22 +33,29 @@ import java.util.Vector;
  */
 public class CommandGroup extends Command {
 
-  /** The commands in this group (stored in entries) */
+  /**
+   * The commands in this group (stored in entries)
+   */
   Vector m_commands = new Vector();
-  /** The active children in this group (stored in entries) */
+  /**
+   * The active children in this group (stored in entries)
+   */
   Vector m_children = new Vector();
-  /** The current command, -1 signifies that none have been run */
+  /**
+   * The current command, -1 signifies that none have been run
+   */
   int m_currentCommandIndex = -1;
 
   /**
-   * Creates a new {@link CommandGroup CommandGroup}. The name of this command
-   * will be set to its class name.
+   * Creates a new {@link CommandGroup CommandGroup}. The name of this command will be set to its
+   * class name.
    */
-  public CommandGroup() {}
+  public CommandGroup() {
+  }
 
   /**
-   * Creates a new {@link CommandGroup CommandGroup} with the given name.
-   *$
+   * Creates a new {@link CommandGroup CommandGroup} with the given name. $
+   *
    * @param name the name for this command group
    * @throws IllegalArgumentException if name is null
    */
@@ -65,24 +64,19 @@ public class CommandGroup extends Command {
   }
 
   /**
-   * Adds a new {@link Command Command} to the group. The {@link Command
-   * Command} will be started after all the previously added {@link Command
-   * Commands}.
+   * Adds a new {@link Command Command} to the group. The {@link Command Command} will be started
+   * after all the previously added {@link Command Commands}.
    *
-   * <p>
-   * Note that any requirements the given {@link Command Command} has will be
-   * added to the group. For this reason, a {@link Command Command's}
-   * requirements can not be changed after being added to a group.
-   * </p>
+   * <p> Note that any requirements the given {@link Command Command} has will be added to the
+   * group. For this reason, a {@link Command Command's} requirements can not be changed after being
+   * added to a group. </p>
    *
-   * <p>
-   * It is recommended that this method be called in the constructor.
-   * </p>
+   * <p> It is recommended that this method be called in the constructor. </p>
    *
    * @param command The {@link Command Command} to be added
-   * @throws IllegalUseOfCommandException if the group has been started before
-   *         or been given to another group
-   * @throws IllegalArgumentException if command is null
+   * @throws IllegalUseOfCommandException if the group has been started before or been given to
+   *                                      another group
+   * @throws IllegalArgumentException     if command is null
    */
   public synchronized final void addSequential(Command command) {
     validate("Can not add new command to command group");
@@ -93,38 +87,31 @@ public class CommandGroup extends Command {
     command.setParent(this);
 
     m_commands.addElement(new Entry(command, Entry.IN_SEQUENCE));
-    for (Enumeration e = command.getRequirements(); e.hasMoreElements();) {
+    for (Enumeration e = command.getRequirements(); e.hasMoreElements(); ) {
       requires((Subsystem) e.nextElement());
     }
   }
 
   /**
-   * Adds a new {@link Command Command} to the group with a given timeout. The
-   * {@link Command Command} will be started after all the previously added
-   * commands.
+   * Adds a new {@link Command Command} to the group with a given timeout. The {@link Command
+   * Command} will be started after all the previously added commands.
    *
-   * <p>
-   * Once the {@link Command Command} is started, it will be run until it
-   * finishes or the time expires, whichever is sooner. Note that the given
-   * {@link Command Command} will have no knowledge that it is on a timer.
-   * </p>
+   * <p> Once the {@link Command Command} is started, it will be run until it finishes or the time
+   * expires, whichever is sooner. Note that the given {@link Command Command} will have no
+   * knowledge that it is on a timer. </p>
    *
-   * <p>
-   * Note that any requirements the given {@link Command Command} has will be
-   * added to the group. For this reason, a {@link Command Command's}
-   * requirements can not be changed after being added to a group.
-   * </p>
+   * <p> Note that any requirements the given {@link Command Command} has will be added to the
+   * group. For this reason, a {@link Command Command's} requirements can not be changed after being
+   * added to a group. </p>
    *
-   * <p>
-   * It is recommended that this method be called in the constructor.
-   * </p>
+   * <p> It is recommended that this method be called in the constructor. </p>
    *
    * @param command The {@link Command Command} to be added
    * @param timeout The timeout (in seconds)
-   * @throws IllegalUseOfCommandException if the group has been started before
-   *         or been given to another group or if the {@link Command Command}
-   *         has been started before or been given to another group
-   * @throws IllegalArgumentException if command is null or timeout is negative
+   * @throws IllegalUseOfCommandException if the group has been started before or been given to
+   *                                      another group or if the {@link Command Command} has been
+   *                                      started before or been given to another group
+   * @throws IllegalArgumentException     if command is null or timeout is negative
    */
   public synchronized final void addSequential(Command command, double timeout) {
     validate("Can not add new command to command group");
@@ -138,38 +125,31 @@ public class CommandGroup extends Command {
     command.setParent(this);
 
     m_commands.addElement(new Entry(command, Entry.IN_SEQUENCE, timeout));
-    for (Enumeration e = command.getRequirements(); e.hasMoreElements();) {
+    for (Enumeration e = command.getRequirements(); e.hasMoreElements(); ) {
       requires((Subsystem) e.nextElement());
     }
   }
 
   /**
-   * Adds a new child {@link Command} to the group. The {@link Command} will be
-   * started after all the previously added {@link Command Commands}.
+   * Adds a new child {@link Command} to the group. The {@link Command} will be started after all
+   * the previously added {@link Command Commands}.
    *
-   * <p>
-   * Instead of waiting for the child to finish, a {@link CommandGroup} will
-   * have it run at the same time as the subsequent {@link Command Commands}.
-   * The child will run until either it finishes, a new child with conflicting
-   * requirements is started, or the main sequence runs a {@link Command} with
-   * conflicting requirements. In the latter two cases, the child will be
-   * canceled even if it says it can't be interrupted.
-   * </p>
+   * <p> Instead of waiting for the child to finish, a {@link CommandGroup} will have it run at the
+   * same time as the subsequent {@link Command Commands}. The child will run until either it
+   * finishes, a new child with conflicting requirements is started, or the main sequence runs a
+   * {@link Command} with conflicting requirements. In the latter two cases, the child will be
+   * canceled even if it says it can't be interrupted. </p>
    *
-   * <p>
-   * Note that any requirements the given {@link Command Command} has will be
-   * added to the group. For this reason, a {@link Command Command's}
-   * requirements can not be changed after being added to a group.
-   * </p>
+   * <p> Note that any requirements the given {@link Command Command} has will be added to the
+   * group. For this reason, a {@link Command Command's} requirements can not be changed after being
+   * added to a group. </p>
    *
-   * <p>
-   * It is recommended that this method be called in the constructor.
-   * </p>
+   * <p> It is recommended that this method be called in the constructor. </p>
    *
    * @param command The command to be added
-   * @throws IllegalUseOfCommandException if the group has been started before
-   *         or been given to another command group
-   * @throws IllegalArgumentException if command is null
+   * @throws IllegalUseOfCommandException if the group has been started before or been given to
+   *                                      another command group
+   * @throws IllegalArgumentException     if command is null
    */
   public synchronized final void addParallel(Command command) {
     validate("Can not add new command to command group");
@@ -180,46 +160,36 @@ public class CommandGroup extends Command {
     command.setParent(this);
 
     m_commands.addElement(new Entry(command, Entry.BRANCH_CHILD));
-    for (Enumeration e = command.getRequirements(); e.hasMoreElements();) {
+    for (Enumeration e = command.getRequirements(); e.hasMoreElements(); ) {
       requires((Subsystem) e.nextElement());
     }
   }
 
   /**
-   * Adds a new child {@link Command} to the group with the given timeout. The
-   * {@link Command} will be started after all the previously added
-   * {@link Command Commands}.
+   * Adds a new child {@link Command} to the group with the given timeout. The {@link Command} will
+   * be started after all the previously added {@link Command Commands}.
    *
-   * <p>
-   * Once the {@link Command Command} is started, it will run until it finishes,
-   * is interrupted, or the time expires, whichever is sooner. Note that the
-   * given {@link Command Command} will have no knowledge that it is on a timer.
-   * </p>
+   * <p> Once the {@link Command Command} is started, it will run until it finishes, is interrupted,
+   * or the time expires, whichever is sooner. Note that the given {@link Command Command} will have
+   * no knowledge that it is on a timer. </p>
    *
-   * <p>
-   * Instead of waiting for the child to finish, a {@link CommandGroup} will
-   * have it run at the same time as the subsequent {@link Command Commands}.
-   * The child will run until either it finishes, the timeout expires, a new
-   * child with conflicting requirements is started, or the main sequence runs a
-   * {@link Command} with conflicting requirements. In the latter two cases, the
-   * child will be canceled even if it says it can't be interrupted.
-   * </p>
+   * <p> Instead of waiting for the child to finish, a {@link CommandGroup} will have it run at the
+   * same time as the subsequent {@link Command Commands}. The child will run until either it
+   * finishes, the timeout expires, a new child with conflicting requirements is started, or the
+   * main sequence runs a {@link Command} with conflicting requirements. In the latter two cases,
+   * the child will be canceled even if it says it can't be interrupted. </p>
    *
-   * <p>
-   * Note that any requirements the given {@link Command Command} has will be
-   * added to the group. For this reason, a {@link Command Command's}
-   * requirements can not be changed after being added to a group.
-   * </p>
+   * <p> Note that any requirements the given {@link Command Command} has will be added to the
+   * group. For this reason, a {@link Command Command's} requirements can not be changed after being
+   * added to a group. </p>
    *
-   * <p>
-   * It is recommended that this method be called in the constructor.
-   * </p>
+   * <p> It is recommended that this method be called in the constructor. </p>
    *
    * @param command The command to be added
    * @param timeout The timeout (in seconds)
-   * @throws IllegalUseOfCommandException if the group has been started before
-   *         or been given to another command group
-   * @throws IllegalArgumentException if command is null
+   * @throws IllegalUseOfCommandException if the group has been started before or been given to
+   *                                      another command group
+   * @throws IllegalArgumentException     if command is null
    */
   public synchronized final void addParallel(Command command, double timeout) {
     validate("Can not add new command to command group");
@@ -233,7 +203,7 @@ public class CommandGroup extends Command {
     command.setParent(this);
 
     m_commands.addElement(new Entry(command, Entry.BRANCH_CHILD, timeout));
-    for (Enumeration e = command.getRequirements(); e.hasMoreElements();) {
+    for (Enumeration e = command.getRequirements(); e.hasMoreElements(); ) {
       requires((Subsystem) e.nextElement());
     }
   }
@@ -330,13 +300,11 @@ public class CommandGroup extends Command {
   }
 
   /**
-   * Returns true if all the {@link Command Commands} in this group have been
-   * started and have finished.
+   * Returns true if all the {@link Command Commands} in this group have been started and have
+   * finished.
    *
-   * <p>
-   * Teams may override this method, although they should probably reference
-   * super.isFinished() if they do.
-   * </p>
+   * <p> Teams may override this method, although they should probably reference super.isFinished()
+   * if they do. </p>
    *
    * @return whether this {@link CommandGroup} is finished
    */
@@ -345,22 +313,25 @@ public class CommandGroup extends Command {
   }
 
   // Can be overwritten by teams
-  protected void initialize() {}
+  protected void initialize() {
+  }
 
   // Can be overwritten by teams
-  protected void execute() {}
+  protected void execute() {
+  }
 
   // Can be overwritten by teams
-  protected void end() {}
+  protected void end() {
+  }
 
   // Can be overwritten by teams
-  protected void interrupted() {}
+  protected void interrupted() {
+  }
 
   /**
-   * Returns whether or not this group is interruptible. A command group will be
-   * uninterruptible if {@link CommandGroup#setInterruptible(boolean)
-   * setInterruptable(false)} was called or if it is currently running an
-   * uninterruptible command or child.
+   * Returns whether or not this group is interruptible. A command group will be uninterruptible if
+   * {@link CommandGroup#setInterruptible(boolean) setInterruptable(false)} was called or if it is
+   * currently running an uninterruptible command or child.
    *
    * @return whether or not this {@link CommandGroup} is interruptible.
    */
@@ -429,7 +400,7 @@ public class CommandGroup extends Command {
         return false;
       } else {
         double time = command.timeSinceInitialized();
-        return time == 0 ? false : time >= timeout;
+        return time != 0 && time >= timeout;
       }
     }
   }

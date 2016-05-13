@@ -8,15 +8,12 @@
 package edu.wpi.first.wpilibj;
 
 import edu.wpi.first.wpilibj.hal.PDPJNI;
-import edu.wpi.first.wpilibj.hal.HALUtil;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
- * Class for getting voltage, current, temperature, power and energy from the
- * CAN PDP.
- *$
+ * Class for getting voltage, current, temperature, power and energy from the CAN PDP. $
+ *
  * @author Thomas Clark
  */
 public class PowerDistributionPanel extends SensorBase implements LiveWindowSendable {
@@ -35,8 +32,8 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
 
 
   /**
-   * Query the input voltage of the PDP
-   *$
+   * Query the input voltage of the PDP $
+   *
    * @return The voltage of the PDP in volts
    */
   public double getVoltage() {
@@ -44,8 +41,8 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
   }
 
   /**
-   * Query the temperature of the PDP
-   *$
+   * Query the temperature of the PDP $
+   *
    * @return The temperature of the PDP in degrees Celsius
    */
   public double getTemperature() {
@@ -53,8 +50,8 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
   }
 
   /**
-   * Query the current of a single channel of the PDP
-   *$
+   * Query the current of a single channel of the PDP $
+   *
    * @return The current of one of the PDP channels (channels 0-15) in Amperes
    */
   public double getCurrent(int channel) {
@@ -66,8 +63,8 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
   }
 
   /**
-   * Query the current of all monitored PDP channels (0-15)
-   *$
+   * Query the current of all monitored PDP channels (0-15) $
+   *
    * @return The current of all the channels in Amperes
    */
   public double getTotalCurrent() {
@@ -75,8 +72,8 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
   }
 
   /**
-   * Query the total power drawn from the monitored PDP channels
-   *$
+   * Query the total power drawn from the monitored PDP channels $
+   *
    * @return the total power in Watts
    */
   public double getTotalPower() {
@@ -84,8 +81,8 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
   }
 
   /**
-   * Query the total energy drawn from the monitored PDP channels
-   *$
+   * Query the total energy drawn from the monitored PDP channels $
+   *
    * @return the total energy in Joules
    */
   public double getTotalEnergy() {
@@ -157,15 +154,15 @@ public class PowerDistributionPanel extends SensorBase implements LiveWindowSend
   }
 
   /**
-   * PDP doesn't have to do anything special when entering the LiveWindow.
-   * {@inheritDoc}
+   * PDP doesn't have to do anything special when entering the LiveWindow. {@inheritDoc}
    */
-  public void startLiveWindowMode() {}
+  public void startLiveWindowMode() {
+  }
 
   /**
-   * PDP doesn't have to do anything special when exiting the LiveWindow.
-   * {@inheritDoc}
+   * PDP doesn't have to do anything special when exiting the LiveWindow. {@inheritDoc}
    */
-  public void stopLiveWindowMode() {}
+  public void stopLiveWindowMode() {
+  }
 
 }

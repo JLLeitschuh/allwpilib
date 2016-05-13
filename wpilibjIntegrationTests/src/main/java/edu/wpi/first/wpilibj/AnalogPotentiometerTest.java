@@ -7,22 +7,21 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.fixtures.AnalogCrossConnectFixture;
 import edu.wpi.first.wpilibj.mockhardware.FakePotentiometerSource;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author jonathanleitschuh
- *
  */
 public class AnalogPotentiometerTest extends AbstractComsSetup {
   private static final Logger logger = Logger.getLogger(AnalogPotentiometerTest.class.getName());

@@ -15,14 +15,13 @@ import edu.wpi.first.wpilibj.tables.ITable;
 /**
  * This class provides an easy way to link commands to inputs.
  *
- * It is very easy to link a button to a command. For instance, you could link
- * the trigger button of a joystick to a "score" command.
+ * It is very easy to link a button to a command. For instance, you could link the trigger button of
+ * a joystick to a "score" command.
  *
- * It is encouraged that teams write a subclass of Trigger if they want to have
- * something unusual (for instance, if they want to react to the user holding a
- * button while the robot is reading a certain sensor input). For this, they
- * only have to write the {@link Trigger#get()} method to get the full
- * functionality of the Trigger class.
+ * It is encouraged that teams write a subclass of Trigger if they want to have something unusual
+ * (for instance, if they want to react to the user holding a button while the robot is reading a
+ * certain sensor input). For this, they only have to write the {@link Trigger#get()} method to get
+ * the full functionality of the Trigger class.
  *
  * @author Joe Grinstead
  */
@@ -38,24 +37,23 @@ public abstract class Trigger implements Sendable {
   public abstract boolean get();
 
   /**
-   * Returns whether get() return true or the internal table for SmartDashboard
-   * use is pressed.
-   *$
-   * @return whether get() return true or the internal table for SmartDashboard
-   *         use is pressed
+   * Returns whether get() return true or the internal table for SmartDashboard use is pressed. $
+   *
+   * @return whether get() return true or the internal table for SmartDashboard use is pressed
    */
   private boolean grab() {
     return get()
-        || (table != null /* && table.isConnected() */&& table.getBoolean("pressed", false));// FIXME
-                                                                                             // make
-                                                                                             // is
-                                                                                             // connected
-                                                                                             // work?
+        || (table != null /* && table.isConnected() */ && table.getBoolean("pressed", false));//
+    // FIXME
+    // make
+    // is
+    // connected
+    // work?
   }
 
   /**
-   * Starts the given command whenever the trigger just becomes active.
-   *$
+   * Starts the given command whenever the trigger just becomes active. $
+   *
    * @param command the command to start
    */
   public void whenActive(final Command command) {
@@ -79,8 +77,8 @@ public abstract class Trigger implements Sendable {
   /**
    * Constantly starts the given command while the button is held.
    *
-   * {@link Command#start()} will be called repeatedly while the trigger is
-   * active, and will be canceled when the trigger becomes inactive.
+   * {@link Command#start()} will be called repeatedly while the trigger is active, and will be
+   * canceled when the trigger becomes inactive.
    *
    * @param command the command to start
    */
@@ -104,8 +102,8 @@ public abstract class Trigger implements Sendable {
   }
 
   /**
-   * Starts the command when the trigger becomes inactive
-   *$
+   * Starts the command when the trigger becomes inactive $
+   *
    * @param command the command to start
    */
   public void whenInactive(final Command command) {
@@ -127,8 +125,8 @@ public abstract class Trigger implements Sendable {
   }
 
   /**
-   * Toggles a command when the trigger becomes active
-   *$
+   * Toggles a command when the trigger becomes active $
+   *
    * @param command the command to toggle
    */
   public void toggleWhenActive(final Command command) {
@@ -154,8 +152,8 @@ public abstract class Trigger implements Sendable {
   }
 
   /**
-   * Cancels a command when the trigger becomes active
-   *$
+   * Cancels a command when the trigger becomes active $
+   *
    * @param command the command to cancel
    */
   public void cancelWhenActive(final Command command) {
@@ -177,8 +175,8 @@ public abstract class Trigger implements Sendable {
   }
 
   /**
-   * An internal class of {@link Trigger}. The user should ignore this, it is
-   * only public to interface between packages.
+   * An internal class of {@link Trigger}. The user should ignore this, it is only public to
+   * interface between packages.
    */
   public abstract class ButtonScheduler {
     public abstract void execute();
@@ -189,8 +187,8 @@ public abstract class Trigger implements Sendable {
   }
 
   /**
-   * These methods continue to return the "Button" SmartDashboard type until we
-   * decided to create a Trigger widget type for the dashboard.
+   * These methods continue to return the "Button" SmartDashboard type until we decided to create a
+   * Trigger widget type for the dashboard.
    */
   public String getSmartDashboardType() {
     return "Button";

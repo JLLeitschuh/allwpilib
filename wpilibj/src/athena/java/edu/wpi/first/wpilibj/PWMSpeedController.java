@@ -16,8 +16,8 @@ public abstract class PWMSpeedController extends SafePWM implements SpeedControl
   /**
    * Constructor.
    *
-   * @param channel The PWM channel that the controller is attached to. 0-9 are
-   *        on-board, 10-19 are on the MXP port
+   * @param channel The PWM channel that the controller is attached to. 0-9 are on-board, 10-19 are
+   *                on the MXP port
    */
   protected PWMSpeedController(int channel) {
     super(channel);
@@ -26,14 +26,13 @@ public abstract class PWMSpeedController extends SafePWM implements SpeedControl
   /**
    * Set the PWM value.
    *
+   * @param speed     The speed to set. Value should be between -1.0 and 1.0.
+   * @param syncGroup The update group to add this Set() to, pending UpdateSyncGroup(). If 0, update
+   *                  immediately.
    * @deprecated For compatibility with CANJaguar
    *
-   *             The PWM value is set using a range of -1.0 to 1.0,
-   *             appropriately scaling the value for the FPGA.
-   *
-   * @param speed The speed to set. Value should be between -1.0 and 1.0.
-   * @param syncGroup The update group to add this Set() to, pending
-   *        UpdateSyncGroup(). If 0, update immediately.
+   * The PWM value is set using a range of -1.0 to 1.0, appropriately scaling the value for the
+   * FPGA.
    */
   @Deprecated
   public void set(double speed, byte syncGroup) {
@@ -44,8 +43,8 @@ public abstract class PWMSpeedController extends SafePWM implements SpeedControl
   /**
    * Set the PWM value.
    *
-   * The PWM value is set using a range of -1.0 to 1.0, appropriately scaling
-   * the value for the FPGA.
+   * The PWM value is set using a range of -1.0 to 1.0, appropriately scaling the value for the
+   * FPGA.
    *
    * @param speed The speed value between -1.0 and 1.0 to set.
    */
@@ -68,7 +67,6 @@ public abstract class PWMSpeedController extends SafePWM implements SpeedControl
    * Common interface for the inverting direction of a speed controller.
    *
    * @return isInverted The state of inversion, true is inverted.
-   *
    */
   @Override
   public boolean getInverted() {

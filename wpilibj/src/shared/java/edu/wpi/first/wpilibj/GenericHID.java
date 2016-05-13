@@ -38,8 +38,8 @@ public abstract class GenericHID {
   }
 
   /**
-   * Get the x position of the HID
-   *$
+   * Get the x position of the HID $
+   *
    * @return the x position of the HID
    */
   public final double getX() {
@@ -47,16 +47,16 @@ public abstract class GenericHID {
   }
 
   /**
-   * Get the x position of HID
-   *$
+   * Get the x position of HID $
+   *
    * @param hand which hand, left or right
    * @return the x position
    */
   public abstract double getX(Hand hand);
 
   /**
-   * Get the y position of the HID
-   *$
+   * Get the y position of the HID $
+   *
    * @return the y position
    */
   public final double getY() {
@@ -64,16 +64,16 @@ public abstract class GenericHID {
   }
 
   /**
-   * Get the y position of the HID
-   *$
+   * Get the y position of the HID $
+   *
    * @param hand which hand, left or right
    * @return the y position
    */
   public abstract double getY(Hand hand);
 
   /**
-   * Get the z position of the HID
-   *$
+   * Get the z position of the HID $
+   *
    * @return the z position
    */
   public final double getZ() {
@@ -81,38 +81,38 @@ public abstract class GenericHID {
   }
 
   /**
-   * Get the z position of the HID
-   *$
+   * Get the z position of the HID $
+   *
    * @param hand which hand, left or right
    * @return the z position
    */
   public abstract double getZ(Hand hand);
 
   /**
-   * Get the twist value
-   *$
+   * Get the twist value $
+   *
    * @return the twist value
    */
   public abstract double getTwist();
 
   /**
-   * Get the throttle
-   *$
+   * Get the throttle $
+   *
    * @return the throttle value
    */
   public abstract double getThrottle();
 
   /**
-   * Get the raw axis
-   *$
+   * Get the raw axis $
+   *
    * @param which index of the axis
    * @return the raw value of the selected axis
    */
   public abstract double getRawAxis(int which);
 
   /**
-   * Is the trigger pressed
-   *$
+   * Is the trigger pressed $
+   *
    * @return true if pressed
    */
   public final boolean getTrigger() {
@@ -120,16 +120,16 @@ public abstract class GenericHID {
   }
 
   /**
-   * Is the trigger pressed
-   *$
+   * Is the trigger pressed $
+   *
    * @param hand which hand
    * @return true if the trigger for the given hand is pressed
    */
   public abstract boolean getTrigger(Hand hand);
 
   /**
-   * Is the top button pressed
-   *$
+   * Is the top button pressed $
+   *
    * @return true if the top button is pressed
    */
   public final boolean getTop() {
@@ -137,16 +137,16 @@ public abstract class GenericHID {
   }
 
   /**
-   * Is the top button pressed
-   *$
+   * Is the top button pressed $
+   *
    * @param hand which hand
    * @return true if hte top button for the given hand is pressed
    */
   public abstract boolean getTop(Hand hand);
 
   /**
-   * Is the bumper pressed
-   *$
+   * Is the bumper pressed $
+   *
    * @return true if the bumper is pressed
    */
   public final boolean getBumper() {
@@ -154,16 +154,16 @@ public abstract class GenericHID {
   }
 
   /**
-   * Is the bumper pressed
-   *$
+   * Is the bumper pressed $
+   *
    * @param hand which hand
    * @return true if hte bumper is pressed
    */
   public abstract boolean getBumper(Hand hand);
 
   /**
-   * Is the given button pressed
-   *$
+   * Is the given button pressed $
+   *
    * @param button which button number
    * @return true if the button is pressed
    */

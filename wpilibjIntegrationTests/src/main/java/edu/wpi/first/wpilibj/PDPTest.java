@@ -7,15 +7,6 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -24,10 +15,19 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.can.CANMessageNotFoundException;
 import edu.wpi.first.wpilibj.fixtures.MotorEncoderFixture;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
+
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class PDPTest extends AbstractComsSetup {
@@ -53,8 +53,9 @@ public class PDPTest extends AbstractComsSetup {
 
   public PDPTest(MotorEncoderFixture<?> mef, Double expectedCurrentDraw) {
     logger.fine("Constructor with: " + mef.getType());
-    if (me != null && !me.equals(mef))
+    if (me != null && !me.equals(mef)) {
       me.teardown();
+    }
     me = mef;
     me.setup();
 
@@ -64,7 +65,7 @@ public class PDPTest extends AbstractComsSetup {
   @Parameters(name = "{index}: {0}, Expected Stopped Current Draw: {1}")
   public static Collection<Object[]> generateData() {
     // logger.fine("Loading the MotorList");
-    return Arrays.asList(new Object[][] {
+    return Arrays.asList(new Object[][]{
         {TestBench.getInstance().getTalonPair(), new Double(0.0)}});
   }
 
@@ -72,7 +73,6 @@ public class PDPTest extends AbstractComsSetup {
   public void tearDown() throws Exception {
     me.reset();
   }
-
 
 
   /**

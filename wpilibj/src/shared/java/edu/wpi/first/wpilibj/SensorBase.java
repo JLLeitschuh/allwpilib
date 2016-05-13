@@ -8,8 +8,8 @@
 package edu.wpi.first.wpilibj;
 
 /**
- * Base class for all sensors. Stores most recent status information as well as
- * containing utility functions for checking channels and error processing.
+ * Base class for all sensors. Stores most recent status information as well as containing utility
+ * functions for checking channels and error processing.
  */
 public abstract class SensorBase { // TODO: Refactor
 
@@ -61,7 +61,8 @@ public abstract class SensorBase { // TODO: Refactor
   /**
    * Creates an instance of the sensor base and gets an FPGA handle
    */
-  public SensorBase() {}
+  public SensorBase() {
+  }
 
   /**
    * Set the default location for the Solenoid module.
@@ -82,8 +83,8 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Check that the digital channel number is valid. Verify that the channel
-   * number is one of the legal channel numbers. Channel numbers are 1-based.
+   * Check that the digital channel number is valid. Verify that the channel number is one of the
+   * legal channel numbers. Channel numbers are 1-based.
    *
    * @param channel The channel number to check.
    */
@@ -94,8 +95,8 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Check that the digital channel number is valid. Verify that the channel
-   * number is one of the legal channel numbers. Channel numbers are 1-based.
+   * Check that the digital channel number is valid. Verify that the channel number is one of the
+   * legal channel numbers. Channel numbers are 1-based.
    *
    * @param channel The channel number to check.
    */
@@ -106,8 +107,8 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Check that the digital channel number is valid. Verify that the channel
-   * number is one of the legal channel numbers. Channel numbers are 1-based.
+   * Check that the digital channel number is valid. Verify that the channel number is one of the
+   * legal channel numbers. Channel numbers are 1-based.
    *
    * @param channel The channel number to check.
    */
@@ -118,8 +119,8 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Check that the analog input number is value. Verify that the analog input
-   * number is one of the legal channel numbers. Channel numbers are 0-based.
+   * Check that the analog input number is value. Verify that the analog input number is one of the
+   * legal channel numbers. Channel numbers are 0-based.
    *
    * @param channel The channel number to check.
    */
@@ -130,20 +131,20 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Check that the analog input number is value. Verify that the analog input
-   * number is one of the legal channel numbers. Channel numbers are 0-based.
+   * Check that the analog input number is value. Verify that the analog input number is one of the
+   * legal channel numbers. Channel numbers are 0-based.
    *
    * @param channel The channel number to check.
    */
   protected static void checkAnalogOutputChannel(final int channel) {
     if (channel < 0 || channel >= kAnalogOutputChannels) {
-      throw new IndexOutOfBoundsException("Requested analog output channel number is out of range.");
+      throw new IndexOutOfBoundsException("Requested analog output channel number is out of range" +
+          ".");
     }
   }
 
   /**
-   * Verify that the solenoid channel number is within limits. Channel numbers
-   * are 1-based.
+   * Verify that the solenoid channel number is within limits. Channel numbers are 1-based.
    *
    * @param channel The channel number to check.
    */
@@ -154,8 +155,8 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Verify that the power distribution channel number is within limits. Channel
-   * numbers are 1-based.
+   * Verify that the power distribution channel number is within limits. Channel numbers are
+   * 1-based.
    *
    * @param channel The channel number to check.
    */
@@ -166,9 +167,8 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Verify that the PDP module number is within limits. module numbers are
-   * 0-based.
-   *$
+   * Verify that the PDP module number is within limits. module numbers are 0-based. $
+   *
    * @param module The module number to check.
    */
   protected static void checkPDPModule(final int module) {
@@ -189,5 +189,6 @@ public abstract class SensorBase { // TODO: Refactor
   /**
    * Free the resources used by this object
    */
-  public void free() {}
+  public void free() {
+  }
 }

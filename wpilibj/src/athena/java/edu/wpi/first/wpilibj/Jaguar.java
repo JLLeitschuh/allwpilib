@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.communication.UsageReporting;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
- * Texas Instruments / Vex Robotics Jaguar Speed Controller as a PWM device.
- *$
+ * Texas Instruments / Vex Robotics Jaguar Speed Controller as a PWM device. $
+ *
  * @see CANJaguar CANJaguar for CAN control
  */
 public class Jaguar extends PWMSpeedController {
@@ -42,8 +42,8 @@ public class Jaguar extends PWMSpeedController {
   /**
    * Constructor.
    *
-   * @param channel The PWM channel that the Jaguar is attached to. 0-9 are
-   *        on-board, 10-19 are on the MXP port
+   * @param channel The PWM channel that the Jaguar is attached to. 0-9 are on-board, 10-19 are on
+   *                the MXP port
    */
   public Jaguar(final int channel) {
     super(channel);

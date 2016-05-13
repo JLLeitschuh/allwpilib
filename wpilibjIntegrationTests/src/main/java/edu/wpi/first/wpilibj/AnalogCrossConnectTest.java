@@ -7,25 +7,24 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.AnalogTriggerOutput.AnalogTriggerType;
 import edu.wpi.first.wpilibj.fixtures.AnalogCrossConnectFixture;
 import edu.wpi.first.wpilibj.test.TestBench;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author jonathanleitschuh
- *
  */
 public class AnalogCrossConnectTest extends AbstractInterruptTest {
   private static final Logger logger = Logger.getLogger(AnalogCrossConnectTest.class.getName());
@@ -69,7 +68,8 @@ public class AnalogCrossConnectTest extends AbstractInterruptTest {
    * @throws java.lang.Exception
    */
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   @Test
   public void testAnalogOuput() {

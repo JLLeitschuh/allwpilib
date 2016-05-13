@@ -7,22 +7,22 @@
 
 package edu.wpi.first.wpilibj;
 
-import edu.wpi.first.wpilibj.fixtures.MotorEncoderFixture;
-import edu.wpi.first.wpilibj.test.AbstractComsSetup;
-
-import edu.wpi.first.wpilibj.test.TestBench;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Logger;
+
+import edu.wpi.first.wpilibj.fixtures.MotorEncoderFixture;
+import edu.wpi.first.wpilibj.test.AbstractComsSetup;
+import edu.wpi.first.wpilibj.test.TestBench;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests Inversion of motors using the SpeedController setInverted
@@ -36,8 +36,9 @@ public class MotorInvertingTest extends AbstractComsSetup {
 
   public MotorInvertingTest(MotorEncoderFixture<?> afixture) {
     logger.fine("Constructor with: " + afixture.getType());
-    if (fixture != null && !fixture.equals(afixture))
+    if (fixture != null && !fixture.equals(afixture)) {
       fixture.teardown();
+    }
     fixture = afixture;
     fixture.setup();
   }
@@ -45,7 +46,7 @@ public class MotorInvertingTest extends AbstractComsSetup {
   @Parameterized.Parameters(name = "{index}: {0}")
   public static Collection<MotorEncoderFixture<?>[]> generateData() {
     // logger.fine("Loading the MotorList");
-    return Arrays.asList(new MotorEncoderFixture<?>[][] { {TestBench.getInstance().getTalonPair()},
+    return Arrays.asList(new MotorEncoderFixture<?>[][]{{TestBench.getInstance().getTalonPair()},
         {TestBench.getInstance().getVictorPair()}, {TestBench.getInstance().getJaguarPair()}});
   }
 

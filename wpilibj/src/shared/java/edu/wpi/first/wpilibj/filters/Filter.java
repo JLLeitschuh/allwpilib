@@ -42,8 +42,7 @@ public abstract class Filter implements PIDSource {
   public abstract double pidGet();
 
   /**
-   * Returns the current filter estimate without also inserting new data as
-   * pidGet() would do.
+   * Returns the current filter estimate without also inserting new data as pidGet() would do.
    *
    * @return The current filter estimate
    */

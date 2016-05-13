@@ -7,8 +7,8 @@
 
 package edu.wpi.first.wpilibj;
 
-import java.nio.ByteOrder;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tInstances;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
- *
  * @author dtjones
  */
 public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindowSendable {
@@ -34,7 +33,7 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
   private static final byte kDataFormat_SelfTest = (byte) 0x80, kDataFormat_SPI = 0x40,
       kDataFormat_IntInvert = 0x20, kDataFormat_FullRes = 0x08, kDataFormat_Justify = 0x04;
 
-  public static enum Axes {
+  public enum Axes {
     kX((byte) 0x00),
     kY((byte) 0x02),
     kZ((byte) 0x04);
@@ -44,7 +43,7 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
      */
     public final byte value;
 
-    private Axes(byte value) {
+    Axes(byte value) {
       this.value = value;
     }
   }
@@ -59,9 +58,9 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
   private I2C m_i2c;
 
   /**
-   * Constructs the ADXL345 Accelerometer with I2C address 0x1D.
-   *$
-   * @param port The I2C port the accelerometer is attached to
+   * Constructs the ADXL345 Accelerometer with I2C address 0x1D. $
+   *
+   * @param port  The I2C port the accelerometer is attached to
    * @param range The range (+ or -) that the accelerometer will measure.
    */
   public ADXL345_I2C(I2C.Port port, Range range) {
@@ -69,11 +68,11 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
   }
 
   /**
-   * Constructs the ADXL345 Accelerometer over I2C.
-   *$
-   * @param port The I2C port the accelerometer is attached to
+   * Constructs the ADXL345 Accelerometer over I2C. $
+   *
+   * @param port  The I2C port the accelerometer is attached to
    * @param range The range (+ or -) that the accelerometer will measure.
-   * @param the I2C address of the accelerometer (0x1D or 0x53)
+   * @param the   I2C address of the accelerometer (0x1D or 0x53)
    */
   public ADXL345_I2C(I2C.Port port, Range range, int deviceAddress) {
     m_i2c = new I2C(port, deviceAddress);
@@ -87,7 +86,9 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
     LiveWindow.addSensor("ADXL345_I2C", port.getValue(), this);
   }
 
-  /** {inheritdoc} */
+  /**
+   * {inheritdoc}
+   */
   @Override
   public void setRange(Range range) {
     byte value = 0;
@@ -111,19 +112,25 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
     m_i2c.write(kDataFormatRegister, kDataFormat_FullRes | value);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getX() {
     return getAcceleration(Axes.kX);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getY() {
     return getAcceleration(Axes.kY);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getZ() {
     return getAcceleration(Axes.kZ);
@@ -147,8 +154,7 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
   /**
    * Get the acceleration of all axes in Gs.
    *
-   * @return An object containing the acceleration measured on each axis of the
-   *         ADXL345 in Gs.
+   * @return An object containing the acceleration measured on each axis of the ADXL345 in Gs.
    */
   public AllAxes getAccelerations() {
     AllAxes data = new AllAxes();
@@ -169,13 +175,17 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
 
   private ITable m_table;
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void initTable(ITable subtable) {
     m_table = subtable;
     updateTable();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void updateTable() {
     if (m_table != null) {
       m_table.putNumber("X", getX());
@@ -184,12 +194,16 @@ public class ADXL345_I2C extends SensorBase implements Accelerometer, LiveWindow
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public ITable getTable() {
     return m_table;
   }
 
-  public void startLiveWindowMode() {}
+  public void startLiveWindowMode() {
+  }
 
-  public void stopLiveWindowMode() {}
+  public void stopLiveWindowMode() {
+  }
 }

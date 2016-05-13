@@ -8,18 +8,17 @@
 package edu.wpi.first.wpilibj.command;
 
 /**
- * A {@link WaitCommand} will wait for a certain amount of time before
- * finishing. It is useful if you want a {@link CommandGroup} to pause for a
- * moment.
- *$
+ * A {@link WaitCommand} will wait for a certain amount of time before finishing. It is useful if
+ * you want a {@link CommandGroup} to pause for a moment. $
+ *
  * @author Joe Grinstead
  * @see CommandGroup
  */
 public class WaitCommand extends Command {
 
   /**
-   * Instantiates a {@link WaitCommand} with the given timeout.
-   *$
+   * Instantiates a {@link WaitCommand} with the given timeout. $
+   *
    * @param timeout the time the command takes to run
    */
   public WaitCommand(double timeout) {
@@ -27,24 +26,28 @@ public class WaitCommand extends Command {
   }
 
   /**
-   * Instantiates a {@link WaitCommand} with the given timeout.
-   *$
-   * @param name the name of the command
+   * Instantiates a {@link WaitCommand} with the given timeout. $
+   *
+   * @param name    the name of the command
    * @param timeout the time the command takes to run
    */
   public WaitCommand(String name, double timeout) {
     super(name, timeout);
   }
 
-  protected void initialize() {}
+  protected void initialize() {
+  }
 
-  protected void execute() {}
+  protected void execute() {
+  }
 
   protected boolean isFinished() {
     return isTimedOut();
   }
 
-  protected void end() {}
+  protected void end() {
+  }
 
-  protected void interrupted() {}
+  protected void interrupted() {
+  }
 }

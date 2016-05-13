@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.util.CheckedAllocationException;
  */
 public abstract class InterruptableSensorBase extends SensorBase {
 
-  public static enum WaitResult {
+  public enum WaitResult {
     kTimeout(0x0), kRisingEdge(0x1), kFallingEdge(0x100), kBoth(0x101);
 
     public final int value;
@@ -31,7 +31,7 @@ public abstract class InterruptableSensorBase extends SensorBase {
     }
 
 
-    private WaitResult(int value) {
+    WaitResult(int value) {
       this.value = value;
     }
   }
@@ -80,12 +80,11 @@ public abstract class InterruptableSensorBase extends SensorBase {
   /**
    * Request one of the 8 interrupts asynchronously on this digital input.
    *
-   * @param handler The {@link InterruptHandlerFunction} that contains the
-   *        method {@link InterruptHandlerFunction#interruptFired(int, Object)}
-   *        that will be called whenever there is an interrupt on this device.
-   *        Request interrupts in synchronous mode where the user program
-   *        interrupt handler will be called when an interrupt occurs. The
-   *        default is interrupt on rising edges only.
+   * @param handler The {@link InterruptHandlerFunction} that contains the method {@link
+   *                InterruptHandlerFunction#interruptFired(int, Object)} that will be called
+   *                whenever there is an interrupt on this device. Request interrupts in synchronous
+   *                mode where the user program interrupt handler will be called when an interrupt
+   *                occurs. The default is interrupt on rising edges only.
    */
   public void requestInterrupts(InterruptHandlerFunction<?> handler) {
     if (m_interrupt != 0) {
@@ -104,10 +103,9 @@ public abstract class InterruptableSensorBase extends SensorBase {
   }
 
   /**
-   * Request one of the 8 interrupts synchronously on this digital input.
-   * Request interrupts in synchronous mode where the user program will have to
-   * explicitly wait for the interrupt to occur using {@link #waitForInterrupt}.
-   * The default is interrupt on rising edges only.
+   * Request one of the 8 interrupts synchronously on this digital input. Request interrupts in
+   * synchronous mode where the user program will have to explicitly wait for the interrupt to occur
+   * using {@link #waitForInterrupt}. The default is interrupt on rising edges only.
    */
   public void requestInterrupts() {
     if (m_interrupt != 0) {
@@ -127,9 +125,8 @@ public abstract class InterruptableSensorBase extends SensorBase {
   /**
    * Allocate the interrupt
    *
-   * @param watcher true if the interrupt should be in synchronous mode where
-   *        the user program will have to explicitly wait for the interrupt to
-   *        occur.
+   * @param watcher true if the interrupt should be in synchronous mode where the user program will
+   *                have to explicitly wait for the interrupt to occur.
    */
   protected void allocateInterrupts(boolean watcher) {
     try {
@@ -144,8 +141,8 @@ public abstract class InterruptableSensorBase extends SensorBase {
   }
 
   /**
-   * Cancel interrupts on this device. This deallocates all the chipobject
-   * structures and disables any interrupts.
+   * Cancel interrupts on this device. This deallocates all the chipobject structures and disables
+   * any interrupts.
    */
   public void cancelInterrupts() {
     if (m_interrupt == 0) {
@@ -159,9 +156,9 @@ public abstract class InterruptableSensorBase extends SensorBase {
   /**
    * In synchronous mode, wait for the defined interrupt to occur.
    *
-   * @param timeout Timeout in seconds
-   * @param ignorePrevious If true, ignore interrupts that happened before
-   *        waitForInterrupt was called.
+   * @param timeout        Timeout in seconds
+   * @param ignorePrevious If true, ignore interrupts that happened before waitForInterrupt was
+   *                       called.
    * @return Result of the wait.
    */
   public WaitResult waitForInterrupt(double timeout, boolean ignorePrevious) {
@@ -184,9 +181,9 @@ public abstract class InterruptableSensorBase extends SensorBase {
   }
 
   /**
-   * Enable interrupts to occur on this input. Interrupts are disabled when the
-   * RequestInterrupt call is made. This gives time to do the setup of the other
-   * options before starting to field interrupts.
+   * Enable interrupts to occur on this input. Interrupts are disabled when the RequestInterrupt
+   * call is made. This gives time to do the setup of the other options before starting to field
+   * interrupts.
    */
   public void enableInterrupts() {
     if (m_interrupt == 0) {
@@ -212,10 +209,10 @@ public abstract class InterruptableSensorBase extends SensorBase {
   }
 
   /**
-   * Return the timestamp for the rising interrupt that occurred most recently.
-   * This is in the same time domain as getClock(). The rising-edge interrupt
-   * should be enabled with {@link #setUpSourceEdge}
-   *$
+   * Return the timestamp for the rising interrupt that occurred most recently. This is in the same
+   * time domain as getClock(). The rising-edge interrupt should be enabled with {@link
+   * #setUpSourceEdge} $
+   *
    * @return Timestamp in seconds since boot.
    */
   public double readRisingTimestamp() {
@@ -226,10 +223,10 @@ public abstract class InterruptableSensorBase extends SensorBase {
   }
 
   /**
-   * Return the timestamp for the falling interrupt that occurred most recently.
-   * This is in the same time domain as getClock(). The falling-edge interrupt
-   * should be enabled with {@link #setUpSourceEdge}
-   *$
+   * Return the timestamp for the falling interrupt that occurred most recently. This is in the same
+   * time domain as getClock(). The falling-edge interrupt should be enabled with {@link
+   * #setUpSourceEdge} $
+   *
    * @return Timestamp in seconds since boot.
    */
   public double readFallingTimestamp() {
@@ -242,7 +239,7 @@ public abstract class InterruptableSensorBase extends SensorBase {
   /**
    * Set which edge to trigger interrupts on
    *
-   * @param risingEdge true to interrupt on rising edge
+   * @param risingEdge  true to interrupt on rising edge
    * @param fallingEdge true to interrupt on falling edge
    */
   public void setUpSourceEdge(boolean risingEdge, boolean fallingEdge) {

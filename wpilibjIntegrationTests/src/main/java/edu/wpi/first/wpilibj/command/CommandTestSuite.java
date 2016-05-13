@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.test.AbstractTestSuite;
 
 /**
  * @author jonathanleitschuh
- *
  */
 @RunWith(Suite.class)
 @SuiteClasses({ButtonTest.class, CommandParallelGroupTest.class, CommandScheduleTest.class,

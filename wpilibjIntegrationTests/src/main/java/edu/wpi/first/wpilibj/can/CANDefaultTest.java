@@ -7,6 +7,18 @@
 
 package edu.wpi.first.wpilibj.can;
 
+import com.googlecode.junittoolbox.PollingWait;
+import com.googlecode.junittoolbox.RunnableAssert;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+
+import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Timer;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -14,21 +26,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.googlecode.junittoolbox.PollingWait;
-import com.googlecode.junittoolbox.RunnableAssert;
-
-import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.Timer;
-
 /**
  * @author jonathanleitschuh
- *
  */
 public class CANDefaultTest extends AbstractCANTest {
   private static final Logger logger = Logger.getLogger(CANDefaultTest.class.getName());
@@ -146,7 +145,6 @@ public class CANDefaultTest extends AbstractCANTest {
   }
 
 
-
   @Test
   public void testFakeLimitSwitchForwards() {
     // Given
@@ -165,7 +163,8 @@ public class CANDefaultTest extends AbstractCANTest {
       public void run() throws Exception {
         getME().getMotor().set(0);
         assertFalse(
-            "Setting the forward limit switch high did not cause the forward limit switch to trigger",
+            "Setting the forward limit switch high did not cause the forward limit switch to " +
+                "trigger",
             getME().getMotor().getForwardLimitOK());
       }
     });
@@ -190,7 +189,8 @@ public class CANDefaultTest extends AbstractCANTest {
       public void run() throws Exception {
         getME().getMotor().set(0);
         assertFalse(
-            "Setting the reverse limit switch high did not cause the forward limit switch to trigger",
+            "Setting the reverse limit switch high did not cause the forward limit switch to " +
+                "trigger",
             getME().getMotor().getReverseLimitOK());
       }
     });

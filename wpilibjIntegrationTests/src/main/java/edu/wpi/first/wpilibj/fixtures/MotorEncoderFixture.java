@@ -19,16 +19,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.test.TestBench;
 
 /**
- * Represents a physically connected Motor and Encoder to allow for unit tests
- * on these different pairs<br>
- * Designed to allow the user to easily setup and tear down the fixture to allow
- * for reuse. This class should be explicitly instantiated in the TestBed class
- * to allow any test to access this fixture. This allows tests to be mailable so
- * that you can easily reconfigure the physical testbed without breaking the
- * tests.
+ * Represents a physically connected Motor and Encoder to allow for unit tests on these different
+ * pairs<br> Designed to allow the user to easily setup and tear down the fixture to allow for
+ * reuse. This class should be explicitly instantiated in the TestBed class to allow any test to
+ * access this fixture. This allows tests to be mailable so that you can easily reconfigure the
+ * physical testbed without breaking the tests.
  *
  * @author Jonathan Leitschuh
- *
  */
 public abstract class MotorEncoderFixture<T extends SpeedController> implements ITestFixture {
   private static final Logger logger = Logger.getLogger(MotorEncoderFixture.class.getName());
@@ -43,31 +40,32 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
   /**
    * Default constructor for a MotorEncoderFixture
    */
-  public MotorEncoderFixture() {}
+  public MotorEncoderFixture() {
+  }
 
   abstract public int getPDPChannel();
 
   /**
-   * Where the implementer of this class should pass the speed controller
-   * Constructor should only be called from outside this class if the Speed
-   * controller is not also an implementation of PWM interface
-   *$
+   * Where the implementer of this class should pass the speed controller Constructor should only be
+   * called from outside this class if the Speed controller is not also an implementation of PWM
+   * interface $
+   *
    * @return SpeedController
    */
   abstract protected T giveSpeedController();
 
   /**
-   * Where the implementer of this class should pass one of the digital inputs<br>
-   * CONSTRUCTOR SHOULD NOT BE CALLED FROM OUTSIDE THIS CLASS!
-   *$
+   * Where the implementer of this class should pass one of the digital inputs<br> CONSTRUCTOR
+   * SHOULD NOT BE CALLED FROM OUTSIDE THIS CLASS! $
+   *
    * @return DigitalInput
    */
   abstract protected DigitalInput giveDigitalInputA();
 
   /**
-   * Where the implementer fo this class should pass the other digital input<br>
-   * CONSTRUCTOR SHOULD NOT BE CALLED FROM OUTSIDE THIS CLASS!
-   *$
+   * Where the implementer fo this class should pass the other digital input<br> CONSTRUCTOR SHOULD
+   * NOT BE CALLED FROM OUTSIDE THIS CLASS! $
+   *
    * @return Input B to be used when this class is instantiated
    */
   abstract protected DigitalInput giveDigitalInputB();
@@ -86,7 +84,7 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
         counters[1] = new Counter(bSource);
         logger.fine("Creating the speed controller!");
         motor = giveSpeedController(); // CANJaguar throws an exception if it
-                                       // doesn't get the message
+        // doesn't get the message
       }
     }
   }
@@ -98,8 +96,8 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
   }
 
   /**
-   * Gets the motor for this Object
-   *$
+   * Gets the motor for this Object $
+   *
    * @return the motor this object refers too
    */
   public T getMotor() {
@@ -108,8 +106,8 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
   }
 
   /**
-   * Gets the encoder for this object
-   *$
+   * Gets the encoder for this object $
+   *
    * @return the encoder that this object refers too
    */
   public Encoder getEncoder() {
@@ -123,8 +121,8 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
   }
 
   /**
-   * Retrieves the name of the motor that this object refers to
-   *$
+   * Retrieves the name of the motor that this object refers to $
+   *
    * @return The simple name of the motor {@link Class#getSimpleName()}
    */
   public String getType() {
@@ -133,14 +131,12 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
   }
 
   /**
-   * Checks to see if the speed of the motor is within some range of a given
-   * value. This is used instead of equals() because doubles can have
-   * inaccuracies.
-   *$
-   * @param value The value to compare against
+   * Checks to see if the speed of the motor is within some range of a given value. This is used
+   * instead of equals() because doubles can have inaccuracies. $
+   *
+   * @param value    The value to compare against
    * @param accuracy The accuracy range to check against to see if the
-   * @return true if the range of values between motors speed accuracy contains
-   *         the 'value'.
+   * @return true if the range of values between motors speed accuracy contains the 'value'.
    */
   public boolean isMotorSpeedWithinRange(double value, double accuracy) {
     initialize();
@@ -169,11 +165,10 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
   }
 
 
-
   /**
-   * Safely tears down the MotorEncoder Fixture in a way that makes sure that
-   * even if an object fails to initialize the rest of the fixture can still be
-   * torn down and the resources deallocated
+   * Safely tears down the MotorEncoder Fixture in a way that makes sure that even if an object
+   * fails to initialize the rest of the fixture can still be torn down and the resources
+   * deallocated
    */
   @Override
   public boolean teardown() {
@@ -188,33 +183,39 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
       if (motor instanceof PWM && motor != null) {
         ((PWM) motor).free();
         motor = null;
-      } else if (motor == null)
+      } else if (motor == null) {
         wasNull = true;
+      }
       if (encoder != null) {
         encoder.free();
         encoder = null;
-      } else
+      } else {
         wasNull = true;
+      }
       if (counters[0] != null) {
         counters[0].free();
         counters[0] = null;
-      } else
+      } else {
         wasNull = true;
+      }
       if (counters[1] != null) {
         counters[1].free();
         counters[1] = null;
-      } else
+      } else {
         wasNull = true;
+      }
       if (aSource != null) {
         aSource.free();
         aSource = null;
-      } else
+      } else {
         wasNull = true;
+      }
       if (bSource != null) {
         bSource.free();
         bSource = null;
-      } else
+      } else {
         wasNull = true;
+      }
 
       tornDown = true;
 
@@ -234,7 +235,8 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
     // Get the generic type as a class
     @SuppressWarnings("unchecked")
     Class<T> class1 =
-        (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments
+            ()[0];
     string.append(class1.getSimpleName());
     string.append(">");
     return string.toString();

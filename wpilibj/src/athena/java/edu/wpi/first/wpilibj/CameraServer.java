@@ -7,29 +7,21 @@
 
 package edu.wpi.first.wpilibj;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.RawData;
 import com.ni.vision.VisionException;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
 // replicates CameraServer.cpp in java lib
@@ -97,8 +89,9 @@ public class CameraServer {
   private synchronized void setImageData(RawData data, int start) {
     if (m_imageData != null && m_imageData.data != null) {
       m_imageData.data.free();
-      if (m_imageData.data.getBuffer() != null)
+      if (m_imageData.data.getBuffer() != null) {
         m_imageDataPool.addLast(m_imageData.data.getBuffer());
+      }
       m_imageData = null;
     }
     m_imageData = new CameraData(data, start);
@@ -106,10 +99,9 @@ public class CameraServer {
   }
 
   /**
-   * Manually change the image that is served by the MJPEG stream. This can be
-   * called to pass custom annotated images to the dashboard. Note that, for
-   * 640x480 video, this method could take between 40 and 50 milliseconds to
-   * complete.
+   * Manually change the image that is served by the MJPEG stream. This can be called to pass custom
+   * annotated images to the dashboard. Note that, for 640x480 video, this method could take between
+   * 40 and 50 milliseconds to complete.
    *
    * This shouldn't be called if {@link #startAutomaticCapture} is called.
    *
@@ -134,25 +126,26 @@ public class CameraServer {
     int index = 0;
     if (hwClient) {
       while (index < buffer.limit() - 1) {
-        if ((buffer.get(index) & 0xff) == 0xFF && (buffer.get(index + 1) & 0xff) == 0xD8)
+        if ((buffer.get(index) & 0xff) == 0xFF && (buffer.get(index + 1) & 0xff) == 0xD8) {
           break;
+        }
         index++;
       }
     }
 
     if (buffer.limit() - index - 1 <= 2) {
-      throw new VisionException("data size of flattened image is less than 2. Try another camera! ");
+      throw new VisionException("data size of flattened image is less than 2. Try another camera!" +
+          " ");
     }
 
     setImageData(data, index);
   }
 
   /**
-   * Start automatically capturing images to send to the dashboard. You should
-   * call this method to just see a camera feed on the dashboard without doing
-   * any vision processing on the roboRIO. {@link #setImage} shouldn't be called
-   * after this is called. This overload calles
-   * {@link #startAutomaticCapture(String)} with the default camera name
+   * Start automatically capturing images to send to the dashboard. You should call this method to
+   * just see a camera feed on the dashboard without doing any vision processing on the roboRIO.
+   * {@link #setImage} shouldn't be called after this is called. This overload calles {@link
+   * #startAutomaticCapture(String)} with the default camera name
    */
   public void startAutomaticCapture() {
     startAutomaticCapture(USBCamera.kDefaultCameraName);
@@ -161,9 +154,8 @@ public class CameraServer {
   /**
    * Start automatically capturing images to send to the dashboard.
    *
-   * You should call this method to just see a camera feed on the dashboard
-   * without doing any vision processing on the roboRIO. {@link #setImage}
-   * shouldn't be called after this is called.
+   * You should call this method to just see a camera feed on the dashboard without doing any vision
+   * processing on the roboRIO. {@link #setImage} shouldn't be called after this is called.
    *
    * @param cameraName The name of the camera interface (e.g. "cam1")
    */
@@ -179,8 +171,9 @@ public class CameraServer {
   }
 
   public synchronized void startAutomaticCapture(USBCamera camera) {
-    if (m_autoCaptureStarted)
+    if (m_autoCaptureStarted) {
       return;
+    }
     m_autoCaptureStarted = true;
     m_camera = camera;
 
@@ -232,25 +225,23 @@ public class CameraServer {
   }
 
 
-
   /**
    * check if auto capture is started
-   *
    */
   public synchronized boolean isAutoCaptureStarted() {
     return m_autoCaptureStarted;
   }
 
   /**
-   * Sets the size of the image to use. Use the public kSize constants to set
-   * the correct mode, or set it directory on a camera and call the appropriate
-   * autoCapture method
-   *$
+   * Sets the size of the image to use. Use the public kSize constants to set the correct mode, or
+   * set it directory on a camera and call the appropriate autoCapture method $
+   *
    * @param size The size to use
    */
   public synchronized void setSize(int size) {
-    if (m_camera == null)
+    if (m_camera == null) {
       return;
+    }
     switch (size) {
       case kSize640x480:
         m_camera.setSize(640, 480);
@@ -285,10 +276,10 @@ public class CameraServer {
   /**
    * Run the M-JPEG server.
    *
-   * This function listens for a connection from the dashboard in a background
-   * thread, then sends back the M-JPEG stream.
+   * This function listens for a connection from the dashboard in a background thread, then sends
+   * back the M-JPEG stream.
    *
-   * @throws IOException if the Socket connection fails
+   * @throws IOException          if the Socket connection fails
    * @throws InterruptedException if the sleep is interrupted
    */
   protected void serve() throws IOException, InterruptedException {
@@ -318,13 +309,15 @@ public class CameraServer {
         // Wait for the camera
         synchronized (this) {
           System.out.println("Camera not yet ready, awaiting image");
-          if (m_camera == null)
+          if (m_camera == null) {
             wait();
+          }
           m_hwClient = compression == kHardwareCompression;
-          if (!m_hwClient)
+          if (!m_hwClient) {
             setQuality(100 - compression);
-          else if (m_camera != null)
+          } else if (m_camera != null) {
             m_camera.setFPS(fps);
+          }
           setSize(size);
         }
 
@@ -338,8 +331,9 @@ public class CameraServer {
             m_imageData = null;
           }
 
-          if (imageData == null)
+          if (imageData == null) {
             continue;
+          }
           // Set the buffer position to the start of the data,
           // and then create a new wrapper for the data at
           // exactly that position

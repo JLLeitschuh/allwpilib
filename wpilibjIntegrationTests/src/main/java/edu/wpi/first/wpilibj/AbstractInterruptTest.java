@@ -7,6 +7,15 @@
 
 package edu.wpi.first.wpilibj;
 
+import org.junit.After;
+import org.junit.Test;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import edu.wpi.first.wpilibj.test.AbstractComsSetup;
+
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
@@ -14,21 +23,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
-
-import org.junit.After;
-import org.junit.Test;
-
-import edu.wpi.first.wpilibj.test.AbstractComsSetup;
-
 /**
- * This class should not be run as a test explicitly. Instead it should be
- * extended by tests that use the InterruptableSensorBase
+ * This class should not be run as a test explicitly. Instead it should be extended by tests that
+ * use the InterruptableSensorBase
  *
  * @author jonathanleitschuh
- *
  */
 public abstract class AbstractInterruptTest extends AbstractComsSetup {
   private InterruptableSensorBase interruptable = null;
@@ -50,15 +49,13 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
   }
 
   /**
-   * Give the interruptible sensor base that interrupts can be attached to.
-   *$
-   * @return
+   * Give the interruptible sensor base that interrupts can be attached to. $
    */
   abstract InterruptableSensorBase giveInterruptableSensorBase();
 
   /**
-   * Cleans up the interruptible sensor base. This is only called if
-   * {@link #giveInterruptableSensorBase()} is called.
+   * Cleans up the interruptible sensor base. This is only called if {@link
+   * #giveInterruptableSensorBase()} is called.
    */
   abstract void freeInterruptableSensorBase();
 
@@ -83,13 +80,17 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
     int getCount() {
       return count.get();
     }
-  };
+  }
 
   private class TestInterruptHandlerFunction extends InterruptHandlerFunction<InterruptCounter> {
     protected final AtomicBoolean exceptionThrown = new AtomicBoolean(false);
-    /** Stores the time that the interrupt fires */
+    /**
+     * Stores the time that the interrupt fires
+     */
     final AtomicLong interruptFireTime = new AtomicLong();
-    /** Stores if the interrupt has completed at least once */
+    /**
+     * Stores if the interrupt has completed at least once
+     */
     final AtomicBoolean interruptComplete = new AtomicBoolean(false);
     protected Exception ex;
     final InterruptCounter counter;
@@ -111,13 +112,13 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
         this.ex = ex;
       }
       interruptComplete.set(true);
-    };
+    }
 
     @Override
     public InterruptCounter overridableParameter() {
       return counter;
     }
-  };
+  }
 
   @Test(timeout = 1000)
   public void testSingleInterruptsTriggering() throws Exception {
@@ -152,7 +153,8 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
     assertThat(
         "The interrupt did not fire within the expected time period (values in milliseconds)",
         function.interruptFireTime.get(),
-        both(greaterThan(interruptTriggerTime - range)).and(lessThan(interruptTriggerTime + range)));
+        both(greaterThan(interruptTriggerTime - range)).and(lessThan(interruptTriggerTime +
+            range)));
     assertThat(
         "The readRisingTimestamp() did not return the correct value (values in seconds)",
         getInterruptable().readRisingTimestamp(),
@@ -184,7 +186,9 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
         counter.getCount());
   }
 
-  /** The timeout length for this test in seconds */
+  /**
+   * The timeout length for this test in seconds
+   */
   private static final int synchronousTimeout = 5;
 
   @Test(timeout = (long) (synchronousTimeout * 1e3))
@@ -225,9 +229,11 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
     getInterruptable().requestInterrupts();
 
     //Don't fire interrupt. Expect it to timeout.
-    InterruptableSensorBase.WaitResult result = getInterruptable().waitForInterrupt(synchronousTimeout / 2);
+    InterruptableSensorBase.WaitResult result = getInterruptable().waitForInterrupt
+        (synchronousTimeout / 2);
 
-    assertEquals("The interrupt did not time out correctly.", result, InterruptableSensorBase.WaitResult.kTimeout);
+    assertEquals("The interrupt did not time out correctly.", result, InterruptableSensorBase
+        .WaitResult.kTimeout);
   }
 
   @Test(timeout = (long) (synchronousTimeout * 1e3))
@@ -247,9 +253,11 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
 
     new Thread(r).start();
     // Delay for twice as long as the timeout so the test should fail first
-    InterruptableSensorBase.WaitResult result = getInterruptable().waitForInterrupt(synchronousTimeout * 2);
+    InterruptableSensorBase.WaitResult result = getInterruptable().waitForInterrupt
+        (synchronousTimeout * 2);
 
-    assertEquals("The interrupt did not fire on the rising edge.", result, InterruptableSensorBase.WaitResult.kRisingEdge);
+    assertEquals("The interrupt did not fire on the rising edge.", result,
+        InterruptableSensorBase.WaitResult.kRisingEdge);
   }
 
   @Test(timeout = (long) (synchronousTimeout * 1e3))
@@ -270,9 +278,11 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
 
     new Thread(r).start();
     // Delay for twice as long as the timeout so the test should fail first
-    InterruptableSensorBase.WaitResult result = getInterruptable().waitForInterrupt(synchronousTimeout * 2);
+    InterruptableSensorBase.WaitResult result = getInterruptable().waitForInterrupt
+        (synchronousTimeout * 2);
 
-    assertEquals("The interrupt did not fire on the falling edge.", result, InterruptableSensorBase.WaitResult.kFallingEdge);
+    assertEquals("The interrupt did not fire on the falling edge.", result,
+        InterruptableSensorBase.WaitResult.kFallingEdge);
   }
 
 

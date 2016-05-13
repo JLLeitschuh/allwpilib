@@ -7,18 +7,6 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,16 +16,27 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.fixtures.MotorEncoderFixture;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * @author Kacper Puczydlowski
  * @author Jonathan Leitschuh
- *
  */
 
 @RunWith(Parameterized.class)
@@ -61,8 +60,9 @@ public class PIDTest extends AbstractComsSetup {
 
   public PIDTest(Double p, Double i, Double d, MotorEncoderFixture mef) {
     logger.fine("Constructor with: " + mef.getType());
-    if (PIDTest.me != null && !PIDTest.me.equals(mef))
+    if (PIDTest.me != null && !PIDTest.me.equals(mef)) {
       PIDTest.me.teardown();
+    }
     PIDTest.me = mef;
     this.k_p = p;
     this.k_i = i;
@@ -78,7 +78,7 @@ public class PIDTest extends AbstractComsSetup {
     double ki = 0.0005;
     double kd = 0.0;
     for (int i = 0; i < 1; i++) {
-      data.addAll(Arrays.asList(new Object[][] {
+      data.addAll(Arrays.asList(new Object[][]{
           {kp, ki, kd, TestBench.getInstance().getTalonPair()},
           {kp, ki, kd, TestBench.getInstance().getVictorPair()},
           {kp, ki, kd, TestBench.getInstance().getJaguarPair()}}));
@@ -90,7 +90,8 @@ public class PIDTest extends AbstractComsSetup {
    * @throws java.lang.Exception
    */
   @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+  public static void setUpBeforeClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception

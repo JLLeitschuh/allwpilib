@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.mockhardware.FakeCounterSource;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public class FakeCounterFixture implements ITestFixture {
   private static final Logger logger = Logger.getLogger(FakeEncoderFixture.class.getName());
@@ -26,10 +25,9 @@ public class FakeCounterFixture implements ITestFixture {
   private final Counter counter;
 
   /**
-   * Constructs a FakeCounterFixture.
-   *$
-   * @param dio A previously allocated DIOCrossConnectFixture (must be freed
-   *        outside this class)
+   * Constructs a FakeCounterFixture. $
+   *
+   * @param dio A previously allocated DIOCrossConnectFixture (must be freed outside this class)
    */
   public FakeCounterFixture(DIOCrossConnectFixture dio) {
     this.dio = dio;
@@ -40,9 +38,9 @@ public class FakeCounterFixture implements ITestFixture {
 
 
   /**
-   * Constructs a FakeCounterFixture using two port numbers
-   *$
-   * @param input the input port
+   * Constructs a FakeCounterFixture using two port numbers $
+   *
+   * @param input  the input port
    * @param output the output port
    */
   public FakeCounterFixture(int input, int output) {
@@ -53,8 +51,8 @@ public class FakeCounterFixture implements ITestFixture {
   }
 
   /**
-   * Retrieves the FakeCouterSource for use
-   *$
+   * Retrieves the FakeCouterSource for use $
+   *
    * @return the FakeCounterSource
    */
   public FakeCounterSource getFakeCounterSource() {
@@ -62,8 +60,8 @@ public class FakeCounterFixture implements ITestFixture {
   }
 
   /**
-   * Gets the Counter for use
-   *$
+   * Gets the Counter for use $
+   *
    * @return the Counter
    */
   public Counter getCounter() {
@@ -109,7 +107,6 @@ public class FakeCounterFixture implements ITestFixture {
     }
     return true;
   }
-
 
 
 }

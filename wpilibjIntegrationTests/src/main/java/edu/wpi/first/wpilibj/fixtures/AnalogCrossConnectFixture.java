@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.AnalogOutput;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public abstract class AnalogCrossConnectFixture implements ITestFixture {
   private boolean initialized = false;

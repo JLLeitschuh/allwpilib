@@ -10,8 +10,8 @@ package edu.wpi.first.wpilibj.mocks;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * A class to simulate a simple command The command keeps track of how many
- * times each method was called
+ * A class to simulate a simple command The command keeps track of how many times each method was
+ * called
  *
  * @author mwills
  */
@@ -43,7 +43,6 @@ public class MockCommand extends Command {
   protected void interrupted() {
     ++interruptedCount;
   }
-
 
 
   /**

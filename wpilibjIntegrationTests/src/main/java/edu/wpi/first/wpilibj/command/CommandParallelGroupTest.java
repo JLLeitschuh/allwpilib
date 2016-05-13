@@ -7,22 +7,21 @@
 
 package edu.wpi.first.wpilibj.command;
 
-import static org.junit.Assert.*;
-
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.mocks.MockCommand;
-import edu.wpi.first.wpilibj.test.AbstractComsSetup;
+
+import static org.junit.Assert.fail;
 
 /**
- * Ported from the old CrioTest Classes
- *$
+ * Ported from the old CrioTest Classes $
+ *
  * @author Mitchell
  * @author Jonathan Leitschuh
  */
@@ -37,25 +36,29 @@ public class CommandParallelGroupTest extends AbstractCommandTest {
    * @throws java.lang.Exception
    */
   @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+  public static void setUpBeforeClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @AfterClass
-  public static void tearDownAfterClass() throws Exception {}
+  public static void tearDownAfterClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   /**
    * Simple Parallel Command Group With 2 commands one command terminates first

@@ -7,13 +7,13 @@
 
 package edu.wpi.first.wpilibj.command;
 
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.mocks.MockCommand;
@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.mocks.MockCommand;
 /**
  * @author Mitchell
  * @author jonathanleitschuh
- *
  */
 public class ButtonTest extends AbstractCommandTest {
   private static final Logger logger = Logger.getLogger(ButtonTest.class.getName());
@@ -38,13 +37,15 @@ public class ButtonTest extends AbstractCommandTest {
    * @throws java.lang.Exception
    */
   @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+  public static void setUpBeforeClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
    */
   @AfterClass
-  public static void tearDownAfterClass() throws Exception {}
+  public static void tearDownAfterClass() throws Exception {
+  }
 
   /**
    * @throws java.lang.Exception
@@ -59,7 +60,8 @@ public class ButtonTest extends AbstractCommandTest {
    * @throws java.lang.Exception
    */
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   /**
    * Simple Button Test

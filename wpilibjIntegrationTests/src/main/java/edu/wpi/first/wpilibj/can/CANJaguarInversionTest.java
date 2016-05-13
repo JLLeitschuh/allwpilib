@@ -7,11 +7,14 @@
 
 package edu.wpi.first.wpilibj.can;
 
+import org.junit.Test;
+
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Timer;
-import org.junit.Test;
+
 import static org.junit.Assert.assertTrue;
-import java.util.logging.Logger;
 
 /**
  * Created by Patrick Murphy on 3/30/15.
@@ -48,12 +51,10 @@ public class CANJaguarInversionTest extends AbstractCANTest {
   }
 
   /**
-   * Runs an inversion test To use set the jaguar to the proper
-   * mode(PercentVbus, voltage, speed)
-   *$
-   * @param setpoint the speed/voltage/percent to set the motor to
-   * @param delayTime the amount of time to delay between starting a motor and
-   *        checking the encoder
+   * Runs an inversion test To use set the jaguar to the proper mode(PercentVbus, voltage, speed) $
+   *
+   * @param setpoint  the speed/voltage/percent to set the motor to
+   * @param delayTime the amount of time to delay between starting a motor and checking the encoder
    */
   private void InversionTest(double setpoint, double delayTime) {
     CANJaguar jag = this.getME().getMotor();

@@ -9,12 +9,9 @@ package edu.wpi.first.wpilibj.fixtures;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public abstract class RelayCrossConnectFixture implements ITestFixture {
 
@@ -24,7 +21,6 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
 
   private boolean initialized = false;
   private boolean freed = false;
-
 
 
   protected abstract Relay giveRelay();

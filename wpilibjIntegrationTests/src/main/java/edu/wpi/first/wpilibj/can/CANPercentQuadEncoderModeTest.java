@@ -7,6 +7,20 @@
 
 package edu.wpi.first.wpilibj.can;
 
+import com.googlecode.junittoolbox.PollingWait;
+import com.googlecode.junittoolbox.RunnableAssert;
+
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Timer;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -15,23 +29,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import com.googlecode.junittoolbox.PollingWait;
-import com.googlecode.junittoolbox.RunnableAssert;
-
-import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.Timer;
-
 /**
  * @author jonathanleitschuh
- *
  */
 public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   private static final Logger logger = Logger.getLogger(CANPercentQuadEncoderModeTest.class
@@ -148,8 +147,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   }
 
   /**
-   * Test if we can limit the Jaguar to not rotate forwards when the fake limit
-   * switch is tripped
+   * Test if we can limit the Jaguar to not rotate forwards when the fake limit switch is tripped
    */
   @Test
   public void shouldNotRotateForwards_WhenFakeLimitSwitchForwardsIsTripped() {
@@ -251,8 +249,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   }
 
   /**
-   * Test if we can limit the Jaguar to only moving forwards with a fake limit
-   * switch.
+   * Test if we can limit the Jaguar to only moving forwards with a fake limit switch.
    */
   @Test
   public void shouldNotRotateReverse_WhenFakeLimitSwitchReversesIsTripped() {
@@ -302,8 +299,8 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
    * switch.
    */
   /**
-	 *$
-	 */
+   * $
+   */
   @Test
   public void shouldRotateForward_WhenFakeLimitSwitchReversesIsTripped() {
     // Given
@@ -368,7 +365,8 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
           @Override
           public boolean getAsBoolean() {
             return Math.abs((getME().getMotor().getPosition() - jagInitialPosition)
-                - (getME().getEncoder().get() - encoderInitialPosition)) < kEncoderPositionTolerance;
+                - (getME().getEncoder().get() - encoderInitialPosition)) <
+                kEncoderPositionTolerance;
           }
         });
 
@@ -391,7 +389,8 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
           @Override
           public boolean getAsBoolean() {
             return Math.abs((getME().getMotor().getPosition() - jagInitialPosition)
-                - (getME().getEncoder().get() - encoderInitialPosition)) < kEncoderPositionTolerance;
+                - (getME().getEncoder().get() - encoderInitialPosition)) <
+                kEncoderPositionTolerance;
           }
         });
     assertEquals(getME().getMotor().getPosition() - jagInitialPosition, getME().getEncoder().get()

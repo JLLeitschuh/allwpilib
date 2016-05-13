@@ -7,24 +7,21 @@
 
 package edu.wpi.first.wpilibj.smartdashboard;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.tables.ITable;
 
-import java.util.ArrayList;
-
 /**
- * The {@link SendableChooser} class is a useful tool for presenting a selection
- * of options to the {@link SmartDashboard}.
+ * The {@link SendableChooser} class is a useful tool for presenting a selection of options to the
+ * {@link SmartDashboard}.
  *
- * <p>
- * For instance, you may wish to be able to select between multiple autonomous
- * modes. You can do this by putting every possible {@link Command} you want to
- * run as an autonomous into a {@link SendableChooser} and then put it into the
- * {@link SmartDashboard} to have a list of options appear on the laptop. Once
- * autonomous starts, simply ask the {@link SendableChooser} what the selected
- * value is.
- * </p>
+ * <p> For instance, you may wish to be able to select between multiple autonomous modes. You can do
+ * this by putting every possible {@link Command} you want to run as an autonomous into a {@link
+ * SendableChooser} and then put it into the {@link SmartDashboard} to have a list of options appear
+ * on the laptop. Once autonomous starts, simply ask the {@link SendableChooser} what the selected
+ * value is. </p>
  *
  * @author Joe Grinstead
  */
@@ -53,13 +50,14 @@ public class SendableChooser implements Sendable {
   /**
    * Instantiates a {@link SendableChooser}.
    */
-  public SendableChooser() {}
+  public SendableChooser() {
+  }
 
   /**
-   * Adds the given object to the list of options. On the {@link SmartDashboard}
-   * on the desktop, the object will appear as the given name.
+   * Adds the given object to the list of options. On the {@link SmartDashboard} on the desktop, the
+   * object will appear as the given name.
    *
-   * @param name the name of the option
+   * @param name   the name of the option
    * @param object the option
    */
   public void addObject(String name, Object object) {
@@ -85,13 +83,12 @@ public class SendableChooser implements Sendable {
   }
 
   /**
-   * Add the given object to the list of options and marks it as the default.
-   * Functionally, this is very close to
-   * {@link SendableChooser#addObject(java.lang.String, java.lang.Object)
-   * addObject(...)} except that it will use this as the default option if none
-   * other is explicitly selected.
+   * Add the given object to the list of options and marks it as the default. Functionally, this is
+   * very close to {@link SendableChooser#addObject(java.lang.String, java.lang.Object)
+   * addObject(...)} except that it will use this as the default option if none other is explicitly
+   * selected.
    *
-   * @param name the name of the option
+   * @param name   the name of the option
    * @param object the option
    */
   public void addDefault(String name, Object object) {
@@ -107,9 +104,8 @@ public class SendableChooser implements Sendable {
   }
 
   /**
-   * Returns the selected option. If there is none selected, it will return the
-   * default. If there is none selected and no default, then it will return
-   * {@code null}.
+   * Returns the selected option. If there is none selected, it will return the default. If there is
+   * none selected and no default, then it will return {@code null}.
    *
    * @return the option selected
    */

@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.util.AllocationException;
 import edu.wpi.first.wpilibj.util.CheckedAllocationException;
 
 /**
- * Texas Instruments Jaguar Speed Controller as a CAN device.
- *$
+ * Texas Instruments Jaguar Speed Controller as a CAN device. $
+ *
  * @author Thomas Clark
  */
 public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
@@ -39,29 +39,29 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
 
   // Control Mode tags
   private static class EncoderTag {
-  };
+  }
 
   /**
-   * Sets an encoder as the speed reference only. <br>
-   * Passed as the "tag" when setting the control mode.
+   * Sets an encoder as the speed reference only. <br> Passed as the "tag" when setting the control
+   * mode.
    */
   public final static EncoderTag kEncoder = new EncoderTag();
 
   private static class QuadEncoderTag {
-  };
+  }
 
   /**
-   * Sets a quadrature encoder as the position and speed reference. <br>
-   * Passed as the "tag" when setting the control mode.
+   * Sets a quadrature encoder as the position and speed reference. <br> Passed as the "tag" when
+   * setting the control mode.
    */
   public final static QuadEncoderTag kQuadEncoder = new QuadEncoderTag();
 
   private static class PotentiometerTag {
-  };
+  }
 
   /**
-   * Sets a potentiometer as the position reference only. <br>
-   * Passed as the "tag" when setting the control mode.
+   * Sets a potentiometer as the position reference only. <br> Passed as the "tag" when setting the
+   * control mode.
    */
   public final static PotentiometerTag kPotentiometer = new PotentiometerTag();
 
@@ -75,12 +75,12 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
 
     @Override
     public boolean isPID() {
-        return this == Current || this == Speed || this == Position;
+      return this == Current || this == Speed || this == Position;
     }
 
     @Override
     public int getValue() {
-        return ordinal();
+      return ordinal();
     }
 
   }
@@ -100,13 +100,17 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * Determines how the Jaguar behaves when sending a zero signal.
    */
   public enum NeutralMode {
-    /** Use the NeutralMode that is set by the jumper wire on the CAN device */
+    /**
+     * Use the NeutralMode that is set by the jumper wire on the CAN device
+     */
     Jumper((byte) 0),
-    /** Stop the motor's rotation by applying a force. */
+    /**
+     * Stop the motor's rotation by applying a force.
+     */
     Brake((byte) 1),
     /**
-     * Do not attempt to stop the motor. Instead allow it to coast to a stop
-     * without applying resistance.
+     * Do not attempt to stop the motor. Instead allow it to coast to a stop without applying
+     * resistance.
      */
     Coast((byte) 2);
 
@@ -122,30 +126,28 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
       return null;
     }
 
-    private NeutralMode(byte value) {
+    NeutralMode(byte value) {
       this.value = value;
     }
   }
 
 
   /**
-   * Determines which sensor to use for position reference. Limit switches will
-   * always be used to limit the rotation. This can not be disabled.
+   * Determines which sensor to use for position reference. Limit switches will always be used to
+   * limit the rotation. This can not be disabled.
    */
   public enum LimitMode {
     /**
-     * Disables the soft position limits and only uses the limit switches to
-     * limit rotation.
-     *$
+     * Disables the soft position limits and only uses the limit switches to limit rotation. $
+     *
      * @see CANJaguar#getForwardLimitOK()
      * @see CANJaguar#getReverseLimitOK()
      */
     SwitchInputsOnly((byte) 0),
     /**
-     * Enables the soft position limits on the Jaguar. These will be used in
-     * addition to the limit switches. This does not disable the behavior of the
-     * limit switch input.
-     *$
+     * Enables the soft position limits on the Jaguar. These will be used in addition to the limit
+     * switches. This does not disable the behavior of the limit switch input. $
+     *
      * @see CANJaguar#configSoftPositionLimits(double, double)
      */
     SoftPositionLimits((byte) 1);
@@ -162,15 +164,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
       return null;
     }
 
-    private LimitMode(byte value) {
+    LimitMode(byte value) {
       this.value = value;
     }
   }
 
   /**
-   * Constructor for the CANJaguar device.<br>
-   * By default the device is configured in Percent mode. The control mode can
-   * be changed by calling one of the control modes listed below.
+   * Constructor for the CANJaguar device.<br> By default the device is configured in Percent mode.
+   * The control mode can be changed by calling one of the control modes listed below.
    *
    * @param deviceNumber The address of the Jaguar on the CAN bus.
    * @see CANJaguar#setCurrentMode(double, double, double)
@@ -259,7 +260,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
                     + m_deviceNumber
                     + " firmware "
                     + m_firmwareVersion
-                    + " is not FIRST approved (must be at least version 108 of the FIRST approved firmware)",
+                    + " is not FIRST approved (must be at least version 108 of the FIRST approved" +
+                    " firmware)",
                 false);
       }
       return;
@@ -267,8 +269,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Cancel periodic messages to the Jaguar, effectively disabling it. No other
-   * methods should be called after this is called.
+   * Cancel periodic messages to the Jaguar, effectively disabling it. No other methods should be
+   * called after this is called.
    */
   public void free() {
     allocated.free(m_deviceNumber - 1);
@@ -318,13 +320,10 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Get the recently set outputValue set point.
    *
-   * The scale and the units depend on the mode the Jaguar is in.<br>
-   * In percentVbus mode, the outputValue is from -1.0 to 1.0 (same as PWM
-   * Jaguar).<br>
-   * In voltage mode, the outputValue is in volts.<br>
-   * In current mode, the outputValue is in amps.<br>
-   * In speed mode, the outputValue is in rotations/minute.<br>
-   * In position mode, the outputValue is in rotations.<br>
+   * The scale and the units depend on the mode the Jaguar is in.<br> In percentVbus mode, the
+   * outputValue is from -1.0 to 1.0 (same as PWM Jaguar).<br> In voltage mode, the outputValue is
+   * in volts.<br> In current mode, the outputValue is in amps.<br> In speed mode, the outputValue
+   * is in rotations/minute.<br> In position mode, the outputValue is in rotations.<br>
    *
    * @return The most recently set outputValue set point.
    */
@@ -344,8 +343,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Get the difference between the setpoint and goal in closed loop modes.
    *
-   * Outside of position and velocity modes the return value of getError() has
-   * relatively little meaning.
+   * Outside of position and velocity modes the return value of getError() has relatively little
+   * meaning.
    *
    * @return The difference between the setpoint and the current position.
    */
@@ -357,17 +356,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Sets the output set-point value.
    *
-   * The scale and the units depend on the mode the Jaguar is in.<br>
-   * In percentVbus Mode, the outputValue is from -1.0 to 1.0 (same as PWM
-   * Jaguar).<br>
-   * In voltage Mode, the outputValue is in volts. <br>
-   * In current Mode, the outputValue is in amps.<br>
-   * In speed mode, the outputValue is in rotations/minute.<br>
-   * In position Mode, the outputValue is in rotations.
+   * The scale and the units depend on the mode the Jaguar is in.<br> In percentVbus Mode, the
+   * outputValue is from -1.0 to 1.0 (same as PWM Jaguar).<br> In voltage Mode, the outputValue is
+   * in volts. <br> In current Mode, the outputValue is in amps.<br> In speed mode, the outputValue
+   * is in rotations/minute.<br> In position Mode, the outputValue is in rotations.
    *
    * @param outputValue The set-point to sent to the motor controller.
-   * @param syncGroup The update group to add this set() to, pending
-   *        UpdateSyncGroup(). If 0, update immediately.
+   * @param syncGroup   The update group to add this set() to, pending UpdateSyncGroup(). If 0,
+   *                    update immediately.
    */
   @Override
   public void set(double outputValue, byte syncGroup) {
@@ -375,8 +371,9 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
     byte[] data = new byte[8];
     byte dataSize;
 
-    if (m_safetyHelper != null)
+    if (m_safetyHelper != null) {
       m_safetyHelper.feed();
+    }
 
     if (m_stopped) {
       enableControl();
@@ -430,13 +427,10 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Sets the output set-point value.
    *
-   * The scale and the units depend on the mode the Jaguar is in.<br>
-   * In percentVbus mode, the outputValue is from -1.0 to 1.0 (same as PWM
-   * Jaguar).<br>
-   * In voltage mode, the outputValue is in volts. <br>
-   * In current mode, the outputValue is in amps. <br>
-   * In speed mode, the outputValue is in rotations/minute.<br>
-   * In position mode, the outputValue is in rotations.
+   * The scale and the units depend on the mode the Jaguar is in.<br> In percentVbus mode, the
+   * outputValue is from -1.0 to 1.0 (same as PWM Jaguar).<br> In voltage mode, the outputValue is
+   * in volts. <br> In current mode, the outputValue is in amps. <br> In speed mode, the outputValue
+   * is in rotations/minute.<br> In position mode, the outputValue is in rotations.
    *
    * @param value The set-point to sent to the motor controller.
    */
@@ -460,9 +454,9 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Inverts the direction of rotation of the motor Only works in percentVbus,
-   * Speed, and Voltage mode
-   *$
+   * Inverts the direction of rotation of the motor Only works in percentVbus, Speed, and Voltage
+   * mode $
+   *
    * @param isInverted The state of inversion true is inverted
    */
   @Override
@@ -474,7 +468,6 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * Common interface for the inverting direction of a speed controller.
    *
    * @return isInverted The state of inversion, true is inverted.
-   *
    */
   @Override
   public boolean getInverted() {
@@ -482,9 +475,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Check all unverified params and make sure they're equal to their local
-   * cached versions. If a value isn't available, it gets requested. If a value
-   * doesn't match up, it gets set again.
+   * Check all unverified params and make sure they're equal to their local cached versions. If a
+   * value isn't available, it gets requested. If a value doesn't match up, it gets set again.
    */
   protected void verify() {
     byte[] data = new byte[8];
@@ -512,7 +504,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
         m_maxOutputVoltageVerified = false;
         m_faultTimeVerified = false;
 
-        if (m_controlMode == JaguarControlMode.PercentVbus || m_controlMode == JaguarControlMode.Voltage) {
+        if (m_controlMode == JaguarControlMode.PercentVbus || m_controlMode == JaguarControlMode
+            .Voltage) {
           m_voltageRampRateVerified = false;
         } else {
           m_pVerified = false;
@@ -528,7 +521,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
         // Remove any old values from netcomms. Otherwise, parameters
         // are incorrectly marked as verified based on stale messages.
         int[] messages =
-            new int[] {CANJNI.LM_API_SPD_REF, CANJNI.LM_API_POS_REF, CANJNI.LM_API_SPD_PC,
+            new int[]{CANJNI.LM_API_SPD_REF, CANJNI.LM_API_POS_REF, CANJNI.LM_API_SPD_PC,
                 CANJNI.LM_API_POS_PC, CANJNI.LM_API_ICTRL_PC, CANJNI.LM_API_SPD_IC,
                 CANJNI.LM_API_POS_IC, CANJNI.LM_API_ICTRL_IC, CANJNI.LM_API_SPD_DC,
                 CANJNI.LM_API_POS_DC, CANJNI.LM_API_ICTRL_DC, CANJNI.LM_API_CFG_ENC_LINES,
@@ -946,7 +939,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * @param reference Specify a speed reference.
    */
   private void setSpeedReference(int reference) {
-    sendMessage(CANJNI.LM_API_SPD_REF, new byte[] {(byte) reference}, 1);
+    sendMessage(CANJNI.LM_API_SPD_REF, new byte[]{(byte) reference}, 1);
 
     m_speedReference = reference;
     m_speedRefVerified = false;
@@ -955,13 +948,13 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Set the reference source device for position controller mode.
    *
-   * Choose between using and encoder and using a potentiometer as the source of
-   * position feedback when in position control mode.
+   * Choose between using and encoder and using a potentiometer as the source of position feedback
+   * when in position control mode.
    *
    * @param reference Specify a position reference.
    */
   private void setPositionReference(int reference) {
-    sendMessage(CANJNI.LM_API_POS_REF, new byte[] {(byte) reference}, 1);
+    sendMessage(CANJNI.LM_API_POS_REF, new byte[]{(byte) reference}, 1);
 
     m_positionReference = reference;
     m_posRefVerified = false;
@@ -1079,7 +1072,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * @return The proportional gain.
    */
   public double getP() {
-    if (m_controlMode.equals(JaguarControlMode.PercentVbus) || m_controlMode.equals(JaguarControlMode.Voltage)) {
+    if (m_controlMode.equals(JaguarControlMode.PercentVbus) || m_controlMode.equals
+        (JaguarControlMode.Voltage)) {
       throw new IllegalStateException("PID does not apply in Percent or Voltage control modes");
     }
     return m_p;
@@ -1091,7 +1085,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * @return The integral gain.
    */
   public double getI() {
-    if (m_controlMode.equals(JaguarControlMode.PercentVbus) || m_controlMode.equals(JaguarControlMode.Voltage)) {
+    if (m_controlMode.equals(JaguarControlMode.PercentVbus) || m_controlMode.equals
+        (JaguarControlMode.Voltage)) {
       throw new IllegalStateException("PID does not apply in Percent or Voltage control modes");
     }
     return m_i;
@@ -1103,7 +1098,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * @return The derivative gain.
    */
   public double getD() {
-    if (m_controlMode.equals(JaguarControlMode.PercentVbus) || m_controlMode.equals(JaguarControlMode.Voltage)) {
+    if (m_controlMode.equals(JaguarControlMode.PercentVbus) || m_controlMode.equals
+        (JaguarControlMode.Voltage)) {
       throw new IllegalStateException("PID does not apply in Percent or Voltage control modes");
     }
     return m_d;
@@ -1112,12 +1108,12 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Enable the closed loop controller.
    *
-   * Start actually controlling the output based on the feedback. If starting a
-   * position controller with an encoder reference, use the
-   * encoderInitialPosition parameter to initialize the encoder state.
+   * Start actually controlling the output based on the feedback. If starting a position controller
+   * with an encoder reference, use the encoderInitialPosition parameter to initialize the encoder
+   * state.
    *
-   * @param encoderInitialPosition Encoder position to set if position with
-   *        encoder reference. Ignored otherwise.
+   * @param encoderInitialPosition Encoder position to set if position with encoder reference.
+   *                               Ignored otherwise.
    */
   public void enableControl(double encoderInitialPosition) {
     switch (m_controlMode) {
@@ -1150,8 +1146,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Enable the closed loop controller.
    *
-   * Start actually controlling the output based on the feedback. This is the
-   * same as calling
+   * Start actually controlling the output based on the feedback. This is the same as calling
    * <code>CANJaguar.enableControl(double encoderInitialPosition)</code> with
    * <code>encoderInitialPosition</code> set to <code>0.0</code>
    */
@@ -1192,9 +1187,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage as a percentage of the bus voltage
-   * without any position or speed feedback.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
+   * Enable controlling the motor voltage as a percentage of the bus voltage without any position or
+   * speed feedback.<br> After calling this you must call {@link CANJaguar#enableControl()} or
    * {@link CANJaguar#enableControl(double)} to enable the device.
    */
   public void setPercentMode() {
@@ -1204,12 +1198,11 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage as a percentage of the bus voltage,
-   * and enable speed sensing from a non-quadrature encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor voltage as a percentage of the bus voltage, and enable speed
+   * sensing from a non-quadrature encoder.<br> After calling this you must call {@link
+   * CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)} to enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kEncoder}
+   * @param tag         The constant {@link CANJaguar#kEncoder}
    * @param codesPerRev The counts per revolution on the encoder
    */
   public void setPercentMode(EncoderTag tag, int codesPerRev) {
@@ -1220,12 +1213,11 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage as a percentage of the bus voltage,
-   * and enable position and speed sensing from a quadrature encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor voltage as a percentage of the bus voltage, and enable position
+   * and speed sensing from a quadrature encoder.<br> After calling this you must call {@link
+   * CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)} to enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kQuadEncoder}
+   * @param tag         The constant {@link CANJaguar#kQuadEncoder}
    * @param codesPerRev The counts per revolution on the encoder
    */
   public void setPercentMode(QuadEncoderTag tag, int codesPerRev) {
@@ -1236,10 +1228,9 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage as a percentage of the bus voltage,
-   * and enable position sensing from a potentiometer and no speed feedback.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor voltage as a percentage of the bus voltage, and enable position
+   * sensing from a potentiometer and no speed feedback.<br> After calling this you must call {@link
+   * CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)} to enable the device.
    *
    * @param tag The constant {@link CANJaguar#kPotentiometer}
    */
@@ -1251,9 +1242,9 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor current with a PID loop.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor current with a PID loop.<br> After calling this you must call
+   * {@link CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)} to enable the
+   * device.
    *
    * @param p The proportional gain of the Jaguar's PID controller.
    * @param i The integral gain of the Jaguar's PID controller.
@@ -1267,15 +1258,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor current with a PID loop, and enable speed
-   * sensing from a non-quadrature encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor current with a PID loop, and enable speed sensing from a
+   * non-quadrature encoder.<br> After calling this you must call {@link CANJaguar#enableControl()}
+   * or {@link CANJaguar#enableControl(double)} to enable the device.
    *
    * @param tag The constant {@link CANJaguar#kEncoder}
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
+   * @param p   The proportional gain of the Jaguar's PID controller.
+   * @param i   The integral gain of the Jaguar's PID controller.
+   * @param d   The differential gain of the Jaguar's PID controller.
    */
   public void setCurrentMode(EncoderTag tag, int codesPerRev, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Current);
@@ -1286,15 +1276,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor current with a PID loop, and enable speed and
-   * position sensing from a quadrature encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor current with a PID loop, and enable speed and position sensing
+   * from a quadrature encoder.<br> After calling this you must call {@link
+   * CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)} to enable the device.
    *
    * @param tag The constant {@link CANJaguar#kQuadEncoder}
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
+   * @param p   The proportional gain of the Jaguar's PID controller.
+   * @param i   The integral gain of the Jaguar's PID controller.
+   * @param d   The differential gain of the Jaguar's PID controller.
    */
   public void setCurrentMode(QuadEncoderTag tag, int codesPerRev, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Current);
@@ -1305,15 +1294,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor current with a PID loop, and enable position
-   * sensing from a potentiometer.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor current with a PID loop, and enable position sensing from a
+   * potentiometer.<br> After calling this you must call {@link CANJaguar#enableControl()} or {@link
+   * CANJaguar#enableControl(double)} to enable the device.
    *
    * @param tag The constant {@link CANJaguar#kPotentiometer}
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
+   * @param p   The proportional gain of the Jaguar's PID controller.
+   * @param i   The integral gain of the Jaguar's PID controller.
+   * @param d   The differential gain of the Jaguar's PID controller.
    */
   public void setCurrentMode(PotentiometerTag tag, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Current);
@@ -1324,16 +1312,15 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the speed with a feedback loop from a non-quadrature
-   * encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the speed with a feedback loop from a non-quadrature encoder.<br> After
+   * calling this you must call {@link CANJaguar#enableControl()} or {@link
+   * CANJaguar#enableControl(double)} to enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kEncoder}
+   * @param tag         The constant {@link CANJaguar#kEncoder}
    * @param codesPerRev The counts per revolution on the encoder
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
+   * @param p           The proportional gain of the Jaguar's PID controller.
+   * @param i           The integral gain of the Jaguar's PID controller.
+   * @param d           The differential gain of the Jaguar's PID controller.
    */
   public void setSpeedMode(EncoderTag tag, int codesPerRev, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Speed);
@@ -1344,16 +1331,15 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the speed with a feedback loop from a quadrature
-   * encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the speed with a feedback loop from a quadrature encoder.<br> After calling
+   * this you must call {@link CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)}
+   * to enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kQuadEncoder}
+   * @param tag         The constant {@link CANJaguar#kQuadEncoder}
    * @param codesPerRev The counts per revolution on the encoder
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
+   * @param p           The proportional gain of the Jaguar's PID controller.
+   * @param i           The integral gain of the Jaguar's PID controller.
+   * @param d           The differential gain of the Jaguar's PID controller.
    */
   public void setSpeedMode(QuadEncoderTag tag, int codesPerRev, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Speed);
@@ -1364,16 +1350,15 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the position with a feedback loop using an encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the position with a feedback loop using an encoder.<br> After calling this
+   * you must call {@link CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)} to
+   * enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kQuadEncoder}
+   * @param tag         The constant {@link CANJaguar#kQuadEncoder}
    * @param codesPerRev The counts per revolution on the encoder
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
-   *
+   * @param p           The proportional gain of the Jaguar's PID controller.
+   * @param i           The integral gain of the Jaguar's PID controller.
+   * @param d           The differential gain of the Jaguar's PID controller.
    */
   public void setPositionMode(QuadEncoderTag tag, int codesPerRev, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Position);
@@ -1383,14 +1368,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the position with a feedback loop using a potentiometer.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the position with a feedback loop using a potentiometer.<br> After calling
+   * this you must call {@link CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)}
+   * to enable the device.
    *
    * @param tag The constant {@link CANJaguar#kPotentiometer}
-   * @param p The proportional gain of the Jaguar's PID controller.
-   * @param i The integral gain of the Jaguar's PID controller.
-   * @param d The differential gain of the Jaguar's PID controller.
+   * @param p   The proportional gain of the Jaguar's PID controller.
+   * @param i   The integral gain of the Jaguar's PID controller.
+   * @param d   The differential gain of the Jaguar's PID controller.
    */
   public void setPositionMode(PotentiometerTag tag, double p, double i, double d) {
     changeControlMode(JaguarControlMode.Position);
@@ -1400,10 +1385,9 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage without any position or speed
-   * feedback.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor voltage without any position or speed feedback.<br> After calling
+   * this you must call {@link CANJaguar#enableControl()} or {@link CANJaguar#enableControl(double)}
+   * to enable the device.
    */
   public void setVoltageMode() {
     changeControlMode(JaguarControlMode.Voltage);
@@ -1412,12 +1396,11 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage with speed feedback from a
-   * non-quadrature encoder and no position feedback.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
+   * Enable controlling the motor voltage with speed feedback from a non-quadrature encoder and no
+   * position feedback.<br> After calling this you must call {@link CANJaguar#enableControl()} or
    * {@link CANJaguar#enableControl(double)} to enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kEncoder}
+   * @param tag         The constant {@link CANJaguar#kEncoder}
    * @param codesPerRev The counts per revolution on the encoder
    */
   public void setVoltageMode(EncoderTag tag, int codesPerRev) {
@@ -1428,12 +1411,11 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage with position and speed feedback from
-   * a quadrature encoder.<br>
-   * After calling this you must call {@link CANJaguar#enableControl()} or
-   * {@link CANJaguar#enableControl(double)} to enable the device.
+   * Enable controlling the motor voltage with position and speed feedback from a quadrature
+   * encoder.<br> After calling this you must call {@link CANJaguar#enableControl()} or {@link
+   * CANJaguar#enableControl(double)} to enable the device.
    *
-   * @param tag The constant {@link CANJaguar#kQuadEncoder}
+   * @param tag         The constant {@link CANJaguar#kQuadEncoder}
    * @param codesPerRev The counts per revolution on the encoder
    */
   public void setVoltageMode(QuadEncoderTag tag, int codesPerRev) {
@@ -1444,8 +1426,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Enable controlling the motor voltage with position feedback from a
-   * potentiometer and no speed feedback.
+   * Enable controlling the motor voltage with position feedback from a potentiometer and no speed
+   * feedback.
    *
    * @param tag The constant {@link CANJaguar#kPotentiometer}
    */
@@ -1457,16 +1439,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Used internally. In order to set the control mode see the methods listed
-   * below.
+   * Used internally. In order to set the control mode see the methods listed below.
    *
    * Change the control mode of this Jaguar object.
    *
-   * After changing modes, configure any PID constants or other settings needed
-   * and then EnableControl() to actually change the mode on the Jaguar.
+   * After changing modes, configure any PID constants or other settings needed and then
+   * EnableControl() to actually change the mode on the Jaguar.
    *
    * @param controlMode The new mode.
-   *
    * @see CANJaguar#setCurrentMode(double, double, double)
    * @see CANJaguar#setCurrentMode(PotentiometerTag, double, double, double)
    * @see CANJaguar#setCurrentMode(EncoderTag, int, double, double, double)
@@ -1505,7 +1485,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   public void setControlMode(int mode) {
-      changeControlMode(JaguarControlMode.values()[mode]);
+    changeControlMode(JaguarControlMode.values()[mode]);
   }
 
   /**
@@ -1555,8 +1535,7 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Get the position of the encoder or potentiometer.
    *
-   * @return The position of the motor in rotations based on the configured
-   *         feedback.
+   * @return The position of the motor in rotations based on the configured feedback.
    * @see CANJaguar#configPotentiometerTurns(int)
    * @see CANJaguar#configEncoderCodesPerRev(int)
    */
@@ -1617,12 +1596,10 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * set the maximum voltage change rate.
    *
-   * When in PercentVbus or Voltage output mode, the rate at which the voltage
-   * changes can be limited to reduce current spikes. set this to 0.0 to disable
-   * rate limiting.
+   * When in PercentVbus or Voltage output mode, the rate at which the voltage changes can be
+   * limited to reduce current spikes. set this to 0.0 to disable rate limiting.
    *
-   * @param rampRate The maximum rate of voltage change in Percent Voltage mode
-   *        in V/s.
+   * @param rampRate The maximum rate of voltage change in Percent Voltage mode in V/s.
    */
   public void setVoltageRampRate(double rampRate) {
     byte[] data = new byte[8];
@@ -1665,16 +1642,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Configure what the controller does to the H-Bridge when neutral (not
-   * driving the output).
+   * Configure what the controller does to the H-Bridge when neutral (not driving the output).
    *
    * This allows you to override the jumper configuration for brake or coast.
    *
-   * @param mode Select to use the jumper setting or to override it to coast or
-   *        brake.
+   * @param mode Select to use the jumper setting or to override it to coast or brake.
    */
   public void configNeutralMode(NeutralMode mode) {
-    sendMessage(CANJNI.LM_API_CFG_BRAKE_COAST, new byte[] {mode.value}, 1);
+    sendMessage(CANJNI.LM_API_CFG_BRAKE_COAST, new byte[]{mode.value}, 1);
 
     m_neutralMode = mode;
     m_neutralModeVerified = false;
@@ -1698,8 +1673,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Configure the number of turns on the potentiometer.
    *
-   * There is no special support for continuous turn potentiometers. Only
-   * integer numbers of turns are supported.
+   * There is no special support for continuous turn potentiometers. Only integer numbers of turns
+   * are supported.
    *
    * @param turns The number of turns of the potentiometer
    */
@@ -1716,15 +1691,14 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Configure Soft Position Limits when in Position Controller mode.<br>
    *
-   * When controlling position, you can add additional limits on top of the
-   * limit switch inputs that are based on the position feedback. If the
-   * position limit is reached or the switch is opened, that direction will be
-   * disabled.
+   * When controlling position, you can add additional limits on top of the limit switch inputs that
+   * are based on the position feedback. If the position limit is reached or the switch is opened,
+   * that direction will be disabled.
    *
-   * @param forwardLimitPosition The position that, if exceeded, will disable
-   *        the forward direction.
-   * @param reverseLimitPosition The position that, if exceeded, will disable
-   *        the reverse direction.
+   * @param forwardLimitPosition The position that, if exceeded, will disable the forward
+   *                             direction.
+   * @param reverseLimitPosition The position that, if exceeded, will disable the reverse
+   *                             direction.
    */
   public void configSoftPositionLimits(double forwardLimitPosition, double reverseLimitPosition) {
     configLimitMode(LimitMode.SoftPositionLimits);
@@ -1744,26 +1718,25 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Set the limit mode for position control mode.<br>
    *
-   * Use {@link #configSoftPositionLimits(double, double)} or
-   * {@link #disableSoftPositionLimits()} to set this automatically.
-   *$
-   * @param mode The {@link LimitMode} to use to limit the rotation of the
-   *        device.
+   * Use {@link #configSoftPositionLimits(double, double)} or {@link #disableSoftPositionLimits()}
+   * to set this automatically. $
+   *
+   * @param mode The {@link LimitMode} to use to limit the rotation of the device.
    * @see LimitMode#SwitchInputsOnly
    * @see LimitMode#SoftPositionLimits
    */
   public void configLimitMode(LimitMode mode) {
-    sendMessage(CANJNI.LM_API_CFG_LIMIT_MODE, new byte[] {mode.value}, 1);
+    sendMessage(CANJNI.LM_API_CFG_LIMIT_MODE, new byte[]{mode.value}, 1);
   }
 
   /**
    * Set the position that, if exceeded, will disable the forward direction.
    *
-   * Use {@link #configSoftPositionLimits(double, double)} to set this and the
-   * {@link LimitMode} automatically.
-   *$
-   * @param forwardLimitPosition The position that, if exceeded, will disable
-   *        the forward direction.
+   * Use {@link #configSoftPositionLimits(double, double)} to set this and the {@link LimitMode}
+   * automatically. $
+   *
+   * @param forwardLimitPosition The position that, if exceeded, will disable the forward
+   *                             direction.
    */
   public void configForwardLimit(double forwardLimitPosition) {
     byte[] data = new byte[8];
@@ -1779,11 +1752,11 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Set the position that, if exceeded, will disable the reverse direction.
    *
-   * Use {@link #configSoftPositionLimits(double, double)} to set this and the
-   * {@link LimitMode} automatically.
-   *$
-   * @param reverseLimitPosition The position that, if exceeded, will disable
-   *        the reverse direction.
+   * Use {@link #configSoftPositionLimits(double, double)} to set this and the {@link LimitMode}
+   * automatically. $
+   *
+   * @param reverseLimitPosition The position that, if exceeded, will disable the reverse
+   *                             direction.
    */
   public void configReverseLimit(double reverseLimitPosition) {
     byte[] data = new byte[8];
@@ -1799,8 +1772,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Configure the maximum voltage that the Jaguar will ever output.
    *
-   * This can be used to limit the maximum output voltage in all modes so that
-   * motors which cannot withstand full bus voltage can be used safely.
+   * This can be used to limit the maximum output voltage in all modes so that motors which cannot
+   * withstand full bus voltage can be used safely.
    *
    * @param voltage The maximum voltage output by the Jaguar.
    */
@@ -1815,21 +1788,21 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Configure how long the Jaguar waits in the case of a fault before resuming
-   * operation.
+   * Configure how long the Jaguar waits in the case of a fault before resuming operation.
    *
-   * Faults include over temerature, over current, and bus under voltage. The
-   * default is 3.0 seconds, but can be reduced to as low as 0.5 seconds.
+   * Faults include over temerature, over current, and bus under voltage. The default is 3.0
+   * seconds, but can be reduced to as low as 0.5 seconds.
    *
    * @param faultTime The time to wait before resuming operation, in seconds.
    */
   public void configFaultTime(float faultTime) {
     byte[] data = new byte[8];
 
-    if (faultTime < 0.5f)
+    if (faultTime < 0.5f) {
       faultTime = 0.5f;
-    else if (faultTime > 3.0f)
+    } else if (faultTime > 3.0f) {
       faultTime = 3.0f;
+    }
 
     int dataSize = packINT16(data, (short) (faultTime * 1000.0));
     sendMessage(CANJNI.LM_API_CFG_FAULT_TIME, data, dataSize);
@@ -1943,12 +1916,11 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Send a message to the Jaguar.
    *
-   * @param messageID The messageID to be used on the CAN bus (device number is
-   *        added internally)
-   * @param data The up to 8 bytes of data to be sent with the message
-   * @param dataSize Specify how much of the data in "data" to send
-   * @param period If positive, tell Network Communications to send the message
-   *        every "period" milliseconds.
+   * @param messageID The messageID to be used on the CAN bus (device number is added internally)
+   * @param data      The up to 8 bytes of data to be sent with the message
+   * @param dataSize  Specify how much of the data in "data" to send
+   * @param period    If positive, tell Network Communications to send the message every "period"
+   *                  milliseconds.
    */
   protected void sendMessage(int messageID, byte[] data, int dataSize, int period) {
     sendMessageHelper(messageID | m_deviceNumber, data, dataSize, period);
@@ -1957,10 +1929,9 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   /**
    * Send a message to the Jaguar, non-periodically
    *
-   * @param messageID The messageID to be used on the CAN bus (device number is
-   *        added internally)
-   * @param data The up to 8 bytes of data to be sent with the message
-   * @param dataSize Specify how much of the data in "data" to send
+   * @param messageID The messageID to be used on the CAN bus (device number is added internally)
+   * @param data      The up to 8 bytes of data to be sent with the message
+   * @param dataSize  Specify how much of the data in "data" to send
    */
   protected void sendMessage(int messageID, byte[] data, int dataSize) {
     sendMessage(messageID, data, dataSize, CANJNI.CAN_SEND_PERIOD_NO_REPEAT);
@@ -1970,8 +1941,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    * Request a message from the Jaguar, but don't wait for it to arrive.
    *
    * @param messageID The message to request
-   * @param period If positive, tell Network Communications to request the
-   *        message every "period" milliseconds.
+   * @param period    If positive, tell Network Communications to request the message every "period"
+   *                  milliseconds.
    */
   protected void requestMessage(int messageID, int period) {
     sendMessageHelper(messageID | m_deviceNumber, null, 0, period);
@@ -1991,10 +1962,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
    *
    * Jaguar always generates a message with the same message ID when replying.
    *
-   * @param messageID The messageID to read from the CAN bus (device number is
-   *        added internally)
-   * @param data The up to 8 bytes of data that was received with the message
-   *
+   * @param messageID The messageID to read from the CAN bus (device number is added internally)
+   * @param data      The up to 8 bytes of data that was received with the message
    * @throws CANMessageNotFoundException if there's not new message available
    */
   protected void getMessage(int messageID, int messageMask, byte[] data)
@@ -2030,19 +1999,19 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
     // Message 0 returns bus voltage, output voltage, output current, and
     // temperature.
     final byte[] kMessage0Data =
-        new byte[] {CANJNI.LM_PSTAT_VOLTBUS_B0, CANJNI.LM_PSTAT_VOLTBUS_B1,
+        new byte[]{CANJNI.LM_PSTAT_VOLTBUS_B0, CANJNI.LM_PSTAT_VOLTBUS_B1,
             CANJNI.LM_PSTAT_VOLTOUT_B0, CANJNI.LM_PSTAT_VOLTOUT_B1, CANJNI.LM_PSTAT_CURRENT_B0,
             CANJNI.LM_PSTAT_CURRENT_B1, CANJNI.LM_PSTAT_TEMP_B0, CANJNI.LM_PSTAT_TEMP_B1};
 
     // Message 1 returns position and speed
     final byte[] kMessage1Data =
-        new byte[] {CANJNI.LM_PSTAT_POS_B0, CANJNI.LM_PSTAT_POS_B1, CANJNI.LM_PSTAT_POS_B2,
+        new byte[]{CANJNI.LM_PSTAT_POS_B0, CANJNI.LM_PSTAT_POS_B1, CANJNI.LM_PSTAT_POS_B2,
             CANJNI.LM_PSTAT_POS_B3, CANJNI.LM_PSTAT_SPD_B0, CANJNI.LM_PSTAT_SPD_B1,
             CANJNI.LM_PSTAT_SPD_B2, CANJNI.LM_PSTAT_SPD_B3};
 
     // Message 2 returns limits and faults
     final byte[] kMessage2Data =
-        new byte[] {CANJNI.LM_PSTAT_LIMIT_CLR, CANJNI.LM_PSTAT_FAULT, CANJNI.LM_PSTAT_END,
+        new byte[]{CANJNI.LM_PSTAT_LIMIT_CLR, CANJNI.LM_PSTAT_FAULT, CANJNI.LM_PSTAT_END,
             (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0,};
 
     dataSize = packINT16(data, (short) (kSendMessagePeriod));
@@ -2068,10 +2037,10 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
     try {
       getMessage(CANJNI.LM_API_PSTAT_DATA_S0, CANJNI.CAN_MSGID_FULL_M, data);
 
-      m_busVoltage = unpackFXP8_8(new byte[] {data[0], data[1]});
-      m_outputVoltage = unpackPercentage(new byte[] {data[2], data[3]}) * m_busVoltage;
-      m_outputCurrent = unpackFXP8_8(new byte[] {data[4], data[5]});
-      m_temperature = unpackFXP8_8(new byte[] {data[6], data[7]});
+      m_busVoltage = unpackFXP8_8(new byte[]{data[0], data[1]});
+      m_outputVoltage = unpackPercentage(new byte[]{data[2], data[3]}) * m_busVoltage;
+      m_outputCurrent = unpackFXP8_8(new byte[]{data[4], data[5]});
+      m_temperature = unpackFXP8_8(new byte[]{data[6], data[7]});
 
       m_receivedStatusMessage0 = true;
     } catch (CANMessageNotFoundException e) {
@@ -2081,8 +2050,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
     try {
       getMessage(CANJNI.LM_API_PSTAT_DATA_S1, CANJNI.CAN_MSGID_FULL_M, data);
 
-      m_position = unpackFXP16_16(new byte[] {data[0], data[1], data[2], data[3]});
-      m_speed = unpackFXP16_16(new byte[] {data[4], data[5], data[6], data[7]});
+      m_position = unpackFXP16_16(new byte[]{data[0], data[1], data[2], data[3]});
+      m_speed = unpackFXP16_16(new byte[]{data[4], data[5], data[6], data[7]});
 
       m_receivedStatusMessage1 = true;
     } catch (CANMessageNotFoundException e) {
@@ -2126,10 +2095,12 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   private static final byte packPercentage(byte[] buffer, double value) {
-    if (value < -1.0)
+    if (value < -1.0) {
       value = -1.0;
-    if (value > 1.0)
+    }
+    if (value > 1.0) {
       value = 1.0;
+    }
     short intValue = (short) (value * 32767.0);
     swap16(intValue, buffer);
     return 2;
@@ -2158,8 +2129,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Unpack 16-bit data from a buffer in little-endian byte order
-   *$
+   * Unpack 16-bit data from a buffer in little-endian byte order $
+   *
    * @param buffer The buffer to unpack from
    * @param offset The offset into he buffer to unpack
    * @return The data that was unpacked
@@ -2169,8 +2140,8 @@ public class CANJaguar implements MotorSafety, PIDOutput, CANSpeedController {
   }
 
   /**
-   * Unpack 32-bit data from a buffer in little-endian byte order
-   *$
+   * Unpack 32-bit data from a buffer in little-endian byte order $
+   *
    * @param buffer The buffer to unpack from
    * @param offset The offset into he buffer to unpack
    * @return The data that was unpacked

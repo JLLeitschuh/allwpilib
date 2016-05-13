@@ -14,11 +14,10 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * A class to represent the a physical Camera with two servos (tilt and pan)
- * designed to test to see if the gyroscope is operating normally.
+ * A class to represent the a physical Camera with two servos (tilt and pan) designed to test to see
+ * if the gyroscope is operating normally.
  *
  * @author Jonathan Leitschuh
- *
  */
 public abstract class TiltPanCameraFixture implements ITestFixture {
   public static final Logger logger = Logger.getLogger(TiltPanCameraFixture.class.getName());
@@ -42,7 +41,8 @@ public abstract class TiltPanCameraFixture implements ITestFixture {
   /**
    * Constructs the TiltPanCamera
    */
-  public TiltPanCameraFixture() {}
+  public TiltPanCameraFixture() {
+  }
 
   @Override
   public boolean setup() {
@@ -65,8 +65,9 @@ public abstract class TiltPanCameraFixture implements ITestFixture {
 
   @Override
   public boolean reset() {
-	if(gyro != null)
-    gyro.reset();
+    if (gyro != null) {
+      gyro.reset();
+    }
     return true;
   }
 
@@ -91,6 +92,7 @@ public abstract class TiltPanCameraFixture implements ITestFixture {
     gyroParam = giveGyroParam(center, offset);
     gyroParam.reset();
   }
+
   public void freeGyro() {
     gyro.free();
     gyro = null;
@@ -102,13 +104,13 @@ public abstract class TiltPanCameraFixture implements ITestFixture {
     tilt = null;
     pan.free();
     pan = null;
-    if(gyro !=null){//in case not freed during gyro tests
-    	gyro.free();
-    	gyro = null;
+    if (gyro != null) {//in case not freed during gyro tests
+      gyro.free();
+      gyro = null;
     }
-    if(gyroParam != null){//in case gyro tests failed before getting to this point
-    gyroParam.free();
-    gyroParam = null;
+    if (gyroParam != null) {//in case gyro tests failed before getting to this point
+      gyroParam.free();
+      gyroParam = null;
     }
     return true;
   }

@@ -7,12 +7,6 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,9 +15,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.fixtures.FilterNoiseFixture;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
+
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(Parameterized.class)
@@ -39,16 +39,17 @@ public class FilterNoiseTest extends AbstractComsSetup {
 
   public FilterNoiseTest(FilterNoiseFixture<?> mef) {
     logger.fine("Constructor with: " + mef.getType());
-    if (me != null && !me.equals(mef))
+    if (me != null && !me.equals(mef)) {
       me.teardown();
+    }
     me = mef;
   }
 
   @Parameters(name = "{index}: {0}")
   public static Collection<FilterNoiseFixture<?>[]> generateData() {
-    return Arrays.asList(new FilterNoiseFixture<?>[][] {
-                         {TestBench.getInstance().getSinglePoleIIRNoiseFixture()},
-                         {TestBench.getInstance().getMovAvgNoiseFixture()}});
+    return Arrays.asList(new FilterNoiseFixture<?>[][]{
+        {TestBench.getInstance().getSinglePoleIIRNoiseFixture()},
+        {TestBench.getInstance().getMovAvgNoiseFixture()}});
   }
 
   @Before
@@ -86,6 +87,7 @@ public class FilterNoiseTest extends AbstractComsSetup {
       noiseGenError += Math.abs(noise.get() - theoryData);
     }
 
-    assertTrue(me.getType() + " should have reduced noise accumulation from " + noiseGenError + " but failed. The filter error was " + filterError, noiseGenError > filterError);
+    assertTrue(me.getType() + " should have reduced noise accumulation from " + noiseGenError + "" +
+        " but failed. The filter error was " + filterError, noiseGenError > filterError);
   }
 }

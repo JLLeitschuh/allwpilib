@@ -8,8 +8,7 @@
 package edu.wpi.first.wpilibj;
 
 /**
- * This is a simple circular buffer so we don't need to "bucket brigade" copy
- * old values.
+ * This is a simple circular buffer so we don't need to "bucket brigade" copy old values.
  */
 public class CircularBuffer {
   private double[] m_data;
@@ -24,8 +23,8 @@ public class CircularBuffer {
   }
 
   /**
-   * Push new value onto front of the buffer. The value at the back is
-   * overwritten if the buffer is full.
+   * Push new value onto front of the buffer. The value at the back is overwritten if the buffer is
+   * full.
    */
   public void pushFront(double value) {
     if (m_data.length == 0) {
@@ -42,8 +41,8 @@ public class CircularBuffer {
   }
 
   /**
-   * Push new value onto back of the buffer. The value at the front is
-   * overwritten if the buffer is full.
+   * Push new value onto back of the buffer. The value at the front is overwritten if the buffer is
+   * full.
    */
   public void pushBack(double value) {
     if (m_data.length == 0) {

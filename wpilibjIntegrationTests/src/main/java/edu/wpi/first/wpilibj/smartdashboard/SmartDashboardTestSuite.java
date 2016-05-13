@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.test.AbstractTestSuite;
 
 /**
  * @author jonathanleitschuh
- *
  */
 @RunWith(Suite.class)
 @SuiteClasses({SmartDashboardTest.class})

@@ -18,12 +18,10 @@ import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
 
 /**
- * Provides a base implementation for CAN Tests that forces a test of a
- * particular mode to provide tests of a certain type. This also allows for a
- * standardized base setup for each test.
- *$
- * @author jonathanleitschuh
+ * Provides a base implementation for CAN Tests that forces a test of a particular mode to provide
+ * tests of a certain type. This also allows for a standardized base setup for each test. $
  *
+ * @author jonathanleitschuh
  */
 public abstract class AbstractCANTest extends AbstractComsSetup {
   public static final double kMotorStopTime = 2;
@@ -36,22 +34,21 @@ public abstract class AbstractCANTest extends AbstractComsSetup {
   public static final double kStartupTime = 0.50;
   public static final double kEncoderPositionTolerance = .75;
   public static final double kPotentiometerPositionTolerance = 10.0 / 360.0; // +/-10
-                                                                             // degrees
+  // degrees
   public static final double kCurrentTolerance = 0.1;
 
 
   /**
-   * Stores the status value for the previous test. This is set immediately
-   * after a failure or success and before the me is torn down.
+   * Stores the status value for the previous test. This is set immediately after a failure or
+   * success and before the me is torn down.
    */
   private String status = "";
 
   /**
-   * Extends the default test watcher in order to provide more information about
-   * a tests failure at runtime.
-   *$
-   * @author jonathanleitschuh
+   * Extends the default test watcher in order to provide more information about a tests failure at
+   * runtime. $
    *
+   * @author jonathanleitschuh
    */
   public class CANTestWatcher extends DefaultTestWatcher {
     @Override
@@ -65,12 +62,14 @@ public abstract class AbstractCANTest extends AbstractComsSetup {
     return new CANTestWatcher();
   }
 
-  /** The Fixture under test */
+  /**
+   * The Fixture under test
+   */
   private CANMotorEncoderFixture me;
 
   /**
-   * Retrieves the CANMotorEncoderFixture
-   *$
+   * Retrieves the CANMotorEncoderFixture $
+   *
    * @return the CANMotorEncoderFixture for this test.
    */
   public CANMotorEncoderFixture getME() {

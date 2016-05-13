@@ -7,19 +7,17 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.logging.Logger;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.fixtures.SampleFixture;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 
-import edu.wpi.first.wpilibj.hal.CanTalonJNI;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Basic test (borrowed straight from SampleTest) for running the CAN TalonSRX.
@@ -137,20 +135,20 @@ public class CANTalonTest extends AbstractComsSetup {
     CANTalon talon = new CANTalon(0);
     talon.clearStickyFaults();
 
-    assertTrue(talon.getFaultOverTemp()==0);
-    assertTrue(talon.getFaultUnderVoltage()==0);
-    assertTrue(talon.getFaultForLim()==0);
-    assertTrue(talon.getFaultRevLim()==0);
-    assertTrue(talon.getFaultHardwareFailure()==0);
-    assertTrue(talon.getFaultForSoftLim()==0);
-    assertTrue(talon.getFaultRevSoftLim()==0);
+    assertTrue(talon.getFaultOverTemp() == 0);
+    assertTrue(talon.getFaultUnderVoltage() == 0);
+    assertTrue(talon.getFaultForLim() == 0);
+    assertTrue(talon.getFaultRevLim() == 0);
+    assertTrue(talon.getFaultHardwareFailure() == 0);
+    assertTrue(talon.getFaultForSoftLim() == 0);
+    assertTrue(talon.getFaultRevSoftLim() == 0);
 
-    assertTrue(talon.getStickyFaultOverTemp()==0);
+    assertTrue(talon.getStickyFaultOverTemp() == 0);
 //    assertTrue(talon.getStickyFaultUnderVoltage()==0);
-    assertTrue(talon.getStickyFaultForLim()==0);
-    assertTrue(talon.getStickyFaultRevLim()==0);
-    assertTrue(talon.getStickyFaultForSoftLim()==0);
-    assertTrue(talon.getStickyFaultRevSoftLim()==0);
+    assertTrue(talon.getStickyFaultForLim() == 0);
+    assertTrue(talon.getStickyFaultRevLim() == 0);
+    assertTrue(talon.getStickyFaultForSoftLim() == 0);
+    assertTrue(talon.getStickyFaultRevSoftLim() == 0);
   }
 
 }

@@ -7,22 +7,22 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.*;
-
-import java.util.concurrent.Delayed;
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Kacper Puczydlowski
- *
  */
 
 public class PCMTest extends AbstractComsSetup {
@@ -73,7 +73,8 @@ public class PCMTest extends AbstractComsSetup {
   }
 
   @Before
-  public void setUp() throws Exception {}
+  public void setUp() throws Exception {
+  }
 
   @Before
   public void reset() throws Exception {
@@ -82,7 +83,8 @@ public class PCMTest extends AbstractComsSetup {
   }
 
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   /**
    * Test if the compressor turns on and off when the pressure switch is toggled
@@ -156,8 +158,8 @@ public class PCMTest extends AbstractComsSetup {
   }
 
   /**
-   * Test if the correct solenoids turn on and off when they should when used
-   * with the DoubleSolenoid class.
+   * Test if the correct solenoids turn on and off when they should when used with the
+   * DoubleSolenoid class.
    */
   @Test
   public void doubleSolenoid() {
@@ -173,13 +175,15 @@ public class PCMTest extends AbstractComsSetup {
     Timer.delay(kSolenoidDelayTime);
     assertFalse("Solenoid #1 did not turn on", fakeSolenoid1.get());
     assertTrue("Solenoid #2 did not turn off", fakeSolenoid2.get());
-    assertTrue("DoubleSolenoid did not report Forward", (solenoid.get() == DoubleSolenoid.Value.kForward));
+    assertTrue("DoubleSolenoid did not report Forward", (solenoid.get() == DoubleSolenoid.Value
+        .kForward));
 
     solenoid.set(DoubleSolenoid.Value.kReverse);
     Timer.delay(kSolenoidDelayTime);
     assertTrue("Solenoid #1 did not turn off", fakeSolenoid1.get());
     assertFalse("Solenoid #2 did not turn on", fakeSolenoid2.get());
-    assertTrue("DoubleSolenoid did not report Reverse", (solenoid.get() == DoubleSolenoid.Value.kReverse));
+    assertTrue("DoubleSolenoid did not report Reverse", (solenoid.get() == DoubleSolenoid.Value
+        .kReverse));
 
     solenoid.free();
   }

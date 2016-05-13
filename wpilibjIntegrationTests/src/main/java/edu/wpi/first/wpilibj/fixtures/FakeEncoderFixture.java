@@ -7,7 +7,6 @@
 
 package edu.wpi.first.wpilibj.fixtures;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -15,7 +14,6 @@ import edu.wpi.first.wpilibj.mockhardware.FakeEncoderSource;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public class FakeEncoderFixture implements ITestFixture {
   private static final Logger logger = Logger.getLogger(FakeEncoderFixture.class.getName());
@@ -30,10 +28,7 @@ public class FakeEncoderFixture implements ITestFixture {
   private int m_encoderPort[] = new int[2];
 
   /**
-   * Constructs a FakeEncoderFixture from two DIOCrossConnectFixture
-   *$
-   * @param dio1
-   * @param dio2
+   * Constructs a FakeEncoderFixture from two DIOCrossConnectFixture $
    */
   public FakeEncoderFixture(DIOCrossConnectFixture dio1, DIOCrossConnectFixture dio2) {
     assert dio1 != null;
@@ -46,12 +41,7 @@ public class FakeEncoderFixture implements ITestFixture {
   }
 
   /**
-   * Construcst a FakeEncoderFixture from a set of Digital I/O ports
-   *$
-   * @param inputA
-   * @param outputA
-   * @param inputB
-   * @param outputB
+   * Construcst a FakeEncoderFixture from a set of Digital I/O ports $
    */
   public FakeEncoderFixture(int inputA, int outputA, int inputB, int outputB) {
     assert outputA != outputB;

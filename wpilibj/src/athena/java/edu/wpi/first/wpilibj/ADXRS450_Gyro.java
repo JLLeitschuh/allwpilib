@@ -7,25 +7,21 @@
 
 package edu.wpi.first.wpilibj;
 
-import java.nio.ByteOrder;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
-import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tInstances;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
-import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
- * Use a rate gyro to return the robots heading relative to a starting position.
- * The Gyro class tracks the robots heading based on the starting position. As
- * the robot rotates the new heading is computed by integrating the rate of
- * rotation returned by the sensor. When the class is instantiated, it does a
- * short calibration routine where it samples the gyro while at rest to
- * determine the default offset. This is subtracted from each sample to
- * determine the heading.
+ * Use a rate gyro to return the robots heading relative to a starting position. The Gyro class
+ * tracks the robots heading based on the starting position. As the robot rotates the new heading is
+ * computed by integrating the rate of rotation returned by the sensor. When the class is
+ * instantiated, it does a short calibration routine where it samples the gyro while at rest to
+ * determine the default offset. This is subtracted from each sample to determine the heading.
  *
  * This class is for the digital ADXRS450 gyro sensor that connects via SPI.
  */
@@ -70,7 +66,8 @@ public class ADXRS450_Gyro extends GyroBase implements Gyro, PIDSource, LiveWind
     if ((readRegister(kPIDRegister) & 0xff00) != 0x5200) {
       m_spi.free();
       m_spi = null;
-      DriverStation.reportError("could not find ADXRS450 gyro on SPI port " + port.getValue(), false);
+      DriverStation.reportError("could not find ADXRS450 gyro on SPI port " + port.getValue(),
+          false);
       return;
     }
 
@@ -88,7 +85,9 @@ public class ADXRS450_Gyro extends GyroBase implements Gyro, PIDSource, LiveWind
    */
   @Override
   public void calibrate() {
-    if (m_spi == null) return;
+    if (m_spi == null) {
+      return;
+    }
 
     Timer.delay(0.1);
 
@@ -97,7 +96,7 @@ public class ADXRS450_Gyro extends GyroBase implements Gyro, PIDSource, LiveWind
 
     Timer.delay(kCalibrationSampleTime);
 
-    m_spi.setAccumulatorCenter((int)m_spi.getAccumulatorAverage());
+    m_spi.setAccumulatorCenter((int) m_spi.getAccumulatorAverage());
     m_spi.resetAccumulator();
   }
 
@@ -152,7 +151,9 @@ public class ADXRS450_Gyro extends GyroBase implements Gyro, PIDSource, LiveWind
    * {@inheritDoc}
    */
   public double getAngle() {
-    if (m_spi == null) return 0.0;
+    if (m_spi == null) {
+      return 0.0;
+    }
     return m_spi.getAccumulatorValue() * kDegreePerSecondPerLSB * kSamplePeriod;
   }
 
@@ -160,7 +161,9 @@ public class ADXRS450_Gyro extends GyroBase implements Gyro, PIDSource, LiveWind
    * {@inheritDoc}
    */
   public double getRate() {
-    if (m_spi == null) return 0.0;
+    if (m_spi == null) {
+      return 0.0;
+    }
     return m_spi.getAccumulatorLastValue() * kDegreePerSecondPerLSB;
   }
 }

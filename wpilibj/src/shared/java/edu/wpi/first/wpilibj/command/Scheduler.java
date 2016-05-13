@@ -17,18 +17,14 @@ import edu.wpi.first.wpilibj.buttons.Trigger.ButtonScheduler;
 import edu.wpi.first.wpilibj.tables.ITable;
 
 /**
- * The {@link Scheduler} is a singleton which holds the top-level running
- * commands. It is in charge of both calling the command's {@link Command#run()
- * run()} method and to make sure that there are no two commands with
- * conflicting requirements running.
+ * The {@link Scheduler} is a singleton which holds the top-level running commands. It is in charge
+ * of both calling the command's {@link Command#run() run()} method and to make sure that there are
+ * no two commands with conflicting requirements running.
  *
- * <p>
- * It is fine if teams wish to take control of the {@link Scheduler} themselves,
- * all that needs to be done is to call {@link Scheduler#getInstance()
- * Scheduler.getInstance()}.{@link Scheduler#run() run()} often to have
- * {@link Command Commands} function correctly. However, this is already done
- * for you if you use the CommandBased Robot template.
- * </p>
+ * <p> It is fine if teams wish to take control of the {@link Scheduler} themselves, all that needs
+ * to be done is to call {@link Scheduler#getInstance() Scheduler.getInstance()}.{@link
+ * Scheduler#run() run()} often to have {@link Command Commands} function correctly. However, this
+ * is already done for you if you use the CommandBased Robot template. </p>
  *
  * @author Joe Grinstead
  * @see Command
@@ -50,8 +46,7 @@ public class Scheduler implements NamedSendable {
   }
 
   /**
-   * A hashtable of active {@link Command Commands} to their
-   * {@link LinkedListElement}
+   * A hashtable of active {@link Command Commands} to their {@link LinkedListElement}
    */
   private Hashtable commandTable = new Hashtable();
   /**
@@ -80,8 +75,8 @@ public class Scheduler implements NamedSendable {
   private Vector additions = new Vector();
   private ITable m_table;
   /**
-   * A list of all {@link edu.wpi.first.wpilibj.buttons.Trigger.ButtonScheduler
-   * Buttons}. It is created lazily.
+   * A list of all {@link edu.wpi.first.wpilibj.buttons.Trigger.ButtonScheduler Buttons}. It is
+   * created lazily.
    */
   private Vector buttons;
   private boolean m_runningCommandsChanged;
@@ -94,16 +89,12 @@ public class Scheduler implements NamedSendable {
   }
 
   /**
-   * Adds the command to the {@link Scheduler}. This will not add the
-   * {@link Command} immediately, but will instead wait for the proper time in
-   * the {@link Scheduler#run()} loop before doing so. The command returns
-   * immediately and does nothing if given null.
+   * Adds the command to the {@link Scheduler}. This will not add the {@link Command} immediately,
+   * but will instead wait for the proper time in the {@link Scheduler#run()} loop before doing so.
+   * The command returns immediately and does nothing if given null.
    *
-   * <p>
-   * Adding a {@link Command} to the {@link Scheduler} involves the
-   * {@link Scheduler} removing any {@link Command} which has shared
-   * requirements.
-   * </p>
+   * <p> Adding a {@link Command} to the {@link Scheduler} involves the {@link Scheduler} removing
+   * any {@link Command} which has shared requirements. </p>
    *
    * @param command the command to add
    */
@@ -114,8 +105,8 @@ public class Scheduler implements NamedSendable {
   }
 
   /**
-   * Adds a button to the {@link Scheduler}. The {@link Scheduler} will poll the
-   * button during its {@link Scheduler#run()}.
+   * Adds a button to the {@link Scheduler}. The {@link Scheduler} will poll the button during its
+   * {@link Scheduler#run()}.
    *
    * @param button the button to add
    */
@@ -127,10 +118,9 @@ public class Scheduler implements NamedSendable {
   }
 
   /**
-   * Adds a command immediately to the {@link Scheduler}. This should only be
-   * called in the {@link Scheduler#run()} loop. Any command with conflicting
-   * requirements will be removed, unless it is uninterruptable. Giving
-   * <code>null</code> does nothing.
+   * Adds a command immediately to the {@link Scheduler}. This should only be called in the {@link
+   * Scheduler#run()} loop. Any command with conflicting requirements will be removed, unless it is
+   * uninterruptable. Giving <code>null</code> does nothing.
    *
    * @param command the {@link Command} to add
    */
@@ -188,17 +178,11 @@ public class Scheduler implements NamedSendable {
   }
 
   /**
-   * Runs a single iteration of the loop. This method should be called often in
-   * order to have a functioning {@link Command} system. The loop has five
-   * stages:
+   * Runs a single iteration of the loop. This method should be called often in order to have a
+   * functioning {@link Command} system. The loop has five stages:
    *
-   * <ol>
-   * <li>Poll the Buttons</li>
-   * <li>Execute/Remove the Commands</li>
-   * <li>Send values to SmartDashboard</li>
-   * <li>Add Commands</li>
-   * <li>Add Defaults</li>
-   * </ol>
+   * <ol> <li>Poll the Buttons</li> <li>Execute/Remove the Commands</li> <li>Send values to
+   * SmartDashboard</li> <li>Add Commands</li> <li>Add Defaults</li> </ol>
    */
   public void run() {
 
@@ -245,9 +229,9 @@ public class Scheduler implements NamedSendable {
   }
 
   /**
-   * Registers a {@link Subsystem} to this {@link Scheduler}, so that the
-   * {@link Scheduler} might know if a default {@link Command} needs to be run.
-   * All {@link Subsystem Subsystems} should call this.
+   * Registers a {@link Subsystem} to this {@link Scheduler}, so that the {@link Scheduler} might
+   * know if a default {@link Command} needs to be run. All {@link Subsystem Subsystems} should call
+   * this.
    *
    * @param system the system
    */
@@ -345,17 +329,17 @@ public class Scheduler implements NamedSendable {
 
       if (m_runningCommandsChanged) {
         // Set the the running commands
-	int n = 0;
+        int n = 0;
         for (LinkedListElement e = firstCommand; e != null; e = e.getNext()) {
-	  n++;
+          n++;
         }
         String[] commands = new String[n];
         double[] ids = new double[n];
-	n = 0;
+        n = 0;
         for (LinkedListElement e = firstCommand; e != null; e = e.getNext()) {
           commands[n] = e.getData().getName();
           ids[n] = e.getData().hashCode();
-	  n++;
+          n++;
         }
         m_table.putStringArray("Names", commands);
         m_table.putNumberArray("Ids", ids);

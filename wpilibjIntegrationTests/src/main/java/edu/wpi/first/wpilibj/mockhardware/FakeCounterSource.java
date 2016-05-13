@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Simulates an encoder for testing purposes
+ *
  * @author Ryan O'Meara
  */
 public class FakeCounterSource {
@@ -48,8 +49,8 @@ public class FakeCounterSource {
   }
 
   /**
-   * Create a fake encoder on a given port
-   *$
+   * Create a fake encoder on a given port $
+   *
    * @param output the port to output the given signal to
    */
   public FakeCounterSource(DigitalOutput output) {
@@ -59,8 +60,8 @@ public class FakeCounterSource {
   }
 
   /**
-   * Create a fake encoder on a given port
-   *$
+   * Create a fake encoder on a given port $
+   *
    * @param port The port the encoder is supposed to be on
    */
   public FakeCounterSource(int port) {
@@ -110,8 +111,7 @@ public class FakeCounterSource {
   }
 
   /**
-   * Starts and completes a task set - does not return until thred has finished
-   * its operations
+   * Starts and completes a task set - does not return until thred has finished its operations
    */
   public void execute() {
     start();
@@ -119,8 +119,8 @@ public class FakeCounterSource {
   }
 
   /**
-   * Sets the count to run encoder
-   *$
+   * Sets the count to run encoder $
+   *
    * @param count The count to emulate to the controller
    */
   public void setCount(int count) {
@@ -128,8 +128,8 @@ public class FakeCounterSource {
   }
 
   /**
-   * Specify the rate to send pulses
-   *$
+   * Specify the rate to send pulses $
+   *
    * @param mSec The rate to send out pulses at
    */
   public void setRate(int mSec) {

@@ -7,11 +7,6 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,16 +15,20 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.Collection;
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.fixtures.FakeEncoderFixture;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
 
+import static org.junit.Assert.assertTrue;
+
 
 /**
- * Test to see if the FPGA properly recognizes a mock Encoder input
- *$
- * @author Jonathan Leitschuh
+ * Test to see if the FPGA properly recognizes a mock Encoder input $
  *
+ * @author Jonathan Leitschuh
  */
 @RunWith(Parameterized.class)
 public class EncoderTest extends AbstractComsSetup {
@@ -48,10 +47,9 @@ public class EncoderTest extends AbstractComsSetup {
   }
 
   /**
-   * Test data generator. This method is called the the JUnit parameterized test
-   * runner and returns a Collection of Arrays. For each Array in the
-   * Collection, each array element corresponds to a parameter in the
-   * constructor.
+   * Test data generator. This method is called the the JUnit parameterized test runner and returns
+   * a Collection of Arrays. For each Array in the Collection, each array element corresponds to a
+   * parameter in the constructor.
    */
   @Parameters
   public static Collection<Integer[]> generateData() {
@@ -59,14 +57,13 @@ public class EncoderTest extends AbstractComsSetup {
   }
 
   /**
-   * Constructs a parameterized Encoder Test
-   *$
-   * @param inputA The port number for inputA
+   * Constructs a parameterized Encoder Test $
+   *
+   * @param inputA  The port number for inputA
    * @param outputA The port number for outputA
-   * @param inputB The port number for inputB
+   * @param inputB  The port number for inputB
    * @param outputB The port number for outputB
-   * @param flip whether or not these set of values require the encoder to be
-   *        reversed (0 or 1)
+   * @param flip    whether or not these set of values require the encoder to be reversed (0 or 1)
    */
   public EncoderTest(int inputA, int outputA, int inputB, int outputB, int flip) {
     this.inputA = inputA;
@@ -76,8 +73,9 @@ public class EncoderTest extends AbstractComsSetup {
 
     // If the encoder from a previous test is allocated then we must free its
     // members
-    if (encoder != null)
+    if (encoder != null) {
       encoder.teardown();
+    }
     this.flip = flip == 0;
     encoder = new FakeEncoderFixture(inputA, outputA, inputB, outputB);
   }
@@ -92,9 +90,7 @@ public class EncoderTest extends AbstractComsSetup {
   }
 
   /**
-   * Sets up the test and verifies that the test was reset to the default state
-   *$
-   * @throws java.lang.Exception
+   * Sets up the test and verifies that the test was reset to the default state $
    */
   @Before
   public void setUp() throws Exception {
@@ -148,13 +144,11 @@ public class EncoderTest extends AbstractComsSetup {
   }
 
   /**
-   * Creates a simple message with the error that was encounterd for the
-   * Encoders
-   *$
-   * @param goal The goal that was trying to be reached
+   * Creates a simple message with the error that was encounterd for the Encoders $
+   *
+   * @param goal      The goal that was trying to be reached
    * @param trueValue The actual value that was reached by the test
-   * @return A fully constructed message with data about where and why the the
-   *         test failed
+   * @return A fully constructed message with data about where and why the the test failed
    */
   private String errorMessage(int goal, int trueValue) {
     return "Encoder ({In,Out}): {" + inputA + ", " + outputA + "},{" + inputB + ", " + outputB

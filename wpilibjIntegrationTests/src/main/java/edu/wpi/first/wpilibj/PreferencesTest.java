@@ -7,9 +7,8 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,15 +16,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author jonathanleitschuh
- *
  */
 public class PreferencesTest extends AbstractComsSetup {
   private static final Logger logger = Logger.getLogger(PreferencesTest.class.getName());
@@ -55,7 +54,12 @@ public class PreferencesTest extends AbstractComsSetup {
       file.createNewFile();
       OutputStream output = new FileOutputStream(file);
       output
-          .write("[NetworkTables Storage 3.0]\ndouble \"/Preferences/checkedValueInt\"=2\ndouble \"/Preferences/checkedValueDouble\"=.2\ndouble \"/Preferences/checkedValueFloat\"=3.14\ndouble \"/Preferences/checkedValueLong\"=172\nstring \"/Preferences/checkedValueString\"=\"hello \\nHow are you ?\"\nboolean \"/Preferences/checkedValueBoolean\"=false\n"
+          .write(("[NetworkTables Storage 3.0]\ndouble \"/Preferences/checkedValueInt\"=2\ndouble " +
+              "\"/Preferences/checkedValueDouble\"=.2\ndouble " +
+              "\"/Preferences/checkedValueFloat\"=3.14\ndouble " +
+              "\"/Preferences/checkedValueLong\"=172\nstring " +
+              "\"/Preferences/checkedValueString\"=\"hello \\nHow are you ?\"\nboolean " +
+              "\"/Preferences/checkedValueBoolean\"=false\n")
               .getBytes());
 
     } catch (IOException e) {
@@ -117,7 +121,7 @@ public class PreferencesTest extends AbstractComsSetup {
     String networkedNumber = "networkCheckedValue";
     int networkNumberValue = 100;
     pref.putInt(networkedNumber, networkNumberValue);
-    assertEquals(networkNumberValue, (int)(prefTable.getNumber(networkedNumber)));
+    assertEquals(networkNumberValue, (int) (prefTable.getNumber(networkedNumber)));
     pref.remove(networkedNumber);
   }
 

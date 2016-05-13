@@ -7,17 +7,17 @@
 
 package edu.wpi.first.wpilibj;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.logging.Logger;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.fixtures.TiltPanCameraFixture;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 import edu.wpi.first.wpilibj.test.TestBench;
+
+import static org.junit.Assert.assertEquals;
 
 public class GyroTest extends AbstractComsSetup {
 
@@ -58,10 +58,9 @@ public class GyroTest extends AbstractComsSetup {
   }
 
   /**
-   * Test to see if the Servo and the gyroscope is turning 90 degrees Note servo
-   * on TestBench is not the same type of servo that servo class was designed
-   * for so setAngle is significantly off. This has been calibrated for the
-   * servo on the rig.
+   * Test to see if the Servo and the gyroscope is turning 90 degrees Note servo on TestBench is not
+   * the same type of servo that servo class was designed for so setAngle is significantly off. This
+   * has been calibrated for the servo on the rig.
    */
   public void testGyroAngle(AnalogGyro gyro) {
     // Set angle
@@ -104,8 +103,8 @@ public class GyroTest extends AbstractComsSetup {
   }
 
   /**
-   *  Gets calibrated parameters from already calibrated gyro, allocates a
-   *  new gyro with the center and offset parameters, and re-runs the test.
+   * Gets calibrated parameters from already calibrated gyro, allocates a new gyro with the center
+   * and offset parameters, and re-runs the test.
    */
   public void testGyroAngleCalibratedParameters() {
     // Get calibrated parameters to make new Gyro with parameters

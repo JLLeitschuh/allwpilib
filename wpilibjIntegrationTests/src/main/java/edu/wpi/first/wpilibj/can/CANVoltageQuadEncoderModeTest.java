@@ -7,34 +7,37 @@
 
 package edu.wpi.first.wpilibj.can;
 
+import com.googlecode.junittoolbox.PollingWait;
+import com.googlecode.junittoolbox.RunnableAssert;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+
+import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.Timer;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.googlecode.junittoolbox.PollingWait;
-import com.googlecode.junittoolbox.RunnableAssert;
-
-import edu.wpi.first.wpilibj.CANJaguar;
-import edu.wpi.first.wpilibj.Timer;
-
 /**
  * @author jonathanleitschuh
- *
  */
 public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
   private static final Logger logger = Logger.getLogger(CANVoltageQuadEncoderModeTest.class
       .getName());
-  /** The stopped value in volts */
+  /**
+   * The stopped value in volts
+   */
   private static final double kStoppedValue = 0;
-  /** The running value in volts */
+  /**
+   * The running value in volts
+   */
   private static final double kRunningValue = 4;
 
   private static final double kVoltageTolerance = .25;
@@ -100,11 +103,10 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
 
 
   /**
-   * Sets up the test to have the CANJaguar running at the target voltage
-   *$
+   * Sets up the test to have the CANJaguar running at the target voltage $
+   *
    * @param targetValue the target voltage
-   * @param wait the PollingWait to to use to wait for the setup to complete
-   *        with
+   * @param wait        the PollingWait to to use to wait for the setup to complete with
    */
   private void setupMotorVoltageForTest(final double targetValue, PollingWait wait) {
     getME().getMotor().enableControl();

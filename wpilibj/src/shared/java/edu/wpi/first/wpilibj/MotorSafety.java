@@ -8,11 +8,10 @@
 package edu.wpi.first.wpilibj;
 
 /**
- *
  * @author brad
  */
 public interface MotorSafety {
-  public static final double DEFAULT_SAFETY_EXPIRATION = 0.1;
+  double DEFAULT_SAFETY_EXPIRATION = 0.1;
 
   void setExpiration(double timeout);
 

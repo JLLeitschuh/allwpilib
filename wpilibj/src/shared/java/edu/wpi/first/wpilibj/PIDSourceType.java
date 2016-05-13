@@ -19,7 +19,7 @@ public enum PIDSourceType {
    */
   public final int value;
 
-  private PIDSourceType(int value) {
+  PIDSourceType(int value) {
     this.value = value;
   }
 }

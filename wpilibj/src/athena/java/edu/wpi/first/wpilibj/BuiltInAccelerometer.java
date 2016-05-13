@@ -7,10 +7,10 @@
 
 package edu.wpi.first.wpilibj;
 
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
-import edu.wpi.first.wpilibj.hal.AccelerometerJNI;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
+import edu.wpi.first.wpilibj.hal.AccelerometerJNI;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -22,8 +22,8 @@ import edu.wpi.first.wpilibj.tables.ITable;
  */
 public class BuiltInAccelerometer implements Accelerometer, LiveWindowSendable {
   /**
-   * Constructor.
-   *$
+   * Constructor. $
+   *
    * @param range The range the accelerometer will measure
    */
   public BuiltInAccelerometer(Range range) {
@@ -40,7 +40,9 @@ public class BuiltInAccelerometer implements Accelerometer, LiveWindowSendable {
     this(Range.k8G);
   }
 
-  /** {inheritdoc} */
+  /**
+   * {inheritdoc}
+   */
   @Override
   public void setRange(Range range) {
     AccelerometerJNI.setAccelerometerActive(false);
@@ -92,13 +94,17 @@ public class BuiltInAccelerometer implements Accelerometer, LiveWindowSendable {
 
   private ITable m_table;
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void initTable(ITable subtable) {
     m_table = subtable;
     updateTable();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void updateTable() {
     if (m_table != null) {
       m_table.putNumber("X", getX());
@@ -107,12 +113,16 @@ public class BuiltInAccelerometer implements Accelerometer, LiveWindowSendable {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public ITable getTable() {
     return m_table;
   }
 
-  public void startLiveWindowMode() {}
+  public void startLiveWindowMode() {
+  }
 
-  public void stopLiveWindowMode() {}
-};
+  public void stopLiveWindowMode() {
+  }
+}

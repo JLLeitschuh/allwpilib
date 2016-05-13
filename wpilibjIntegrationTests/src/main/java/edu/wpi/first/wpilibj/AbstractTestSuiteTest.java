@@ -7,13 +7,6 @@
 
 package edu.wpi.first.wpilibj.test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,11 +15,17 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.junit.runners.model.InitializationError;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.test.AbstractTestSuite.ClassMethodPair;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author jonathanleitschuh
- *
  */
 public class AbstractTestSuiteTest {
 
@@ -86,10 +85,10 @@ public class AbstractTestSuiteTest {
     List<Class<?>> collectedTests = testSuite.getSuiteOrTestMatchingRegex(".*Test.*");
     // then
     assertEquals(7, collectedTests.size());
-    assertThat(collectedTests, hasItems(new Class<?>[] {FirstSubSuiteTest.class,
-        SecondSubSuiteTest.class, UnusualTest.class}));
+    assertThat(collectedTests, hasItems(FirstSubSuiteTest.class,
+        SecondSubSuiteTest.class, UnusualTest.class));
     assertThat(collectedTests,
-        not(hasItems(new Class<?>[] {ExampleSubSuite.class, EmptySuite.class})));
+        not(hasItems(new Class<?>[]{ExampleSubSuite.class, EmptySuite.class})));
   }
 
   @Test
@@ -131,7 +130,8 @@ class FirstSubSuiteTest {
   public static final String METHODNAME = "aTestMethod";
 
   @Test
-  public void aTestMethod() {}
+  public void aTestMethod() {
+  }
 }
 
 

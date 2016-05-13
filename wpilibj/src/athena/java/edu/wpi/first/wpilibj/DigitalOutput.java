@@ -7,18 +7,17 @@
 
 package edu.wpi.first.wpilibj;
 
+import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 import edu.wpi.first.wpilibj.communication.UsageReporting;
 import edu.wpi.first.wpilibj.hal.DIOJNI;
 import edu.wpi.first.wpilibj.hal.PWMJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
-import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary.tResourceType;
 
 /**
- * Class to write digital outputs. This class will write digital outputs. Other
- * devices that are implemented elsewhere will automatically allocate digital
- * inputs and outputs as required.
+ * Class to write digital outputs. This class will write digital outputs. Other devices that are
+ * implemented elsewhere will automatically allocate digital inputs and outputs as required.
  */
 public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
 
@@ -27,11 +26,11 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
   private long m_pwmGenerator = invalidPwmGenerator;
 
   /**
-   * Create an instance of a digital output. Create an instance of a digital
-   * output given a channel.
+   * Create an instance of a digital output. Create an instance of a digital output given a
+   * channel.
    *
-   * @param channel the DIO channel to use for the digital output. 0-9 are
-   *        on-board, 10-25 are on the MXP
+   * @param channel the DIO channel to use for the digital output. 0-9 are on-board, 10-25 are on
+   *                the MXP
    */
   public DigitalOutput(int channel) {
     initDigitalPort(channel, false);
@@ -68,10 +67,10 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
   }
 
   /**
-   * Generate a single pulse. Write a pulse to the specified digital output
-   * channel. There can only be a single pulse going at any time.
+   * Generate a single pulse. Write a pulse to the specified digital output channel. There can only
+   * be a single pulse going at any time.
    *
-   * @param channel The channel to pulse.
+   * @param channel     The channel to pulse.
    * @param pulseLength The length of the pulse.
    */
   public void pulse(final int channel, final float pulseLength) {
@@ -79,12 +78,10 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
   }
 
   /**
-   * @deprecated Generate a single pulse. Write a pulse to the specified digital
-   *             output channel. There can only be a single pulse going at any
-   *             time.
-   *
-   * @param channel The channel to pulse.
+   * @param channel     The channel to pulse.
    * @param pulseLength The length of the pulse.
+   * @deprecated Generate a single pulse. Write a pulse to the specified digital output channel.
+   * There can only be a single pulse going at any time.
    */
   @Deprecated
   public void pulse(final int channel, final int pulseLength) {
@@ -96,8 +93,7 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
   }
 
   /**
-   * Determine if the pulse is still going. Determine if a previously started
-   * pulse is still going.
+   * Determine if the pulse is still going. Determine if a previously started pulse is still going.
    *
    * @return true if pulsing
    */
@@ -108,8 +104,7 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
   /**
    * Change the PWM frequency of the PWM output on a Digital Output line.
    *
-   * The valid range is from 0.6 Hz to 19 kHz. The frequency resolution is
-   * logarithmic.
+   * The valid range is from 0.6 Hz to 19 kHz. The frequency resolution is logarithmic.
    *
    * There is only one PWM frequency for all channnels.
    *
@@ -124,17 +119,17 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
    *
    * Allocate one of the 6 DO PWM generator resources.
    *
-   * Supply the initial duty-cycle to output so as to avoid a glitch when first
-   * starting.
+   * Supply the initial duty-cycle to output so as to avoid a glitch when first starting.
    *
-   * The resolution of the duty cycle is 8-bit for low frequencies (1kHz or
-   * less) but is reduced the higher the frequency of the PWM signal is.
+   * The resolution of the duty cycle is 8-bit for low frequencies (1kHz or less) but is reduced the
+   * higher the frequency of the PWM signal is.
    *
    * @param initialDutyCycle The duty-cycle to start generating. [0..1]
    */
   public void enablePWM(double initialDutyCycle) {
-    if (m_pwmGenerator != invalidPwmGenerator)
+    if (m_pwmGenerator != invalidPwmGenerator) {
       return;
+    }
     m_pwmGenerator = PWMJNI.allocatePWM();
     PWMJNI.setPWMDutyCycle(m_pwmGenerator, initialDutyCycle);
     PWMJNI.setPWMOutputChannel(m_pwmGenerator, m_channel);
@@ -146,8 +141,9 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
    * Free up one of the 6 DO PWM generator resources that were in use.
    */
   public void disablePWM() {
-    if (m_pwmGenerator == invalidPwmGenerator)
+    if (m_pwmGenerator == invalidPwmGenerator) {
       return;
+    }
     // Disable the output by routing to a dead bit.
     PWMJNI.setPWMOutputChannel(m_pwmGenerator, kDigitalChannels);
     PWMJNI.freePWM(m_pwmGenerator);
@@ -157,14 +153,15 @@ public class DigitalOutput extends DigitalSource implements LiveWindowSendable {
   /**
    * Change the duty-cycle that is being generated on the line.
    *
-   * The resolution of the duty cycle is 8-bit for low frequencies (1kHz or
-   * less) but is reduced the higher the frequency of the PWM signal is.
+   * The resolution of the duty cycle is 8-bit for low frequencies (1kHz or less) but is reduced the
+   * higher the frequency of the PWM signal is.
    *
    * @param dutyCycle The duty-cycle to change to. [0..1]
    */
   public void updateDutyCycle(double dutyCycle) {
-    if (m_pwmGenerator == invalidPwmGenerator)
+    if (m_pwmGenerator == invalidPwmGenerator) {
       return;
+    }
     PWMJNI.setPWMDutyCycle(m_pwmGenerator, dutyCycle);
   }
 

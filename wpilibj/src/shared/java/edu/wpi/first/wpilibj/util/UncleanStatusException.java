@@ -8,8 +8,8 @@
 package edu.wpi.first.wpilibj.util;
 
 /**
- * Exception for bad status codes from the chip object
- *$
+ * Exception for bad status codes from the chip object $
+ *
  * @author Brian
  */
 public final class UncleanStatusException extends IllegalStateException {
@@ -17,9 +17,9 @@ public final class UncleanStatusException extends IllegalStateException {
   private final int statusCode;
 
   /**
-   * Create a new UncleanStatusException
-   *$
-   * @param status the status code that caused the exception
+   * Create a new UncleanStatusException $
+   *
+   * @param status  the status code that caused the exception
    * @param message A message describing the exception
    */
   public UncleanStatusException(int status, String message) {
@@ -28,8 +28,8 @@ public final class UncleanStatusException extends IllegalStateException {
   }
 
   /**
-   * Create a new UncleanStatusException
-   *$
+   * Create a new UncleanStatusException $
+   *
    * @param status the status code that caused the exception
    */
   public UncleanStatusException(int status) {
@@ -37,8 +37,8 @@ public final class UncleanStatusException extends IllegalStateException {
   }
 
   /**
-   * Create a new UncleanStatusException
-   *$
+   * Create a new UncleanStatusException $
+   *
    * @param message a message describing the exception
    */
   public UncleanStatusException(String message) {
@@ -53,8 +53,8 @@ public final class UncleanStatusException extends IllegalStateException {
   }
 
   /**
-   * Create a new UncleanStatusException
-   *$
+   * Create a new UncleanStatusException $
+   *
    * @return the status code that caused the exception
    */
   public int getStatus() {

@@ -7,17 +7,16 @@
 
 package edu.wpi.first.wpilibj.command;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 
 import edu.wpi.first.wpilibj.mocks.MockCommand;
 import edu.wpi.first.wpilibj.test.AbstractComsSetup;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 /**
  * @author jonathanleitschuh
- *
  */
 public abstract class AbstractCommandTest extends AbstractComsSetup {
 
@@ -42,7 +41,7 @@ public abstract class AbstractCommandTest extends AbstractComsSetup {
   }
 
   public void assertCommandState(MockCommand command, int initialize, int execute, int isFinished,
-      int end, int interrupted) {
+                                 int end, int interrupted) {
     assertEquals(initialize, command.getInitializeCount());
     assertEquals(execute, command.getExecuteCount());
     assertEquals(isFinished, command.getIsFinishedCount());

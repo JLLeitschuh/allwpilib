@@ -8,8 +8,8 @@
 package edu.wpi.first.wpilibj;
 
 /**
- * Structure for holding the values stored in an accumulator
- *$
+ * Structure for holding the values stored in an accumulator $
+ *
  * @author brad
  */
 public class AccumulatorResult {

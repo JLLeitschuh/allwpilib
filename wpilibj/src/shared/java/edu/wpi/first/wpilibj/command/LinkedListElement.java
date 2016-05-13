@@ -8,7 +8,6 @@
 package edu.wpi.first.wpilibj.command;
 
 /**
- *
  * @author Greg
  */
 class LinkedListElement {
@@ -16,7 +15,8 @@ class LinkedListElement {
   private LinkedListElement previous;
   private Command data;
 
-  public LinkedListElement() {}
+  public LinkedListElement() {
+  }
 
   public void setData(Command newData) {
     data = newData;

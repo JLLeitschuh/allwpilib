@@ -11,14 +11,14 @@ import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
 /**
- * Class representing a generic image.
- *$
+ * Class representing a generic image. $
+ *
  * @author dtjones
  */
 public abstract class ImageBase {
 
   /**
-   * Pointer to the image memory
+   * Pointer to the image memory.
    */
   public final Image image;
   static final int DEFAULT_BORDER_SIZE = 3;
@@ -28,10 +28,9 @@ public abstract class ImageBase {
   }
 
   /**
-   * Creates a new image pointing to the same data as the source image. The
-   * imgae data is not copied, it is just referenced by both objects. Freeing
-   * one will free both.
-   *$
+   * Creates a new image pointing to the same data as the source image. The imgae data is not
+   * copied, it is just referenced by both objects. Freeing one will free both. $
+   *
    * @param sourceImage The image to reference
    */
   ImageBase(ImageBase sourceImage) {
@@ -41,8 +40,8 @@ public abstract class ImageBase {
   /**
    * Write the image to a file.
    *
-   * Supported extensions: .aipd or .apd AIPD .bmp BMP .jpg or .jpeg JPEG .jp2
-   * JPEG2000 .png PNG .tif or .tiff TIFF
+   * <p>Supported extensions: .aipd or .apd AIPD .bmp BMP .jpg or .jpeg JPEG .jp2 JPEG2000 .png PNG
+   * .tif or .tiff TIFF
    *
    * @param fileName The path to write the image to.
    */
@@ -60,8 +59,8 @@ public abstract class ImageBase {
   }
 
   /**
-   * Get the height of the image in pixels.
-   *$
+   * Get the height of the image in pixels. $
+   *
    * @return The height of the image.
    */
   public int getHeight() throws NIVisionException {
@@ -69,8 +68,8 @@ public abstract class ImageBase {
   }
 
   /**
-   * Get the width of the image in pixels.
-   *$
+   * Get the width of the image in pixels. $
+   *
    * @return The width of the image.
    */
   public int getWidth() throws NIVisionException {
