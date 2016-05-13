@@ -144,7 +144,7 @@ public class IterativeRobot extends RobotBase {
    * functions whenever a packet is received from the Driver Station, or about every 20ms.
    */
   private boolean nextPeriodReady() {
-    return ds.isNewControlData();
+    return ds.isnewControlData();
   }
 
   /* ----------- Overridable initialization code ----------------- */

@@ -25,42 +25,42 @@ public abstract class DigitalSource extends InterruptableSensorBase {
 
   protected void initDigitalPort(int channel, boolean input) {
 
-    m_channel = channel;
+    this.m_channel = channel;
 
-    checkDigitalChannel(m_channel);
+    checkDigitalChannel(this.m_channel);
 
     try {
-      channels.allocate(m_channel);
+      channels.allocate(this.m_channel);
     } catch (CheckedAllocationException ex) {
-      throw new AllocationException("Digital input " + m_channel + " is already allocated");
+      throw new AllocationException("Digital input " + this.m_channel + " is already allocated");
     }
 
-    long port_pointer = DIOJNI.getPort((byte) channel);
-    m_port = DIOJNI.initializeDigitalPort(port_pointer);
-    DIOJNI.allocateDIO(m_port, input);
+    long portPointer = DIOJNI.getPort((byte) channel);
+    this.m_port = DIOJNI.initializeDigitalPort(portPointer);
+    DIOJNI.allocateDIO(this.m_port, input);
   }
 
   @Override
   public void free() {
-    channels.free(m_channel);
-    DIOJNI.freeDIO(m_port);
-    DIOJNI.freeDigitalPort(m_port);
-    m_port = 0;
-    m_channel = 0;
+    channels.free(this.m_channel);
+    DIOJNI.freeDIO(this.m_port);
+    DIOJNI.freeDigitalPort(this.m_port);
+    this.m_port = 0;
+    this.m_channel = 0;
   }
 
   /**
-   * Get the channel routing number
+   * Get the channel routing number.
    *
    * @return channel routing number
    */
   @Override
   public int getChannelForRouting() {
-    return m_channel;
+    return this.m_channel;
   }
 
   /**
-   * Get the module routing number
+   * Get the module routing number.
    *
    * @return 0
    */
@@ -70,7 +70,7 @@ public abstract class DigitalSource extends InterruptableSensorBase {
   }
 
   /**
-   * Is this an analog trigger $
+   * Is this an analog trigger.
    *
    * @return true if this is an analog trigger
    */

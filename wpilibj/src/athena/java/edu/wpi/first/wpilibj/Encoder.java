@@ -26,8 +26,8 @@ import edu.wpi.first.wpilibj.tables.ITable;
  * digital outputs, an A Channel and a B Channel that are out of phase with each other to allow the
  * FPGA to do direction sensing.
  *
- * All encoders will immediately start counting - reset() them if you need them to be zeroed before
- * use.
+ * <p>All encoders will immediately start counting - reset() them if you need them to be zeroed
+ * before use.
  */
 public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveWindowSendable {
   public enum IndexingType {
@@ -35,24 +35,31 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
   }
 
   /**
-   * The a source
+   * The a source.
    */
-  protected DigitalSource m_aSource; // the A phase of the quad encoder
+  protected DigitalSource m_sourceA; // the A phase of the quad encoder
   /**
-   * The b source
+   * The b source.
    */
-  protected DigitalSource m_bSource; // the B phase of the quad encoder
+  protected DigitalSource m_sourceB; // the B phase of the quad encoder
   /**
-   * The index source
+   * The index source.
    */
   protected DigitalSource m_indexSource = null; // Index on some encoders
   private long m_encoder;
   private int m_index;
-  private double m_distancePerPulse; // distance of travel for each encoder
+  private double m_distancePerPulse; // distance of travel for each m_encoder
   // tick
   private Counter m_counter; // Counter object for 1x and 2x encoding
+  /**
+   * Either k1X, k2X, or k4X to indicate 1X, 2X or 4X decoding. If 4X is selected, then an encoder
+   * FPGA object is used and the returned counts will be 4x the encoder spec'd value since all
+   * rising and falling edges are counted. If 1X or 2X are selected then a counter object will be
+   * used and the returned value will either exactly match the spec'd count or be double (2x) the
+   * spec'd count.
+   */
   private EncodingType m_encodingType = EncodingType.k4X;
-  private int m_encodingScale; // 1x, 2x, or 4x, per the encodingType
+  private int m_encodingScale; // 1x, 2x, or 4x, per the m_encodingType
   private boolean m_allocatedA;
   private boolean m_allocatedB;
   private boolean m_allocatedI;
@@ -62,15 +69,9 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * Common initialization code for Encoders. This code allocates resources for Encoders and is
    * common to all constructors.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
    * @param reverseDirection If true, counts down instead of up (this is all relative)
-   * @param encodingType     either k1X, k2X, or k4X to indicate 1X, 2X or 4X decoding. If 4X is
-   *                         selected, then an encoder FPGA object is used and the returned counts
-   *                         will be 4x the encoder spec'd value since all rising and falling edges
-   *                         are counted. If 1X or 2X are selected then a counter object will be
-   *                         used and the returned value will either exactly match the spec'd count
-   *                         or be double (2x) the spec'd count.
    */
   private void initEncoder(boolean reverseDirection) {
     switch (m_encodingType) {
@@ -80,77 +81,79 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
         // set the byte order
         index.order(ByteOrder.LITTLE_ENDIAN);
         m_encoder =
-            EncoderJNI.initializeEncoder(m_aSource.getModuleForRouting(), m_aSource
-                    .getChannelForRouting(), m_aSource.getAnalogTriggerForRouting(),
-                m_bSource.getModuleForRouting(), m_bSource.getChannelForRouting(),
-                m_bSource.getAnalogTriggerForRouting(),
+            EncoderJNI.initializeEncoder(this.m_sourceA.getModuleForRouting(), this.m_sourceA
+                    .getChannelForRouting(), this.m_sourceA.getAnalogTriggerForRouting(),
+                this.m_sourceB.getModuleForRouting(), this.m_sourceB.getChannelForRouting(),
+                this.m_sourceB.getAnalogTriggerForRouting(),
                 reverseDirection, index.asIntBuffer());
-        m_index = index.asIntBuffer().get(0);
+        this.m_index = index.asIntBuffer().get(0);
         m_counter = null;
         setMaxPeriod(.5);
         break;
       case k2X:
       case k1X:
         m_encodingScale = m_encodingType == EncodingType.k1X ? 1 : 2;
-        m_counter = new Counter(m_encodingType, m_aSource, m_bSource, reverseDirection);
-        m_index = m_counter.getFPGAIndex();
+        m_counter = new Counter(m_encodingType, this.m_sourceA, this.m_sourceB, reverseDirection);
+        this.m_index = m_counter.getFPGAIndex();
         break;
+      default:
+        throw new AssertionError("Illegal encoding type: " + m_encodingType);
     }
     m_distancePerPulse = 1.0;
     m_pidSource = PIDSourceType.kDisplacement;
 
     UsageReporting.report(tResourceType.kResourceType_Encoder, m_index, m_encodingType.value);
-    LiveWindow.addSensor("Encoder", m_aSource.getChannelForRouting(), this);
+    LiveWindow.addSensor("Encoder", this.m_sourceA.getChannelForRouting(), this);
   }
 
   /**
    * Encoder constructor. Construct a Encoder given a and b channels.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aChannel         The a channel DIO channel. 0-9 are on-board, 10-25 are on the MXP port
-   * @param bChannel         The b channel DIO channel. 0-9 are on-board, 10-25 are on the MXP port
+   * @param channelA         The a channel DIO channel. 0-9 are on-board, 10-25 are on the MXP port
+   * @param channelB         The b channel DIO channel. 0-9 are on-board, 10-25 are on the MXP port
    * @param reverseDirection represents the orientation of the encoder and inverts the output values
    *                         if necessary so forward represents positive values.
    */
-  public Encoder(final int aChannel, final int bChannel, boolean reverseDirection) {
+  public Encoder(final int channelA, final int channelB, boolean reverseDirection) {
     m_allocatedA = true;
     m_allocatedB = true;
     m_allocatedI = false;
-    m_aSource = new DigitalInput(aChannel);
-    m_bSource = new DigitalInput(bChannel);
+    this.m_sourceA = new DigitalInput(channelA);
+    this.m_sourceB = new DigitalInput(channelB);
     initEncoder(reverseDirection);
   }
 
   /**
    * Encoder constructor. Construct a Encoder given a and b channels.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aChannel The a channel digital input channel.
-   * @param bChannel The b channel digital input channel.
+   * @param channelA The a channel digital input channel.
+   * @param channelB The b channel digital input channel.
    */
-  public Encoder(final int aChannel, final int bChannel) {
-    this(aChannel, bChannel, false);
+  public Encoder(final int channelA, final int channelB) {
+    this(channelA, channelB, false);
   }
 
   /**
    * Encoder constructor. Construct a Encoder given a and b channels.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aChannel         The a channel digital input channel.
-   * @param bChannel         The b channel digital input channel.
+   * @param channelA         The a channel digital input channel.
+   * @param channelB         The b channel digital input channel.
    * @param reverseDirection represents the orientation of the encoder and inverts the output values
    *                         if necessary so forward represents positive values.
    * @param encodingType     either k1X, k2X, or k4X to indicate 1X, 2X or 4X decoding. If 4X is
    *                         selected, then an encoder FPGA object is used and the returned counts
    *                         will be 4x the encoder spec'd value since all rising and falling edges
-   *                         are counted. If 1X or 2X are selected then a counter object will be
+   *                         are counted. If 1X or 2X are selected then a m_counter object will be
    *                         used and the returned value will either exactly match the spec'd count
    *                         or be double (2x) the spec'd count.
    */
-  public Encoder(final int aChannel, final int bChannel, boolean reverseDirection,
+  public Encoder(final int channelA, final int channelB, boolean reverseDirection,
                  final EncodingType encodingType) {
     m_allocatedA = true;
     m_allocatedB = true;
@@ -158,48 +161,48 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
     if (encodingType == null) {
       throw new NullPointerException("Given encoding type was null");
     }
-    m_encodingType = encodingType;
-    m_aSource = new DigitalInput(aChannel);
-    m_bSource = new DigitalInput(bChannel);
+    this.m_encodingType = encodingType;
+    this.m_sourceA = new DigitalInput(channelA);
+    this.m_sourceB = new DigitalInput(channelB);
     initEncoder(reverseDirection);
   }
 
   /**
-   * Encoder constructor. Construct a Encoder given a and b channels. Using an index pulse forces 4x
-   * encoding
+   * Encoder constructor. Construct a Encoder given a and b channels. Using an index pulse forces
+   * 4x encoding
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aChannel         The a channel digital input channel.
-   * @param bChannel         The b channel digital input channel.
+   * @param channelA         The a channel digital input channel.
+   * @param channelB         The b channel digital input channel.
    * @param indexChannel     The index channel digital input channel.
    * @param reverseDirection represents the orientation of the encoder and inverts the output values
    *                         if necessary so forward represents positive values.
    */
-  public Encoder(final int aChannel, final int bChannel, final int indexChannel,
+  public Encoder(final int channelA, final int channelB, final int indexChannel,
                  boolean reverseDirection) {
     m_allocatedA = true;
     m_allocatedB = true;
     m_allocatedI = true;
-    m_aSource = new DigitalInput(aChannel);
-    m_bSource = new DigitalInput(bChannel);
+    this.m_sourceA = new DigitalInput(channelA);
+    this.m_sourceB = new DigitalInput(channelB);
     m_indexSource = new DigitalInput(indexChannel);
     initEncoder(reverseDirection);
-    setIndexSource(indexChannel);
+    setindexSource(indexChannel);
   }
 
   /**
-   * Encoder constructor. Construct a Encoder given a and b channels. Using an index pulse forces 4x
-   * encoding
+   * Encoder constructor. Construct a Encoder given a and b channels. Using an index pulse forces
+   * 4x encoding
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aChannel     The a channel digital input channel.
-   * @param bChannel     The b channel digital input channel.
+   * @param channelA     The a channel digital input channel.
+   * @param channelB     The b channel digital input channel.
    * @param indexChannel The index channel digital input channel.
    */
-  public Encoder(final int aChannel, final int bChannel, final int indexChannel) {
-    this(aChannel, bChannel, indexChannel, false);
+  public Encoder(final int channelA, final int channelB, final int indexChannel) {
+    this(channelA, channelB, indexChannel, false);
   }
 
   /**
@@ -207,25 +210,25 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * in the case where the digital inputs are shared. The Encoder class will not allocate the
    * digital inputs and assume that they already are counted.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aSource          The source that should be used for the a channel.
-   * @param bSource          the source that should be used for the b channel.
+   * @param sourceA          The source that should be used for the a channel.
+   * @param sourceB          the source that should be used for the b channel.
    * @param reverseDirection represents the orientation of the encoder and inverts the output values
    *                         if necessary so forward represents positive values.
    */
-  public Encoder(DigitalSource aSource, DigitalSource bSource, boolean reverseDirection) {
+  public Encoder(DigitalSource sourceA, DigitalSource sourceB, boolean reverseDirection) {
     m_allocatedA = false;
     m_allocatedB = false;
     m_allocatedI = false;
-    if (aSource == null) {
+    if (sourceA == null) {
       throw new NullPointerException("Digital Source A was null");
     }
-    m_aSource = aSource;
-    if (bSource == null) {
+    this.m_sourceA = sourceA;
+    if (sourceB == null) {
       throw new NullPointerException("Digital Source B was null");
     }
-    m_bSource = bSource;
+    this.m_sourceB = sourceB;
     initEncoder(reverseDirection);
   }
 
@@ -234,13 +237,13 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * in the case where the digital inputs are shared. The Encoder class will not allocate the
    * digital inputs and assume that they already are counted.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aSource The source that should be used for the a channel.
-   * @param bSource the source that should be used for the b channel.
+   * @param sourceA The source that should be used for the a channel.
+   * @param sourceB the source that should be used for the b channel.
    */
-  public Encoder(DigitalSource aSource, DigitalSource bSource) {
-    this(aSource, bSource, false);
+  public Encoder(DigitalSource sourceA, DigitalSource sourceB) {
+    this(sourceA, sourceB, false);
   }
 
   /**
@@ -248,20 +251,20 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * in the case where the digital inputs are shared. The Encoder class will not allocate the
    * digital inputs and assume that they already are counted.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aSource          The source that should be used for the a channel.
-   * @param bSource          the source that should be used for the b channel.
+   * @param sourceA          The source that should be used for the a channel.
+   * @param sourceB          the source that should be used for the b channel.
    * @param reverseDirection represents the orientation of the encoder and inverts the output values
    *                         if necessary so forward represents positive values.
    * @param encodingType     either k1X, k2X, or k4X to indicate 1X, 2X or 4X decoding. If 4X is
    *                         selected, then an encoder FPGA object is used and the returned counts
    *                         will be 4x the encoder spec'd value since all rising and falling edges
-   *                         are counted. If 1X or 2X are selected then a counter object will be
+   *                         are counted. If 1X or 2X are selected then a m_counter object will be
    *                         used and the returned value will either exactly match the spec'd count
    *                         or be double (2x) the spec'd count.
    */
-  public Encoder(DigitalSource aSource, DigitalSource bSource, boolean reverseDirection,
+  public Encoder(DigitalSource sourceA, DigitalSource sourceB, boolean reverseDirection,
                  final EncodingType encodingType) {
     m_allocatedA = false;
     m_allocatedB = false;
@@ -269,88 +272,92 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
     if (encodingType == null) {
       throw new NullPointerException("Given encoding type was null");
     }
-    m_encodingType = encodingType;
-    if (aSource == null) {
+    this.m_encodingType = encodingType;
+    if (sourceA == null) {
       throw new NullPointerException("Digital Source A was null");
     }
-    m_aSource = aSource;
-    if (bSource == null) {
+    this.m_sourceA = sourceA;
+    if (sourceB == null) {
       throw new NullPointerException("Digital Source B was null");
     }
-    m_aSource = aSource;
-    m_bSource = bSource;
+    this.m_sourceA = sourceA;
+    this.m_sourceB = sourceB;
     initEncoder(reverseDirection);
   }
 
   /**
-   * Encoder constructor. Construct a Encoder given a, b and index channels as digital inputs. This
-   * is used in the case where the digital inputs are shared. The Encoder class will not allocate
-   * the digital inputs and assume that they already are counted.
+   * Encoder constructor. Construct a Encoder given a, b and index channels as digital inputs.
+   * This is used in the case where the digital inputs are shared. The Encoder class will not
+   * allocate the digital inputs and assume that they already are counted.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aSource          The source that should be used for the a channel.
-   * @param bSource          the source that should be used for the b channel.
+   * @param sourceA          The source that should be used for the a channel.
+   * @param sourceB          the source that should be used for the b channel.
    * @param indexSource      the source that should be used for the index channel.
    * @param reverseDirection represents the orientation of the encoder and inverts the output values
    *                         if necessary so forward represents positive values.
    */
-  public Encoder(DigitalSource aSource, DigitalSource bSource, DigitalSource indexSource,
+  public Encoder(DigitalSource sourceA, DigitalSource sourceB, DigitalSource indexSource,
                  boolean reverseDirection) {
     m_allocatedA = false;
     m_allocatedB = false;
     m_allocatedI = false;
-    if (aSource == null) {
+    if (sourceB == null) {
       throw new NullPointerException("Digital Source A was null");
     }
-    m_aSource = aSource;
-    if (bSource == null) {
+    this.m_sourceA = sourceA;
+    if (sourceB == null) {
       throw new NullPointerException("Digital Source B was null");
     }
-    m_aSource = aSource;
-    m_bSource = bSource;
-    m_indexSource = indexSource;
+    this.m_sourceA = sourceA;
+    this.m_sourceB = sourceB;
+    this.m_indexSource = indexSource;
     initEncoder(reverseDirection);
     setIndexSource(indexSource);
   }
 
   /**
-   * Encoder constructor. Construct a Encoder given a, b and index channels as digital inputs. This
-   * is used in the case where the digital inputs are shared. The Encoder class will not allocate
-   * the digital inputs and assume that they already are counted.
+   * Encoder constructor. Construct a Encoder given a, b and index channels as digital inputs.
+   * This is used in the case where the digital inputs are shared. The Encoder class will not
+   * allocate the digital inputs and assume that they already are counted.
    *
-   * The encoder will start counting immediately.
+   * <p>The encoder will start counting immediately.
    *
-   * @param aSource     The source that should be used for the a channel.
-   * @param bSource     the source that should be used for the b channel.
+   * @param sourceA     The source that should be used for the a channel.
+   * @param sourceB     the source that should be used for the b channel.
    * @param indexSource the source that should be used for the index channel.
    */
-  public Encoder(DigitalSource aSource, DigitalSource bSource, DigitalSource indexSource) {
-    this(aSource, bSource, indexSource, false);
+  public Encoder(DigitalSource sourceA, DigitalSource sourceB, DigitalSource indexSource) {
+    this(sourceA, sourceB, indexSource, false);
   }
 
   /**
-   * @return the Encoder's FPGA index
+   * @return The Encoder's FPGA m_index.
    */
+  @SuppressWarnings("AbbreviationAsWordInName")
   public int getFPGAIndex() {
     return m_index;
   }
 
   /**
-   * @return the encoding scale factor 1x, 2x, or 4x, per the requested encodingType. Used to divide
-   * raw edge counts down to spec'd counts.
+   * @return The encoding scale factor 1x, 2x, or 4x, per the requested m_encodingType. Used to
+   *         divide raw edge counts down to spec'd counts.
    */
   public int getEncodingScale() {
     return m_encodingScale;
   }
 
+  /**
+   * Free the resources used by this object.
+   */
   public void free() {
-    if (m_aSource != null && m_allocatedA) {
-      m_aSource.free();
+    if (this.m_sourceA != null && m_allocatedA) {
+      this.m_sourceA.free();
       m_allocatedA = false;
     }
-    if (m_bSource != null && m_allocatedB) {
-      m_bSource.free();
+    if (this.m_sourceB != null && m_allocatedB) {
+      this.m_sourceB.free();
       m_allocatedB = false;
     }
     if (m_indexSource != null && m_allocatedI) {
@@ -358,8 +365,8 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
       m_allocatedI = false;
     }
 
-    m_aSource = null;
-    m_bSource = null;
+    this.m_sourceA = null;
+    this.m_sourceB = null;
     m_indexSource = null;
     if (m_counter != null) {
       m_counter.free();
@@ -370,8 +377,8 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
   }
 
   /**
-   * Gets the raw value from the encoder. The raw value is the actual count unscaled by the 1x, 2x,
-   * or 4x scale factor.
+   * Gets the raw value from the encoder. The raw value is the actual count unscaled by the 1x,
+   * 2x, or 4x scale factor.
    *
    * @return Current raw count from the encoder
    */
@@ -412,7 +419,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    *
    * @return Period in seconds of the most recent pulse.
    * @deprecated Use getRate() in favor of this method. This returns unscaled periods and getRate()
-   * scales using value from setDistancePerPulse().
+   *             scales using value from setDistancePerPulse().
    */
   public double getPeriod() {
     double measuredPeriod;
@@ -490,15 +497,15 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * Get the distance the robot has driven since the last reset.
    *
    * @return The distance driven since the last reset as scaled by the value from
-   * setDistancePerPulse().
+   *         setdistancePerPulse().
    */
   public double getDistance() {
     return getRaw() * decodingScaleFactor() * m_distancePerPulse;
   }
 
   /**
-   * Get the current rate of the encoder. Units are distance per second as scaled by the value from
-   * setDistancePerPulse().
+   * Get the current rate of the encoder. Units are distance per second as scaled by the value
+   * from setdistancePerPulse().
    *
    * @return The current rate of the encoder.
    */
@@ -510,7 +517,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * Set the minimum rate of the device before the hardware reports it stopped.
    *
    * @param minRate The minimum rate. The units are in distance per second as scaled by the value
-   *                from setDistancePerPulse().
+   *                from setdistancePerPulse().
    */
   public void setMinRate(double minRate) {
     setMaxPeriod(m_distancePerPulse / minRate);
@@ -518,14 +525,15 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 
   /**
    * Set the distance per pulse for this encoder. This sets the multiplier used to determine the
-   * distance driven based on the count value from the encoder. Do not include the decoding type in
-   * this scale. The library already compensates for the decoding type. Set this value based on the
-   * encoder's rated Pulses per Revolution and factor in gearing reductions following the encoder
-   * shaft. This distance can be in any units you like, linear or angular.
+   * distance driven based on the count value from the encoder. Do not include the decoding type
+   * in this scale. The library already compensates for the decoding type. Set this value based on
+   * the encoder's rated Pulses per Revolution and factor in gearing reductions following the
+   * encoder shaft. This distance can be in any units you like, linear or angular.
    *
-   * @param distancePerPulse The scale factor that will be used to convert pulses to useful units.
+   * @param distancePerPulse The scale factor that will be used to convert pulses to useful
+   *                           units.
    */
-  public void setDistancePerPulse(double distancePerPulse) {
+  public void setdistancePerPulse(double distancePerPulse) {
     m_distancePerPulse = distancePerPulse;
   }
 
@@ -538,8 +546,6 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
   public void setReverseDirection(boolean reverseDirection) {
     if (m_counter != null) {
       m_counter.setReverseDirection(reverseDirection);
-    } else {
-
     }
   }
 
@@ -547,9 +553,6 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
    * Set the Samples to Average which specifies the number of samples of the timer to average when
    * calculating the period. Perform averaging to account for mechanical imperfections or as
    * oversampling to increase resolution.
-   *
-   * TODO: Should this throw a checked exception, so that the user has to deal with giving an
-   * incorrect value?
    *
    * @param samplesToAverage The number of samples to average from 1 to 127.
    */
@@ -562,6 +565,8 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
       case k2X:
         m_counter.setSamplesToAverage(samplesToAverage);
         break;
+      default:
+        throw new AssertionError("Illegal encoding type: " + m_encodingType);
     }
   }
 
@@ -579,8 +584,9 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
       case k1X:
       case k2X:
         return m_counter.getSamplesToAverage();
+      default:
+        return 1;
     }
-    return 1;
   }
 
   /**
@@ -593,9 +599,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
     m_pidSource = pidSource;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public PIDSourceType getPIDSourceType() {
     return m_pidSource;
   }
@@ -617,8 +621,18 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
   }
 
   /**
-   * Set the index source for the encoder. When this source rises, the encoder count automatically
-   * resets.
+   * Set the index source for the encoder. When this source is activated, the encoder count
+   * automatically resets.
+   *
+   * @param channel A DIO channel to set as the encoder index
+   */
+  public void setindexSource(int channel) {
+    this.setIndexSource(channel, IndexingType.kResetOnRisingEdge);
+  }
+
+  /**
+   * Set the index source for the encoder. When this source rises, the encoder count
+   * automatically resets.
    *
    * @param channel A DIO channel to set as the encoder index
    * @param type    The state that will cause the encoder to reset
@@ -633,18 +647,8 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
   }
 
   /**
-   * Set the index source for the encoder. When this source is activated, the encoder count
+   * Set the index source for the encoder. When this source rises, the encoder count
    * automatically resets.
-   *
-   * @param channel A DIO channel to set as the encoder index
-   */
-  public void setIndexSource(int channel) {
-    this.setIndexSource(channel, IndexingType.kResetOnRisingEdge);
-  }
-
-  /**
-   * Set the index source for the encoder. When this source rises, the encoder count automatically
-   * resets.
    *
    * @param source A digital source to set as the encoder index
    * @param type   The state that will cause the encoder to reset
@@ -669,7 +673,7 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
     this.setIndexSource(source, IndexingType.kResetOnRisingEdge);
   }
 
-  /*
+  /**
    * Live Window code, only does anything if live window is activated.
    */
   public String getSmartDashboardType() {
@@ -683,24 +687,18 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
 
   private ITable m_table;
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void initTable(ITable subtable) {
     m_table = subtable;
     updateTable();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public ITable getTable() {
     return m_table;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void updateTable() {
     if (m_table != null) {
       m_table.putNumber("Speed", getRate());
@@ -709,15 +707,11 @@ public class Encoder extends SensorBase implements CounterBase, PIDSource, LiveW
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void startLiveWindowMode() {
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void stopLiveWindowMode() {
   }
 }

@@ -20,21 +20,28 @@ import edu.wpi.first.wpilibj.hal.DigitalGlitchFilterJNI;
  * that an input must remain high or low before it is classified as high or low.
  */
 public class DigitalGlitchFilter extends SensorBase {
+
+  /**
+   * Configures the Digital Glitch Filter to its default settings.
+   */
   public DigitalGlitchFilter() {
     synchronized (m_mutex) {
-      int i = 0;
-      while (m_filterAllocated[i] != false && i < m_filterAllocated.length) {
-        i++;
+      int index = 0;
+      while (m_filterAllocated[index] != false && index < m_filterAllocated.length) {
+        index++;
       }
-      if (i != m_filterAllocated.length) {
-        m_channelIndex = i;
-        m_filterAllocated[i] = true;
+      if (index != m_filterAllocated.length) {
+        m_channelIndex = index;
+        m_filterAllocated[index] = true;
         UsageReporting.report(tResourceType.kResourceType_DigitalFilter,
             m_channelIndex, 0);
       }
     }
   }
 
+  /**
+   * Free the resources used by this object.
+   */
   public void free() {
     if (m_channelIndex >= 0) {
       synchronized (m_mutex) {
@@ -71,8 +78,8 @@ public class DigitalGlitchFilter extends SensorBase {
    * @param input The Encoder to add.
    */
   public void add(Encoder input) {
-    add(input.m_aSource);
-    add(input.m_bSource);
+    add(input.m_sourceA);
+    add(input.m_sourceB);
   }
 
   /**
@@ -100,8 +107,8 @@ public class DigitalGlitchFilter extends SensorBase {
    * @param input the Encoder to stop filtering.
    */
   public void remove(Encoder input) {
-    remove(input.m_aSource);
-    remove(input.m_bSource);
+    remove(input.m_sourceA);
+    remove(input.m_sourceB);
   }
 
   /**
@@ -118,10 +125,10 @@ public class DigitalGlitchFilter extends SensorBase {
    * Sets the number of FPGA cycles that the input must hold steady to pass through this glitch
    * filter.
    *
-   * @param fpga_cycles The number of FPGA cycles.
+   * @param fpgaCycles The number of FPGA cycles.
    */
-  public void setPeriodCycles(int fpga_cycles) {
-    DigitalGlitchFilterJNI.setFilterPeriod(m_channelIndex, fpga_cycles);
+  public void setPeriodCycles(int fpgaCycles) {
+    DigitalGlitchFilterJNI.setFilterPeriod(m_channelIndex, fpgaCycles);
   }
 
   /**
@@ -131,9 +138,9 @@ public class DigitalGlitchFilter extends SensorBase {
    * @param nanoseconds The number of nanoseconds.
    */
   public void setPeriodNanoSeconds(long nanoseconds) {
-    int fpga_cycles = (int) (nanoseconds * kSystemClockTicksPerMicrosecond / 4 /
-        1000);
-    setPeriodCycles(fpga_cycles);
+    int fpgaCycles = (int) (nanoseconds * kSystemClockTicksPerMicrosecond / 4
+        / 1000);
+    setPeriodCycles(fpgaCycles);
   }
 
   /**
@@ -153,10 +160,10 @@ public class DigitalGlitchFilter extends SensorBase {
    * @return The number of nanoseconds.
    */
   public long getPeriodNanoSeconds() {
-    int fpga_cycles = getPeriodCycles();
+    int fpgaCycles = getPeriodCycles();
 
-    return (long) fpga_cycles * 1000L /
-        (long) (kSystemClockTicksPerMicrosecond / 4);
+    return (long) fpgaCycles * 1000L
+        / (long) (kSystemClockTicksPerMicrosecond / 4);
   }
 
   private int m_channelIndex = -1;

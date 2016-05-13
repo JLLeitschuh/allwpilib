@@ -41,7 +41,7 @@ public class DigitalInput extends DigitalSource implements LiveWindowSendable {
    * @return the status of the digital input
    */
   public boolean get() {
-    return DIOJNI.getDIO(m_port);
+    return DIOJNI.getDIO(super.m_port);
   }
 
   /**
@@ -50,7 +50,7 @@ public class DigitalInput extends DigitalSource implements LiveWindowSendable {
    * @return The GPIO channel number that this object represents.
    */
   public int getChannel() {
-    return m_channel;
+    return super.m_channel;
   }
 
   @Override
@@ -58,9 +58,7 @@ public class DigitalInput extends DigitalSource implements LiveWindowSendable {
     return false;
   }
 
-  /*
-   * Live Window code, only does anything if live window is activated.
-   */
+
   @Override
   public String getSmartDashboardType() {
     return "Digital Input";
@@ -68,43 +66,33 @@ public class DigitalInput extends DigitalSource implements LiveWindowSendable {
 
   private ITable m_table;
 
-  /**
-   * {@inheritDoc}
-   */
+
   @Override
   public void initTable(ITable subtable) {
-    m_table = subtable;
+    this.m_table = subtable;
     updateTable();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+
   @Override
   public void updateTable() {
-    if (m_table != null) {
-      m_table.putBoolean("Value", get());
+    if (this.m_table != null) {
+      this.m_table.putBoolean("Value", get());
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+
   @Override
   public ITable getTable() {
-    return m_table;
+    return this.m_table;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+
   @Override
   public void startLiveWindowMode() {
   }
 
-  /**
-   * {@inheritDoc}
-   */
+
   @Override
   public void stopLiveWindowMode() {
   }

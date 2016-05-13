@@ -134,7 +134,7 @@ public abstract class RobotBase {
    * @return Has new data arrived over the network since the last time this function was called?
    */
   public boolean isNewDataAvailable() {
-    return ds.isNewControlData();
+    return ds.isnewControlData();
   }
 
   /**
