@@ -9,22 +9,19 @@ package edu.wpi.first.wpilibj.fixtures;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
+ * A connection between a {@link Relay} and two {@link DigitalInput DigitalInputs}.
  * @author jonathanleitschuh
- *
  */
 public abstract class RelayCrossConnectFixture implements ITestFixture {
 
-  private DigitalInput inputOne;
-  private DigitalInput inputTwo;
-  private Relay relay;
+  private DigitalInput m_inputOne;
+  private DigitalInput m_inputTwo;
+  private Relay m_relay;
 
-  private boolean initialized = false;
-  private boolean freed = false;
-
+  private boolean m_initialized = false;
+  private boolean m_freed = false;
 
 
   protected abstract Relay giveRelay();
@@ -35,28 +32,28 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
 
   private void initialize() {
     synchronized (this) {
-      if (!initialized) {
-        relay = giveRelay();
-        inputOne = giveInputOne();
-        inputTwo = giveInputTwo();
-        initialized = true;
+      if (!m_initialized) {
+        m_relay = giveRelay();
+        m_inputOne = giveInputOne();
+        m_inputTwo = giveInputTwo();
+        m_initialized = true;
       }
     }
   }
 
-  public Relay getRelay() {
+  public Relay getM_relay() {
     initialize();
-    return relay;
+    return m_relay;
   }
 
   public DigitalInput getInputOne() {
     initialize();
-    return inputOne;
+    return m_inputOne;
   }
 
-  public DigitalInput getInputTwo() {
+  public DigitalInput getM_inputTwo() {
     initialize();
-    return inputTwo;
+    return m_inputTwo;
   }
 
   /*
@@ -88,11 +85,11 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
    */
   @Override
   public boolean teardown() {
-    if (!freed) {
-      relay.free();
-      inputOne.free();
-      inputTwo.free();
-      freed = true;
+    if (!m_freed) {
+      m_relay.free();
+      m_inputOne.free();
+      m_inputTwo.free();
+      m_freed = true;
     } else {
       throw new RuntimeException("You attempted to free the "
           + RelayCrossConnectFixture.class.getSimpleName() + " multiple times");
