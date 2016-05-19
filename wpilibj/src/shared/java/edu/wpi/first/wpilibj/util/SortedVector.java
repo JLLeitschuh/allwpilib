@@ -43,7 +43,7 @@ public class SortedVector extends Vector {
    *                   vector.
    */
   public SortedVector(Comparator comparator) {
-    this.m_comparator = comparator;
+    m_comparator = comparator;
   }
 
   /**

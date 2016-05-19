@@ -19,7 +19,7 @@ public class FakeEncoderSource {
 
   private Thread m_task;
   private int m_count;
-  private int m_miliSec;
+  private int m_milliSec;
   private boolean m_forward;
   private final DigitalOutput m_outputA;
   private final DigitalOutput m_outputB;
@@ -55,13 +55,13 @@ public class FakeEncoderSource {
       try {
         for (int i = 0; i < m_encoder.m_count; i++) {
           lead.set(true);
-          Thread.sleep(m_encoder.m_miliSec);
+          Thread.sleep(m_encoder.m_milliSec);
           lag.set(true);
-          Thread.sleep(m_encoder.m_miliSec);
+          Thread.sleep(m_encoder.m_milliSec);
           lead.set(false);
-          Thread.sleep(m_encoder.m_miliSec);
+          Thread.sleep(m_encoder.m_milliSec);
           lag.set(false);
-          Thread.sleep(m_encoder.m_miliSec);
+          Thread.sleep(m_encoder.m_milliSec);
         }
       } catch (InterruptedException ex) {
         Thread.currentThread().interrupt();
@@ -110,7 +110,7 @@ public class FakeEncoderSource {
    * Common initialization code.
    */
   private final void initQuadEncoder() {
-    m_miliSec = 1;
+    m_milliSec = 1;
     m_forward = true;
     m_task = new QuadEncoderThread(this);
     m_outputA.set(false);
@@ -148,10 +148,10 @@ public class FakeEncoderSource {
   /**
    * Rate of pulses to send.
    *
-   * @param miliSec Pulse Rate
+   * @param milliSec Pulse Rate
    */
-  public void setRate(int miliSec) {
-    m_miliSec = miliSec;
+  public void setRate(int milliSec) {
+    m_milliSec = milliSec;
   }
 
   /**

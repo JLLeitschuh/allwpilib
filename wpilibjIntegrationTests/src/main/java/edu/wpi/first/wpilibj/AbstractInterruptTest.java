@@ -96,7 +96,7 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
     final InterruptCounter m_counter;
 
     TestInterruptHandlerFunction(InterruptCounter counter) {
-      this.m_counter = counter;
+      m_counter = counter;
     }
 
     @Override
@@ -109,7 +109,7 @@ public abstract class AbstractInterruptTest extends AbstractComsSetup {
       } catch (Exception ex) {
         // So we must throw the exception within the test
         m_exceptionThrown.set(true);
-        this.m_ex = ex;
+        m_ex = ex;
       }
       m_interruptComplete.set(true);
     }

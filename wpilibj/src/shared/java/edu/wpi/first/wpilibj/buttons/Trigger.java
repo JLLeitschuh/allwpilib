@@ -16,8 +16,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
  * This class provides an easy way to link commands to inputs.
  *
  * <p>It is very easy to link a button to a command. For instance, you could link the trigger
- * button of
- * a joystick to a "score" command.
+ * button of a joystick to a "score" command.
  *
  * <p>It is encouraged that teams write a subclass of Trigger if they want to have something unusual
  * (for instance, if they want to react to the user holding a button while the robot is reading a
@@ -43,13 +42,9 @@ public abstract class Trigger implements Sendable {
    * @return whether get() return true or the internal table for SmartDashboard use is pressed.
    */
   private boolean grab() {
+    // FIXME: make isConnected work?
     return get()
-        || (m_table != null /* && table.isConnected() */ && m_table.getBoolean("pressed", false));//
-    // FIXME
-    // make
-    // is
-    // connected
-    // work?
+        || (m_table != null /* && m_table.isConnected() */ && m_table.getBoolean("pressed", false));
   }
 
   /**
@@ -205,7 +200,7 @@ public abstract class Trigger implements Sendable {
 
   @Override
   public void initTable(ITable table) {
-    this.m_table = table;
+    m_table = table;
     if (table != null) {
       table.putBoolean("pressed", get());
     }

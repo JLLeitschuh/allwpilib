@@ -87,7 +87,7 @@ public class FilterOutputTest extends AbstractComsSetup {
 
     double filterOutput = 0.0;
     for (double t = 0.0; t < TestBench.kFilterTime; t += TestBench.kFilterStep) {
-      filterOutput = me.getM_filter().pidGet();
+      filterOutput = me.getFilter().pidGet();
     }
 
     assertEquals(me.getType() + " output was incorrect.", m_expectedOutput, filterOutput, 0.00005);

@@ -40,7 +40,7 @@ public class CommandGroup extends Command {
   /**
    * The active children in this group (stored in entries).
    */
-  final Vector m_children = new Vector();
+  private final Vector m_children = new Vector();
   /**
    * The current command, -1 signifies that none have been run.
    */
@@ -54,7 +54,7 @@ public class CommandGroup extends Command {
   }
 
   /**
-   * Creates a new {@link CommandGroup CommandGroup} with the given name. $
+   * Creates a new {@link CommandGroup CommandGroup} with the given name.
    *
    * @param name the name for this command group
    * @throws IllegalArgumentException if name is null
@@ -390,15 +390,15 @@ public class CommandGroup extends Command {
     private final double m_timeout;
 
     Entry(Command command, int state) {
-      this.m_command = command;
-      this.m_state = state;
-      this.m_timeout = -1;
+      m_command = command;
+      m_state = state;
+      m_timeout = -1;
     }
 
     Entry(Command command, int state, double timeout) {
-      this.m_command = command;
-      this.m_state = state;
-      this.m_timeout = timeout;
+      m_command = command;
+      m_state = state;
+      m_timeout = timeout;
     }
 
     boolean isTimedOut() {

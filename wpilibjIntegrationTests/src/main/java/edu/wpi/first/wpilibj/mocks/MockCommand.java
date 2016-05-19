@@ -84,7 +84,7 @@ public class MockCommand extends Command {
    * @param hasFinished set what value the isFinished method will return.
    */
   public void setHasFinished(boolean hasFinished) {
-    this.m_hasFinished = hasFinished;
+    m_hasFinished = hasFinished;
   }
 
   /**

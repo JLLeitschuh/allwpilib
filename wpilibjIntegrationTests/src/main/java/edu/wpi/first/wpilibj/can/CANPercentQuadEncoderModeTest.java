@@ -43,29 +43,29 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#stopMotor()
    */
   protected void stopMotor() {
-    getME().getM_motor().set(kStoppedValue);
+    getME().getMotor().set(kStoppedValue);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorForward()
    */
   protected void runMotorForward() {
-    getME().getM_motor().set(kRunningValue);
+    getME().getMotor().set(kRunningValue);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorReverse()
    */
   protected void runMotorReverse() {
-    getME().getM_motor().set(-kRunningValue);
+    getME().getMotor().set(-kRunningValue);
   }
 
   @Override
@@ -75,9 +75,9 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
 
   @Before
   public void setUp() {
-    getME().getM_motor().setPercentMode(CANJaguar.kQuadEncoder, 360);
-    getME().getM_motor().enableControl();
-    getME().getM_motor().set(0.0f);
+    getME().getMotor().setPercentMode(CANJaguar.kQuadEncoder, 360);
+    getME().getMotor().enableControl();
+    getME().getMotor().set(0.0f);
     /* The motor might still have momentum from the previous test. */
     Timer.delay(kStartupTime);
   }
@@ -85,26 +85,26 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testDisableStopsTheMotor() {
     // given
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
     setCANJaguar(kMotorTime / 2, 1);
-    getME().getM_motor().disableControl();
+    getME().getMotor().disableControl();
     // when
     simpleLog(Level.FINER, "The motor should stop running now");
     setCANJaguar(kMotorTime / 2, 1);
-    final double initialPosition = getME().getM_motor().getPosition();
+    final double initialPosition = getME().getMotor().getPosition();
     setCANJaguar(kMotorTime / 2, 1);
 
     // then
-    assertEquals("Speed did not go to zero when disabled in percent mode", 0, getME().getM_motor()
+    assertEquals("Speed did not go to zero when disabled in percent mode", 0, getME().getMotor()
         .getSpeed(), kEncoderSpeedTolerance);
-    assertEquals(initialPosition, getME().getM_motor().getPosition(), 10);
+    assertEquals(initialPosition, getME().getMotor().getPosition(), 10);
   }
 
   @Test
   public void testRotateForward() {
     // Given
-    getME().getM_motor().enableControl();
-    final double initialPosition = getME().getM_motor().getPosition();
+    getME().getMotor().enableControl();
+    final double initialPosition = getME().getMotor().getPosition();
     // When
     /* Drive the speed controller briefly to move the encoder */
     runMotorForward();
@@ -118,7 +118,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorForward();
         assertThat("CANJaguar position should have increased after the motor moved", getME()
-            .getM_motor().getPosition(), is(greaterThan(initialPosition)));
+            .getMotor().getPosition(), is(greaterThan(initialPosition)));
       }
     });
 
@@ -128,8 +128,8 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testRotateReverse() {
     // Given
-    getME().getM_motor().enableControl();
-    final double initialPosition = getME().getM_motor().getPosition();
+    getME().getMotor().enableControl();
+    final double initialPosition = getME().getMotor().getPosition();
     // When
     /* Drive the speed controller briefly to move the encoder */
     runMotorReverse();
@@ -143,7 +143,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorReverse();
         assertThat("CANJaguar position should have decreased after the motor moved", getME()
-            .getM_motor().getPosition(), is(lessThan(initialPosition)));
+            .getMotor().getPosition(), is(lessThan(initialPosition)));
       }
     });
     stopMotor();
@@ -155,10 +155,10 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void shouldNotRotateForwards_WhenFakeLimitSwitchForwardsIsTripped() {
     // Given
-    getME().getM_motor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
+    getME().getMotor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
     getME().getForwardLimit().set(true);
     getME().getReverseLimit().set(false);
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
 
     stopMotor();
     Timer.delay(kEncoderSettlingTime);
@@ -173,13 +173,13 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         stopMotor();
         assertFalse("[TEST SETUP] The forward limit switch is not in the correct state", getME()
-            .getM_motor().getForwardLimitOK());
+            .getMotor().getForwardLimitOK());
         assertTrue("[TEST SETUP]The reverse limit switch is not in the correct state", getME()
-            .getM_motor().getReverseLimitOK());
+            .getMotor().getReverseLimitOK());
       }
     });
 
-    final double initialPosition = getME().getM_motor().getPosition();
+    final double initialPosition = getME().getMotor().getPosition();
 
     // When
     /*
@@ -192,7 +192,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
     // Then
     /* The position should be the same, since the limit switch was on. */
     assertEquals("CAN Jaguar should not have moved with the forward limit switch pressed",
-        initialPosition, getME().getM_motor().getPosition(), kEncoderPositionTolerance);
+        initialPosition, getME().getMotor().getPosition(), kEncoderPositionTolerance);
   }
 
 
@@ -202,10 +202,10 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void shouldRotateReverse_WhenFakeLimitSwitchForwardsIsTripped() {
     // Given
-    getME().getM_motor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
+    getME().getMotor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
     getME().getForwardLimit().set(true);
     getME().getReverseLimit().set(false);
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
 
     stopMotor();
     Timer.delay(kEncoderSettlingTime);
@@ -220,13 +220,13 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         stopMotor();
         assertFalse("[TEST SETUP] The forward limit switch is not in the correct state", getME()
-            .getM_motor().getForwardLimitOK());
+            .getMotor().getForwardLimitOK());
         assertTrue("[TEST SETUP] The reverse limit switch is not in the correct state", getME()
-            .getM_motor().getReverseLimitOK());
+            .getMotor().getReverseLimitOK());
       }
     });
 
-    final double initialPosition = getME().getM_motor().getPosition();
+    final double initialPosition = getME().getMotor().getPosition();
 
     // When
     /*
@@ -243,7 +243,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorReverse();
         assertThat("CAN Jaguar should have moved in reverse while the forward limit was on",
-            getME().getM_motor().getPosition(), is(lessThan(initialPosition)));
+            getME().getMotor().getPosition(), is(lessThan(initialPosition)));
       }
 
     });
@@ -257,10 +257,10 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void shouldNotRotateReverse_WhenFakeLimitSwitchReversesIsTripped() {
     // Given
-    getME().getM_motor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
+    getME().getMotor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
     getME().getForwardLimit().set(false);
     getME().getReverseLimit().set(true);
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
 
     stopMotor();
     Timer.delay(kEncoderSettlingTime);
@@ -275,13 +275,13 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         stopMotor();
         assertTrue("[TEST SETUP] The forward limit switch is not in the correct state", getME()
-            .getM_motor().getForwardLimitOK());
+            .getMotor().getForwardLimitOK());
         assertFalse("[TEST SETUP] The reverse limit switch is not in the correct state", getME()
-            .getM_motor().getReverseLimitOK());
+            .getMotor().getReverseLimitOK());
       }
     });
 
-    final double initialPosition = getME().getM_motor().getPosition();
+    final double initialPosition = getME().getMotor().getPosition();
 
     // When
     /*
@@ -294,7 +294,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
     // Then
     /* The position should be the same, since the limit switch was on. */
     assertEquals("CAN Jaguar should not have moved with the limit switch pressed", initialPosition,
-        getME().getM_motor().getPosition(), kEncoderPositionTolerance);
+        getME().getMotor().getPosition(), kEncoderPositionTolerance);
   }
 
   /**
@@ -304,10 +304,10 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void shouldRotateForward_WhenFakeLimitSwitchReversesIsTripped() {
     // Given
-    getME().getM_motor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
+    getME().getMotor().configLimitMode(CANJaguar.LimitMode.SwitchInputsOnly);
     getME().getForwardLimit().set(false);
     getME().getReverseLimit().set(true);
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
 
     PollingWait limitWait =
         new PollingWait().timeoutAfter((long) kLimitSettlingTime, TimeUnit.SECONDS).pollEvery(1,
@@ -319,13 +319,13 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         stopMotor();
         assertTrue("[TEST SETUP] The forward limit switch is not in the correct state", getME()
-            .getM_motor().getForwardLimitOK());
+            .getMotor().getForwardLimitOK());
         assertFalse("[TEST SETUP] The reverse limit switch is not in the correct state", getME()
-            .getM_motor().getReverseLimitOK());
+            .getMotor().getReverseLimitOK());
       }
     });
 
-    final double initialPosition = getME().getM_motor().getPosition();
+    final double initialPosition = getME().getMotor().getPosition();
 
     // When
     /*
@@ -343,7 +343,7 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorForward();
         assertThat("CAN Jaguar should have moved forwards while the reverse limit was on", getME()
-            .getM_motor().getPosition(), is(greaterThan(initialPosition)));
+            .getMotor().getPosition(), is(greaterThan(initialPosition)));
       }
 
     });
@@ -353,47 +353,47 @@ public class CANPercentQuadEncoderModeTest extends AbstractCANTest {
   @Ignore("Encoder is not yet wired to the FPGA")
   @Test
   public void testRotateForwardEncoderToFPGA() {
-    getME().getM_motor().enableControl();
-    final double jagInitialPosition = getME().getM_motor().getPosition();
+    getME().getMotor().enableControl();
+    final double jagInitialPosition = getME().getMotor().getPosition();
     final double encoderInitialPosition = getME().getEncoder().get();
-    getME().getM_motor().set(1);
+    getME().getMotor().set(1);
     Timer.delay(kMotorStopTime);
-    getME().getM_motor().set(0);
+    getME().getMotor().set(0);
 
     delayTillInCorrectStateWithMessage(Level.FINE, kEncoderSettlingTime,
         "Forward Encodeder settling", new BooleanCheck() {
           @Override
           public boolean getAsBoolean() {
-            return Math.abs((getME().getM_motor().getPosition() - jagInitialPosition)
+            return Math.abs((getME().getMotor().getPosition() - jagInitialPosition)
                 - (getME().getEncoder().get() - encoderInitialPosition))
                 < kEncoderPositionTolerance;
           }
         });
 
-    assertEquals(getME().getM_motor().getPosition() - jagInitialPosition, getME().getEncoder().get()
+    assertEquals(getME().getMotor().getPosition() - jagInitialPosition, getME().getEncoder().get()
         - encoderInitialPosition, kEncoderPositionTolerance);
   }
 
   @Ignore("Encoder is not yet wired to the FPGA")
   @Test
   public void testRotateReverseEncoderToFPGA() {
-    getME().getM_motor().enableControl();
-    final double jagInitialPosition = getME().getM_motor().getPosition();
+    getME().getMotor().enableControl();
+    final double jagInitialPosition = getME().getMotor().getPosition();
     final double encoderInitialPosition = getME().getEncoder().get();
-    getME().getM_motor().set(-1);
+    getME().getMotor().set(-1);
     Timer.delay(kMotorStopTime);
-    getME().getM_motor().set(0);
+    getME().getMotor().set(0);
 
     delayTillInCorrectStateWithMessage(Level.FINE, kEncoderSettlingTime,
         "Forward Encodeder settling", new BooleanCheck() {
           @Override
           public boolean getAsBoolean() {
-            return Math.abs((getME().getM_motor().getPosition() - jagInitialPosition)
+            return Math.abs((getME().getMotor().getPosition() - jagInitialPosition)
                 - (getME().getEncoder().get() - encoderInitialPosition))
                 < kEncoderPositionTolerance;
           }
         });
-    assertEquals(getME().getM_motor().getPosition() - jagInitialPosition, getME().getEncoder().get()
+    assertEquals(getME().getMotor().getPosition() - jagInitialPosition, getME().getEncoder().get()
         - encoderInitialPosition, kEncoderPositionTolerance);
   }
 }

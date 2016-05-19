@@ -54,7 +54,7 @@ public abstract class Subsystem implements NamedSendable {
    * @param name the name of the subsystem
    */
   public Subsystem(String name) {
-    this.m_name = name;
+    m_name = name;
     Scheduler.getInstance().registerSubsystem(this);
   }
 
@@ -62,7 +62,7 @@ public abstract class Subsystem implements NamedSendable {
    * Creates a subsystem. This will set the name to the name of the class.
    */
   public Subsystem() {
-    this.m_name = getClass().getName().substring(getClass().getName().lastIndexOf('.') + 1);
+    m_name = getClass().getName().substring(getClass().getName().lastIndexOf('.') + 1);
     Scheduler.getInstance().registerSubsystem(this);
     m_currentCommandChanged = true;
   }
@@ -188,7 +188,7 @@ public abstract class Subsystem implements NamedSendable {
 
   @Override
   public void initTable(ITable table) {
-    this.m_table = table;
+    m_table = table;
     if (table != null) {
       if (m_defaultCommand != null) {
         table.putBoolean("hasDefault", true);

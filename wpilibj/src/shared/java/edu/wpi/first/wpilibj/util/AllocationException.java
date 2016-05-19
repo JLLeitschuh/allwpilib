@@ -22,6 +22,4 @@ public class AllocationException extends RuntimeException {
   public AllocationException(String msg) {
     super(msg);
   }
-
-
 }

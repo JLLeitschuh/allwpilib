@@ -50,8 +50,8 @@ public class DIOCrossConnectFixture implements ITestFixture {
     assert input != null;
     assert output != null;
     assert !input.equals(output);
-    this.m_input = new DigitalInput(input);
-    this.m_output = new DigitalOutput(output);
+    m_input = new DigitalInput(input);
+    m_output = new DigitalOutput(output);
     m_allocated = true;
   }
 

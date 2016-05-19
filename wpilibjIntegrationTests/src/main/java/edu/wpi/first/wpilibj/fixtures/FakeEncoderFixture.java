@@ -36,8 +36,8 @@ public class FakeEncoderFixture implements ITestFixture {
   public FakeEncoderFixture(DIOCrossConnectFixture dio1, DIOCrossConnectFixture dio2) {
     assert dio1 != null;
     assert dio2 != null;
-    this.m_dio1 = dio1;
-    this.m_dio2 = dio2;
+    m_dio1 = dio1;
+    m_dio2 = dio2;
     m_allocated = false;
     m_source = new FakeEncoderSource(dio1.getOutput(), dio2.getOutput());
     m_encoder = new Encoder(dio1.getInput(), dio2.getInput());
@@ -53,8 +53,8 @@ public class FakeEncoderFixture implements ITestFixture {
     assert outputB != inputA;
     assert outputB != inputB;
     assert inputA != inputB;
-    this.m_dio1 = new DIOCrossConnectFixture(inputA, outputA);
-    this.m_dio2 = new DIOCrossConnectFixture(inputB, outputB);
+    m_dio1 = new DIOCrossConnectFixture(inputA, outputA);
+    m_dio2 = new DIOCrossConnectFixture(inputB, outputB);
     m_allocated = true;
     m_sourcePort[0] = outputA;
     m_sourcePort[1] = outputB;
@@ -74,7 +74,7 @@ public class FakeEncoderFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#setup()
    */
   @Override
@@ -84,7 +84,7 @@ public class FakeEncoderFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#reset()
    */
   @Override
@@ -97,7 +97,7 @@ public class FakeEncoderFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#teardown()
    */
   @Override

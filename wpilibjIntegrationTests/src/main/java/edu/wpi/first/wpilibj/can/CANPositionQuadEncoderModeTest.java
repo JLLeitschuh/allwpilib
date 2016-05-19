@@ -36,30 +36,30 @@ public class CANPositionQuadEncoderModeTest extends AbstractCANTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorForward()
    */
   protected void runMotorForward() {
-    double postion = getME().getM_motor().getPosition();
-    getME().getM_motor().set(postion + 100);
+    double postion = getME().getMotor().getPosition();
+    getME().getMotor().set(postion + 100);
   }
 
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorReverse()
    */
   protected void runMotorReverse() {
-    double postion = getME().getM_motor().getPosition();
-    getME().getM_motor().set(postion - 100);
+    double postion = getME().getMotor().getPosition();
+    getME().getMotor().set(postion - 100);
   }
 
 
   @Before
   public void setUp() throws Exception {
-    getME().getM_motor().setPositionMode(CANJaguar.kQuadEncoder, 360, 10.0f, 0.01f, 0.0f);
-    getME().getM_motor().enableControl(0);
+    getME().getMotor().setPositionMode(CANJaguar.kQuadEncoder, 360, 10.0f, 0.01f, 0.0f);
+    getME().getMotor().enableControl(0);
     /* The motor might still have momentum from the previous test. */
     Timer.delay(kStartupTime);
   }
@@ -70,18 +70,18 @@ public class CANPositionQuadEncoderModeTest extends AbstractCANTest {
     // given
     final double encoderValue = 4823;
     // when
-    getME().getM_motor().enableControl(encoderValue);
-    getME().getM_motor().disableControl();
+    getME().getMotor().enableControl(encoderValue);
+    getME().getMotor().disableControl();
     delayTillInCorrectStateWithMessage(Level.FINE, kEncoderSettlingTime, "Encoder value settling",
         new BooleanCheck() {
           @Override
           public boolean getAsBoolean() {
-            getME().getM_motor().set(getME().getM_motor().getPosition());
-            return Math.abs(getME().getM_motor().getPosition() - encoderValue) < 40;
+            getME().getMotor().set(getME().getMotor().getPosition());
+            return Math.abs(getME().getMotor().getPosition() - encoderValue) < 40;
           }
         });
     // then
-    assertEquals(encoderValue, getME().getM_motor().getPosition(), 40);
+    assertEquals(encoderValue, getME().getMotor().getPosition(), 40);
   }
 
   /**
@@ -90,14 +90,14 @@ public class CANPositionQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testEncoderPositionPIDForward() {
 
-    double setpoint = getME().getM_motor().getPosition() + 1.0f;
+    double setpoint = getME().getMotor().getPosition() + 1.0f;
 
     /* It should get to the setpoint within 10 seconds */
-    getME().getM_motor().set(setpoint);
+    getME().getMotor().set(setpoint);
     setCANJaguar(kMotorTimeSettling, setpoint);
 
     assertEquals("CAN Jaguar should have reached setpoint with PID control", setpoint, getME()
-        .getM_motor().getPosition(), kEncoderPositionTolerance);
+        .getMotor().getPosition(), kEncoderPositionTolerance);
   }
 
   /**
@@ -106,14 +106,14 @@ public class CANPositionQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testEncoderPositionPIDReverse() {
 
-    double setpoint = getME().getM_motor().getPosition() - 1.0f;
+    double setpoint = getME().getMotor().getPosition() - 1.0f;
 
     /* It should get to the setpoint within 10 seconds */
-    getME().getM_motor().set(setpoint);
+    getME().getMotor().set(setpoint);
     setCANJaguar(kMotorTimeSettling, setpoint);
 
     assertEquals("CAN Jaguar should have reached setpoint with PID control", setpoint, getME()
-        .getM_motor().getPosition(), kEncoderPositionTolerance);
+        .getMotor().getPosition(), kEncoderPositionTolerance);
   }
 
 

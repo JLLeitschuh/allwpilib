@@ -42,29 +42,29 @@ public class CANPositionPotentiometerModeTest extends AbstractCANTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#stopMotor()
    */
   protected void stopMotor() {
-    getME().getM_motor().set(.5);
+    getME().getMotor().set(.5);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorForward()
    */
   protected void runMotorForward() {
-    getME().getM_motor().set(1);
+    getME().getMotor().set(1);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorReverse()
    */
   protected void runMotorReverse() {
-    getME().getM_motor().set(0);
+    getME().getMotor().set(0);
   }
 
   @Override
@@ -74,12 +74,12 @@ public class CANPositionPotentiometerModeTest extends AbstractCANTest {
 
   @Before
   public void setUp() throws Exception {
-    getME().getM_motor().setPositionMode(CANJaguar.kPotentiometer, 5.0, 0.1, 2.0);
+    getME().getMotor().setPositionMode(CANJaguar.kPotentiometer, 5.0, 0.1, 2.0);
     // getME().getMotor().configPotentiometerTurns(rotationRange);
     getME().getFakePot().setMaxVoltage(maxPotVoltage);
     getME().getFakePot().setVoltage(1.5);
     stopMotor();
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
     /* The motor might still have momentum from the previous test. */
     Timer.delay(kStartupTime);
   }
@@ -94,9 +94,9 @@ public class CANPositionPotentiometerModeTest extends AbstractCANTest {
   public void testRotateForward() {
     final int initialPosition = getME().getEncoder().get();
     /* Drive the speed controller briefly to move the encoder */
-    getME().getM_motor().set(kStoppedValue);
+    getME().getMotor().set(kStoppedValue);
     Timer.delay(kMotorTimeSettling);
-    getME().getM_motor().set(defaultPotAngle);
+    getME().getMotor().set(defaultPotAngle);
 
     /* The position should have increased */
     assertThat("CAN Jaguar position should have increased after the motor moved", getME()
@@ -113,9 +113,9 @@ public class CANPositionPotentiometerModeTest extends AbstractCANTest {
   public void testRotateReverse() {
     final int initialPosition = getME().getEncoder().get();
     /* Drive the speed controller briefly to move the encoder */
-    getME().getM_motor().set(kStoppedValue);
+    getME().getMotor().set(kStoppedValue);
     Timer.delay(kMotorTimeSettling);
-    getME().getM_motor().set(defaultPotAngle);
+    getME().getMotor().set(defaultPotAngle);
 
     /* The position should have increased */
     assertThat("CAN Jaguar position should have increased after the motor moved", getME()
@@ -140,11 +140,11 @@ public class CANPositionPotentiometerModeTest extends AbstractCANTest {
         new RunnableAssert("Waiting for potentiometer position to be correct") {
           @Override
           public void run() throws Exception {
-            getME().getM_motor().set(0);
+            getME().getMotor().set(0);
             assertEquals(
                 "CAN Jaguar should have returned the potentiometer position set by the analog "
                     + "output",
-                getME().getFakePot().getVoltage(), getME().getM_motor().getPosition() * 3,
+                getME().getFakePot().getVoltage(), getME().getMotor().getPosition() * 3,
                 kPotentiometerPositionTolerance * 3);
           }
         };

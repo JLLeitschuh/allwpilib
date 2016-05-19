@@ -26,9 +26,8 @@ public class Talon extends PWMSpeedController {
    * available from CTRE.
    *
    * <p>- 2.037ms = full "forward" - 1.539ms = the "high end" of the deadband range - 1.513ms =
-   * center
-   * of the deadband range (off) - 1.487ms = the "low end" of the deadband range - .989ms = full
-   * "reverse"
+   * center of the deadband range (off) - 1.487ms = the "low end" of the deadband range - .989ms
+   * = full "reverse"
    */
   private void initTalon() {
     setBounds(2.037, 1.539, 1.513, 1.487, .989);

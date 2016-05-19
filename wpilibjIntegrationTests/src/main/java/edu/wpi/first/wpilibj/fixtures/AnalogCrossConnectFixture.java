@@ -38,7 +38,7 @@ public abstract class AnalogCrossConnectFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#setup()
    */
   @Override
@@ -50,7 +50,7 @@ public abstract class AnalogCrossConnectFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#reset()
    */
   @Override
@@ -61,7 +61,7 @@ public abstract class AnalogCrossConnectFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#teardown()
    */
   @Override

@@ -30,29 +30,29 @@ public class CANCurrentQuadEncoderModeTest extends AbstractCANTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#stopMotor()
    */
   protected void stopMotor() {
-    getME().getM_motor().set(kStoppedValue);
+    getME().getMotor().set(kStoppedValue);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorForward()
    */
   protected void runMotorForward() {
-    getME().getM_motor().set(kRunningValue);
+    getME().getMotor().set(kRunningValue);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorReverse()
    */
   protected void runMotorReverse() {
-    getME().getM_motor().set(-kRunningValue);
+    getME().getMotor().set(-kRunningValue);
   }
 
   @Override
@@ -62,9 +62,9 @@ public class CANCurrentQuadEncoderModeTest extends AbstractCANTest {
 
   @Before
   public void setUp() throws Exception {
-    getME().getM_motor().setCurrentMode(CANJaguar.kQuadEncoder, 360, 10.0, 4.0, 1.0);
-    getME().getM_motor().enableControl();
-    getME().getM_motor().set(0.0f);
+    getME().getMotor().setCurrentMode(CANJaguar.kQuadEncoder, 360, 10.0, 4.0, 1.0);
+    getME().getMotor().enableControl();
+    getME().getMotor().set(0.0f);
     /* The motor might still have momentum from the previous test. */
     Timer.delay(kStartupTime);
   }
@@ -79,12 +79,12 @@ public class CANCurrentQuadEncoderModeTest extends AbstractCANTest {
     for (int i = 0; i < 10; i++) {
       setCANJaguar(1.0, setpoint);
 
-      if (Math.abs(getME().getM_motor().getOutputCurrent() - setpoint) <= kCurrentTolerance) {
+      if (Math.abs(getME().getMotor().getOutputCurrent() - setpoint) <= kCurrentTolerance) {
         break;
       }
     }
 
-    assertEquals("The desired output current was not reached", setpoint, getME().getM_motor()
+    assertEquals("The desired output current was not reached", setpoint, getME().getMotor()
         .getOutputCurrent(), kCurrentTolerance);
   }
 
@@ -97,14 +97,14 @@ public class CANCurrentQuadEncoderModeTest extends AbstractCANTest {
     for (int i = 0; i < 10; i++) {
       setCANJaguar(1.0, setpoint);
 
-      if (Math.abs(getME().getM_motor().getOutputCurrent() - Math.abs(setpoint))
+      if (Math.abs(getME().getMotor().getOutputCurrent() - Math.abs(setpoint))
           <= kCurrentTolerance) {
         break;
       }
     }
 
     assertEquals("The desired output current was not reached", Math.abs(setpoint), getME()
-        .getM_motor().getOutputCurrent(), kCurrentTolerance);
+        .getMotor().getOutputCurrent(), kCurrentTolerance);
   }
 
 }

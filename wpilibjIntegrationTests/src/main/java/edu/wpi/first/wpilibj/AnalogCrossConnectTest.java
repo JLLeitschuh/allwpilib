@@ -146,7 +146,7 @@ public class AnalogCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see
    * edu.wpi.first.wpilibj.AbstractInterruptTest#giveInterruptableSensorBase()
    */
@@ -162,7 +162,7 @@ public class AnalogCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see
    * edu.wpi.first.wpilibj.AbstractInterruptTest#freeInterruptableSensorBase()
    */
@@ -178,7 +178,7 @@ public class AnalogCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.AbstractInterruptTest#setInterruptHigh()
    */
   @Override
@@ -189,7 +189,7 @@ public class AnalogCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.AbstractInterruptTest#setInterruptLow()
    */
   @Override

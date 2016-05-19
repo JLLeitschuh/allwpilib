@@ -32,15 +32,15 @@ public class InternalButton extends Button {
    *                 when set to false.
    */
   public InternalButton(boolean inverted) {
-    this.m_pressed = this.m_inverted = inverted;
+    m_pressed = m_inverted = inverted;
   }
 
   public void setInverted(boolean inverted) {
-    this.m_inverted = inverted;
+    m_inverted = inverted;
   }
 
   public void setPressed(boolean pressed) {
-    this.m_pressed = pressed;
+    m_pressed = pressed;
   }
 
   public boolean get() {

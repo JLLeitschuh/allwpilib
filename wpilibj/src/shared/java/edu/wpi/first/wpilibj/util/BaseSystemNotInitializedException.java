@@ -35,5 +35,4 @@ public class BaseSystemNotInitializedException extends RuntimeException {
     super("The " + offender.getSimpleName() + " for the " + affected.getSimpleName()
         + " was never set.");
   }
-
 }

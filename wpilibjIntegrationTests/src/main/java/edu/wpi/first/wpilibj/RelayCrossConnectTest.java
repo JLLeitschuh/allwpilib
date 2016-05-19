@@ -40,7 +40,7 @@ public class RelayCrossConnectTest extends AbstractComsSetup {
   public void setUp() throws Exception {
     m_relayFixture = TestBench.getRelayCrossConnectFixture();
     m_relayFixture.setup();
-    m_relayFixture.getM_relay().initTable(table);
+    m_relayFixture.getRelay().initTable(table);
   }
 
   @After
@@ -51,60 +51,60 @@ public class RelayCrossConnectTest extends AbstractComsSetup {
 
   @Test
   public void testBothHigh() {
-    m_relayFixture.getM_relay().setDirection(Direction.kBoth);
-    m_relayFixture.getM_relay().set(Value.kOn);
-    m_relayFixture.getM_relay().updateTable();
+    m_relayFixture.getRelay().setDirection(Direction.kBoth);
+    m_relayFixture.getRelay().set(Value.kOn);
+    m_relayFixture.getRelay().updateTable();
     assertTrue("Input one was not high when relay set both high", m_relayFixture.getInputOne()
         .get());
-    assertTrue("Input two was not high when relay set both high", m_relayFixture.getM_inputTwo()
+    assertTrue("Input two was not high when relay set both high", m_relayFixture.getInputTwo()
         .get());
     assertEquals("On", table.getString("Value"));
   }
 
   @Test
   public void testFirstHigh() {
-    m_relayFixture.getM_relay().setDirection(Direction.kBoth);
-    m_relayFixture.getM_relay().set(Value.kForward);
-    m_relayFixture.getM_relay().updateTable();
+    m_relayFixture.getRelay().setDirection(Direction.kBoth);
+    m_relayFixture.getRelay().set(Value.kForward);
+    m_relayFixture.getRelay().updateTable();
     assertFalse("Input one was not low when relay set Value.kForward", m_relayFixture.getInputOne()
         .get());
     assertTrue("Input two was not high when relay set Value.kForward", m_relayFixture
-        .getM_inputTwo()
+        .getInputTwo()
         .get());
     assertEquals("Forward", table.getString("Value"));
   }
 
   @Test
   public void testSecondHigh() {
-    m_relayFixture.getM_relay().setDirection(Direction.kBoth);
-    m_relayFixture.getM_relay().set(Value.kReverse);
-    m_relayFixture.getM_relay().updateTable();
+    m_relayFixture.getRelay().setDirection(Direction.kBoth);
+    m_relayFixture.getRelay().set(Value.kReverse);
+    m_relayFixture.getRelay().updateTable();
     assertTrue("Input one was not high when relay set Value.kReverse", m_relayFixture.getInputOne()
         .get());
     assertFalse("Input two was not low when relay set Value.kReverse", m_relayFixture
-        .getM_inputTwo()
+        .getInputTwo()
         .get());
     assertEquals("Reverse", table.getString("Value"));
   }
 
   @Test(expected = InvalidValueException.class)
   public void testSetValueForwardWithDirectionReverseThrowingException() {
-    m_relayFixture.getM_relay().setDirection(Direction.kForward);
-    m_relayFixture.getM_relay().set(Value.kReverse);
+    m_relayFixture.getRelay().setDirection(Direction.kForward);
+    m_relayFixture.getRelay().set(Value.kReverse);
   }
 
   @Test(expected = InvalidValueException.class)
   public void testSetValueReverseWithDirectionForwardThrowingException() {
-    m_relayFixture.getM_relay().setDirection(Direction.kReverse);
-    m_relayFixture.getM_relay().set(Value.kForward);
+    m_relayFixture.getRelay().setDirection(Direction.kReverse);
+    m_relayFixture.getRelay().set(Value.kForward);
   }
 
   @Test
   public void testInitialSettings() {
-    assertEquals(Value.kOff, m_relayFixture.getM_relay().get());
+    assertEquals(Value.kOff, m_relayFixture.getRelay().get());
     // Initially both outputs should be off
     assertFalse(m_relayFixture.getInputOne().get());
-    assertFalse(m_relayFixture.getM_inputTwo().get());
+    assertFalse(m_relayFixture.getInputTwo().get());
     assertEquals("Off", table.getString("Value"));
   }
 

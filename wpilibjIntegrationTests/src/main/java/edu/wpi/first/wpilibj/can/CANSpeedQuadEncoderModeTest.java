@@ -45,9 +45,9 @@ public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
 
   @Before
   public void setUp() throws Exception {
-    getME().getM_motor().setSpeedMode(CANJaguar.kQuadEncoder, 360, 0.1f, 0.003f, 0.01f);
-    getME().getM_motor().enableControl();
-    getME().getM_motor().set(0.0f);
+    getME().getMotor().setSpeedMode(CANJaguar.kQuadEncoder, 360, 0.1f, 0.003f, 0.01f);
+    getME().getMotor().enableControl();
+    getME().getMotor().set(0.0f);
     /* The motor might still have momentum from the previous test. */
     Timer.delay(kStartupTime);
   }
@@ -55,7 +55,7 @@ public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testDefaultSpeed() {
     assertEquals("CAN Jaguar did not start with an initial speed of zero", 0.0f, getME()
-        .getM_motor()
+        .getMotor()
         .getSpeed(), 0.3f);
   }
 
@@ -66,11 +66,11 @@ public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testRotateForwardSpeed() {
     double speed = 50.0f;
-    double initialPosition = getME().getM_motor().getPosition();
+    double initialPosition = getME().getMotor().getPosition();
     setCANJaguar(2 * kMotorTime, speed);
     assertEquals("The motor did not reach the required speed in speed mode", speed, getME()
-        .getM_motor().getSpeed(), kEncoderSpeedTolerance);
-    assertThat("The motor did not move forward in speed mode", getME().getM_motor().getPosition(),
+        .getMotor().getSpeed(), kEncoderSpeedTolerance);
+    assertThat("The motor did not move forward in speed mode", getME().getMotor().getPosition(),
         is(greaterThan(initialPosition)));
   }
 
@@ -80,11 +80,11 @@ public class CANSpeedQuadEncoderModeTest extends AbstractCANTest {
   @Test
   public void testRotateReverseSpeed() {
     double speed = -50.0f;
-    double initialPosition = getME().getM_motor().getPosition();
+    double initialPosition = getME().getMotor().getPosition();
     setCANJaguar(2 * kMotorTime, speed);
     assertEquals("The motor did not reach the required speed in speed mode", speed, getME()
-        .getM_motor().getSpeed(), kEncoderSpeedTolerance);
-    assertThat("The motor did not move in reverse in speed mode", getME().getM_motor()
+        .getMotor().getSpeed(), kEncoderSpeedTolerance);
+    assertThat("The motor did not move in reverse in speed mode", getME().getMotor()
         .getPosition(),
         is(lessThan(initialPosition)));
   }

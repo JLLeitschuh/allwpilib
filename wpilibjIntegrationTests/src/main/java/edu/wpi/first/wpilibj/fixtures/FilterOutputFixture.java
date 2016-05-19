@@ -30,7 +30,7 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
   private double m_expectedOutput;
 
   public FilterOutputFixture(double expectedOutput) {
-    this.m_expectedOutput = expectedOutput;
+    m_expectedOutput = expectedOutput;
   }
 
   /**
@@ -73,7 +73,7 @@ public abstract class FilterOutputFixture<T extends PIDSource> implements ITestF
    *
    * @return the filter this object refers too
    */
-  public T getM_filter() {
+  public T getFilter() {
     initialize();
     return m_filter;
   }

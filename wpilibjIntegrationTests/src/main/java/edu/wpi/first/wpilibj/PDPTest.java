@@ -63,7 +63,7 @@ public class PDPTest extends AbstractComsSetup {
     me = mef;
     me.setup();
 
-    this.m_expectedStoppedCurrentDraw = expectedCurrentDraw;
+    m_expectedStoppedCurrentDraw = expectedCurrentDraw;
   }
 
   @Parameters(name = "{index}: {0}, Expected Stopped Current Draw: {1}")
@@ -98,7 +98,7 @@ public class PDPTest extends AbstractComsSetup {
   public void checkRunningCurrentForSpeedController() throws CANMessageNotFoundException {
 
     /* Set the motor to full forward */
-    me.getM_motor().set(1.0);
+    me.getMotor().set(1.0);
     Timer.delay(2);
 
     /* The current should now be greater than the low current */

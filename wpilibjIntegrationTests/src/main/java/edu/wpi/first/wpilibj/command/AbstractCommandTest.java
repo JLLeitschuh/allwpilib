@@ -38,7 +38,7 @@ public abstract class AbstractCommandTest extends AbstractComsSetup {
     }
 
     public void init(Command command) {
-      this.m_command = command;
+      m_command = command;
     }
   }
 

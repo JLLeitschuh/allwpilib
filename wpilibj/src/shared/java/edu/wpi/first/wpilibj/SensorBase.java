@@ -167,7 +167,7 @@ public abstract class SensorBase { // TODO: Refactor
   }
 
   /**
-   * Verify that the PDP module number is within limits. module numbers are 0-based. $
+   * Verify that the PDP module number is within limits. module numbers are 0-based.
    *
    * @param module The module number to check.
    */

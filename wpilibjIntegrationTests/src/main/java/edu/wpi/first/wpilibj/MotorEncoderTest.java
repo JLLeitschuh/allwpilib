@@ -65,7 +65,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
 
   @Before
   public void setUp() {
-    double initialSpeed = me.getM_motor().get();
+    double initialSpeed = me.getMotor().get();
     assertTrue(me.getType() + " Did not start with an initial speed of 0 instead got: "
         + initialSpeed, Math.abs(initialSpeed) < 0.001);
     me.setup();
@@ -106,7 +106,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
   public void testIncrement() {
     int startValue = me.getEncoder().get();
 
-    me.getM_motor().set(.2);
+    me.getMotor().set(.2);
     Timer.delay(MOTOR_RUNTIME);
     int currentValue = me.getEncoder().get();
     assertTrue(me.getType() + " Encoder not incremented: start: " + startValue + "; current: "
@@ -122,7 +122,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
   public void testDecrement() {
     int startValue = me.getEncoder().get();
 
-    me.getM_motor().set(-.2);
+    me.getMotor().set(-.2);
     Timer.delay(MOTOR_RUNTIME);
     int currentValue = me.getEncoder().get();
     assertTrue(me.getType() + " Encoder not decremented: start: " + startValue + "; current: "
@@ -137,7 +137,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
     final int counter1Start = me.getCounters()[0].get();
     final int counter2Start = me.getCounters()[1].get();
 
-    me.getM_motor().set(.75);
+    me.getMotor().set(.75);
     Timer.delay(MOTOR_RUNTIME);
     int counter1End = me.getCounters()[0].get();
     int counter2End = me.getCounters()[1].get();
@@ -155,8 +155,8 @@ public class MotorEncoderTest extends AbstractComsSetup {
    */
   @Test
   public void testSetHighForwardSpeed() {
-    me.getM_motor().set(15);
-    assertTrue(me.getType() + " Motor speed was not close to 1.0, was: " + me.getM_motor().get(),
+    me.getMotor().set(15);
+    assertTrue(me.getType() + " Motor speed was not close to 1.0, was: " + me.getMotor().get(),
         me.isMotorSpeedWithinRange(1.0, 0.001));
   }
 
@@ -166,8 +166,8 @@ public class MotorEncoderTest extends AbstractComsSetup {
    */
   @Test
   public void testSetHighReverseSpeed() {
-    me.getM_motor().set(-15);
-    assertTrue(me.getType() + " Motor speed was not close to 1.0, was: " + me.getM_motor().get(),
+    me.getMotor().set(-15);
+    assertTrue(me.getType() + " Motor speed was not close to 1.0, was: " + me.getMotor().get(),
         me.isMotorSpeedWithinRange(-1.0, 0.001));
   }
 
@@ -175,7 +175,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
   @Test
   public void testPositionPIDController() {
     me.getEncoder().setPIDSourceType(PIDSourceType.kDisplacement);
-    PIDController pid = new PIDController(0.001, 0.0005, 0, me.getEncoder(), me.getM_motor());
+    PIDController pid = new PIDController(0.001, 0.0005, 0, me.getEncoder(), me.getMotor());
     pid.setAbsoluteTolerance(50.0);
     pid.setOutputRange(-0.2, 0.2);
     pid.setSetpoint(1000);
@@ -195,7 +195,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
   public void testVelocityPIDController() {
     me.getEncoder().setPIDSourceType(PIDSourceType.kRate);
     PIDController pid =
-        new PIDController(1e-5, 0.0, 3e-5, 8e-5, me.getEncoder(), me.getM_motor());
+        new PIDController(1e-5, 0.0, 3e-5, 8e-5, me.getEncoder(), me.getMotor());
     pid.setAbsoluteTolerance(200);
     pid.setToleranceBuffer(50);
     pid.setOutputRange(-0.3, 0.3);
@@ -220,7 +220,7 @@ public class MotorEncoderTest extends AbstractComsSetup {
   private void encodersResetCheck(MotorEncoderFixture<?> me) {
     assertEquals(me.getType() + " Encoder value was incorrect after reset.", me.getEncoder().get(),
         0);
-    assertEquals(me.getType() + " Motor value was incorrect after reset.", me.getM_motor().get(), 0,
+    assertEquals(me.getType() + " Motor value was incorrect after reset.", me.getMotor().get(), 0,
         0);
     assertEquals(me.getType() + " Counter1 value was incorrect after reset.",
         me.getCounters()[0].get(), 0);

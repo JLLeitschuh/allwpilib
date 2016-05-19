@@ -136,7 +136,7 @@ public class TestSuite extends AbstractTestSuite {
   }
 
   /**
-   * Prints the loaded tests before they are run. $
+   * Prints the loaded tests before they are run.
    *
    * @param classes the classes that were loaded.
    */
@@ -156,7 +156,7 @@ public class TestSuite extends AbstractTestSuite {
 
   /**
    * Parses the arguments passed at runtime and runs the appropriate tests based upon these
-   * arguments $
+   * arguments
    *
    * @param args the args passed into the program at runtime
    * @return the restults of the tests that have run. If no tests were run then null is returned.
@@ -246,7 +246,7 @@ public class TestSuite extends AbstractTestSuite {
 
       /**
        * Adds the given result's data to this result.
-       *$
+       *
        * @param result the result to add to this result
        */
       void addResult(Result result) {

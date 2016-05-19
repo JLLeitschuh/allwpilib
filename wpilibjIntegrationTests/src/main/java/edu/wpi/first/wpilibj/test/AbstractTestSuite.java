@@ -71,8 +71,8 @@ public abstract class AbstractTestSuite {
     public final String m_methodName;
 
     public ClassMethodPair(Class<?> klass, Method method) {
-      this.m_methodClass = klass;
-      this.m_methodName = method.getName();
+      m_methodClass = klass;
+      m_methodName = method.getName();
     }
 
     public Request getMethodRunRequest() {
@@ -100,7 +100,7 @@ public abstract class AbstractTestSuite {
 
   /**
    * Gets all of the test classes listed in this suite. Does not include any of the test suites. All
-   * of these classes contain tests. $
+   * of these classes contain tests.
    *
    * @param runningList the running list of classes to prevent recursion.
    * @return The list of base test classes.
@@ -135,7 +135,7 @@ public abstract class AbstractTestSuite {
 
   /**
    * Gets all of the test classes listed in this suite. Does not include any of the test suites. All
-   * of these classes contain tests. $
+   * of these classes contain tests.
    *
    * @return The list of base test classes.
    */
@@ -147,7 +147,7 @@ public abstract class AbstractTestSuite {
 
   /**
    * Retrieves all of the classes listed in the <code>@SuiteClasses</code> annotation that match the
-   * given regex text. $
+   * given regex text.
    *
    * @param regex       the text pattern to retrieve.
    * @param runningList the running list of classes to prevent recursion
@@ -165,7 +165,7 @@ public abstract class AbstractTestSuite {
 
   /**
    * Retrieves all of the classes listed in the <code>@SuiteClasses</code> annotation that match the
-   * given regex text. $
+   * given regex text.
    *
    * @param regex the text pattern to retrieve.
    * @return The list of classes matching the regex pattern
@@ -178,7 +178,7 @@ public abstract class AbstractTestSuite {
   /**
    * Searches through all of the suites and tests and loads only the test or test suites matching
    * the regex text. This method also prevents a single test from being loaded multiple times by
-   * loading the suite first then loading tests from all non loaded suites. $
+   * loading the suite first then loading tests from all non loaded suites.
    *
    * @param regex the regex text to search for
    * @return the list of suite and/or test classes matching the regex.
@@ -224,7 +224,7 @@ public abstract class AbstractTestSuite {
   /**
    * Searches through all of the suites and tests and loads only the test or test suites matching
    * the regex text. This method also prevents a single test from being loaded multiple times by
-   * loading the suite first then loading tests from all non loaded suites. $
+   * loading the suite first then loading tests from all non loaded suites.
    *
    * @param regex the regex text to search for
    * @return the list of suite and/or test classes matching the regex.
@@ -236,7 +236,7 @@ public abstract class AbstractTestSuite {
 
 
   /**
-   * Retrieves all of the classes listed in the <code>@SuiteClasses</code> annotation. $
+   * Retrieves all of the classes listed in the <code>@SuiteClasses</code> annotation.
    *
    * @return List of SuiteClasses
    * @throws RuntimeException If the <code>@SuiteClasses</code> annotation is missing.
@@ -246,7 +246,7 @@ public abstract class AbstractTestSuite {
   }
 
   /**
-   * Gets the name of all of the classes listed within the <code>@SuiteClasses</code> annotation. $
+   * Gets the name of all of the classes listed within the <code>@SuiteClasses</code> annotation.
    *
    * @return the list of classes.
    * @throws RuntimeException If the <code>@SuiteClasses</code> annotation is missing.

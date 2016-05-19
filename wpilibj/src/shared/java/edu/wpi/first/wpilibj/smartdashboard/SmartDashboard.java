@@ -181,7 +181,7 @@ public class SmartDashboard {
   }
 
   /**
-   * Returns the value at the specified key. $
+   * Returns the value at the specified key.
    *
    * @param key the key
    * @return the value
@@ -194,7 +194,7 @@ public class SmartDashboard {
   }
 
   /**
-   * Returns the value at the specified key. $
+   * Returns the value at the specified key.
    *
    * @param key          the key
    * @param defaultValue The value returned if the key is undefined

@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 /**
  * This class is designated to allow for simple testing of the library without the overlying testing
  * framework. This test is NOT run as a normal part of the testing process and must be explicitly
- * selected at runtime by using the 'quick' argument. $ This test should never be committed with
- * changes to it but can be used during development to aid in feature testing. $
+ * selected at runtime by using the 'quick' argument. This test should never be committed with
+ * changes to it but can be used during development to aid in feature testing.
  *
  * @author Jonathan Leitschuh
  */
@@ -24,7 +24,7 @@ public class QuickTest extends AbstractComsSetup {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.test.AbstractComsSetup#getClassLogger()
    */
   @Override

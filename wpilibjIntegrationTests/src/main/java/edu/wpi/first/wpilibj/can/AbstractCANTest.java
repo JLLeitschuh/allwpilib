@@ -84,7 +84,7 @@ public abstract class AbstractCANTest extends AbstractComsSetup {
     m_status = "";
     m_me = TestBench.getInstance().getCanJaguarPair();
     m_me.setup();
-    m_me.getM_motor().setSafetyEnabled(false);
+    m_me.getMotor().setSafetyEnabled(false);
   }
 
   @After
@@ -101,7 +101,7 @@ public abstract class AbstractCANTest extends AbstractComsSetup {
 
   protected void setCANJaguar(double seconds, double value) {
     for (int i = 0; i < 50; i++) {
-      getME().getM_motor().set(value);
+      getME().getMotor().set(value);
       Timer.delay(seconds / 50.0);
     }
   }

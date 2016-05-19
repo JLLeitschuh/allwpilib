@@ -106,7 +106,7 @@ public class PIDTest extends AbstractComsSetup {
     logger.fine("Setup: " + me.getType());
     me.setup();
     m_table = NetworkTable.getTable("TEST_PID");
-    m_controller = new PIDController(k_p, k_i, k_d, me.getEncoder(), me.getM_motor());
+    m_controller = new PIDController(k_p, k_i, k_d, me.getEncoder(), me.getMotor());
     m_controller.initTable(m_table);
   }
 
@@ -153,11 +153,11 @@ public class PIDTest extends AbstractComsSetup {
     Timer.delay(.5);
     assertTrue(m_table.getBoolean("enabled"));
     assertTrue(m_controller.isEnable());
-    assertThat(0.0, is(not(me.getM_motor().get())));
+    assertThat(0.0, is(not(me.getMotor().get())));
     m_controller.reset();
     assertFalse(m_table.getBoolean("enabled"));
     assertFalse(m_controller.isEnable());
-    assertEquals(0, me.getM_motor().get(), 0);
+    assertEquals(0, me.getMotor().get(), 0);
   }
 
   @Test

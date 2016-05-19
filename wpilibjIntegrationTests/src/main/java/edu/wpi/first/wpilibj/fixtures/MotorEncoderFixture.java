@@ -102,7 +102,7 @@ public abstract class MotorEncoderFixture<T extends SpeedController> implements 
    *
    * @return the motor this object refers too
    */
-  public T getM_motor() {
+  public T getMotor() {
     initialize();
     return m_motor;
   }

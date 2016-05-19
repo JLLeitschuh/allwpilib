@@ -233,7 +233,7 @@ public final class TestBench {
 
     /*
      * (non-Javadoc)
-     *$
+     *
      * @see
      * edu.wpi.first.wpilibj.fixtures.CANMotorEncoderFixture#givePowerCycleRelay
      * ()
@@ -518,7 +518,7 @@ public final class TestBench {
   /**
    * Provides access to the output stream for the test system. This should be used instead of
    * System.out This is gives us a way to implement changes to where the output text of this test
-   * system is sent. $
+   * system is sent.
    *
    * @return The test bench global print stream.
    */
@@ -529,7 +529,7 @@ public final class TestBench {
   /**
    * Provides access to the error stream for the test system. This should be used instead of
    * System.err This is gives us a way to implement changes to where the output text of this test
-   * system is sent. $
+   * system is sent.
    *
    * @return The test bench global print stream.
    */

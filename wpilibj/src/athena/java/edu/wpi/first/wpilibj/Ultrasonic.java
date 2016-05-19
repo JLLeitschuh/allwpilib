@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSendable {
 
   /**
-   * The m_units to return when PIDGet is called.
+   * The units to return when PIDGet is called.
    */
   public enum Unit {
     /**
@@ -38,34 +38,34 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
     kMillimeters
   }
 
-  private static final double kPingTime = 10 * 1e-6; // /< Time (sec) for the
-  // ping trigger pulse.
-  private static final int kPriority = 90; // /< Priority that the ultrasonic
-  // round robin m_task runs.
-  private static final double kMaxUltrasonicTime = 0.1; // /< Max time (ms)
-  // between readings.
+  // Time (sec) for the ping trigger pulse.
+  private static final double kPingTime = 10 * 1e-6;
+  // Priority that the ultrasonic round robin task runs.
+  private static final int kPriority = 90;
+  // Max time (ms) between readings.
+  private static final double kMaxUltrasonicTime = 0.1;
   private static final double kSpeedOfSoundInchesPerSec = 1130.0 * 12.0;
-  private static Ultrasonic m_firstSensor = null; // head of the ultrasonic
-  // sensor list
-  private static boolean m_automaticEnabled = false; // automatic round robin
-  // mode
+  // head of the ultrasonic sensor list
+  private static Ultrasonic m_firstSensor = null;
+  // automatic round robin mode
+  private static boolean m_automaticEnabled = false;
   private DigitalInput m_echoChannel;
   private DigitalOutput m_pingChannel = null;
   private boolean m_allocatedChannels;
   private boolean m_enabled = false;
   private Counter m_counter = null;
   private Ultrasonic m_nextSensor = null;
-  private static Thread m_task = null; // m_task doing the round-robin automatic
-  // sensing
+  // task doing the round-robin automatic sensing
+  private static Thread m_task = null;
   private Unit m_units;
   private static int m_instances = 0;
   protected PIDSourceType m_pidSource = PIDSourceType.kDisplacement;
 
   /**
-   * Background m_task that goes through the list of ultrasonic sensors and pings each one in turn.
-   * The m_counter is configured to read the timing of the returned echo pulse.
+   * Background task that goes through the list of ultrasonic sensors and pings each one in turn.
+   * The counter is configured to read the timing of the returned echo pulse.
    *
-   * <p><b>DANGER WILL ROBINSON, DANGER WILL ROBINSON:</b> This code runs as a m_task and assumes
+   * <p><b>DANGER WILL ROBINSON, DANGER WILL ROBINSON:</b> This code runs as a task and assumes
    * that none of the ultrasonic sensors will change while it's running. If one does, then this will
    * certainly break. Make sure to disable automatic mode before changing anything with the
    * sensors!!
@@ -104,11 +104,11 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
       m_task = new UltrasonicChecker();
     }
     final boolean originalMode = m_automaticEnabled;
-    setAutomaticMode(false); // kill m_task when adding a new sensor
+    setAutomaticMode(false); // kill task when adding a new sensor
     m_nextSensor = m_firstSensor;
     m_firstSensor = this;
 
-    m_counter = new Counter(m_echoChannel); // set up m_counter for this
+    m_counter = new Counter(m_echoChannel); // set up counter for this
     // sensor
     m_counter.setMaxPeriod(1.0);
     m_counter.setSemiPeriodMode(true);
@@ -130,13 +130,13 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
    * @param echoChannel The digital input channel that receives the echo. The length of time that
    *                    the echo is high represents the round trip time of the ping, and the
    *                    distance.
-   * @param units       The m_units returned in either kInches or kMilliMeters
+   * @param units       The units returned in either kInches or kMilliMeters
    */
   public Ultrasonic(final int pingChannel, final int echoChannel, Unit units) {
-    this.m_pingChannel = new DigitalOutput(pingChannel);
-    this.m_echoChannel = new DigitalInput(echoChannel);
+    m_pingChannel = new DigitalOutput(pingChannel);
+    m_echoChannel = new DigitalInput(echoChannel);
     m_allocatedChannels = true;
-    this.m_units = units;
+    m_units = units;
     initialize();
   }
 
@@ -162,16 +162,16 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
    *                    10uS pulse to start.
    * @param echoChannel The digital input object that times the return pulse to determine the
    *                    range.
-   * @param units       The m_units returned in either kInches or kMilliMeters
+   * @param units       The units returned in either kInches or kMilliMeters
    */
   public Ultrasonic(DigitalOutput pingChannel, DigitalInput echoChannel, Unit units) {
     if (pingChannel == null || echoChannel == null) {
       throw new NullPointerException("Null Channel Provided");
     }
     m_allocatedChannels = false;
-    this.m_pingChannel = pingChannel;
-    this.m_echoChannel = echoChannel;
-    this.m_units = units;
+    m_pingChannel = pingChannel;
+    m_echoChannel = echoChannel;
+    m_units = units;
     initialize();
   }
 
@@ -251,16 +251,16 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
 
     if (enabling) {
       /* Clear all the counters so no data is valid. No synchronization is
-       * needed because the background m_task is stopped.
+       * needed because the background task is stopped.
        */
       for (Ultrasonic u = m_firstSensor; u != null; u = u.m_nextSensor) {
         u.m_counter.reset();
       }
 
-      // Start round robin m_task
+      // Start round robin task
       m_task.start();
     } else {
-      // Wait for background m_task to stop running
+      // Wait for background task to stop running
       try {
         m_task.join();
       } catch (InterruptedException ex) {
@@ -269,7 +269,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
       }
 
       /* Clear all the counters (data now invalid) since automatic mode is
-       * disabled. No synchronization is needed because the background m_task is
+       * disabled. No synchronization is needed because the background task is
        * stopped.
        */
       for (Ultrasonic u = m_firstSensor; u != null; u = u.m_nextSensor) {
@@ -280,14 +280,14 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
 
   /**
    * Single ping to ultrasonic sensor. Send out a single ping to the ultrasonic sensor. This only
-   * works if automatic (round robin) mode is disabled. A single ping is sent out, and the m_counter
-   * should count the semi-period when it comes in. The m_counter is reset to make the current value
+   * works if automatic (round robin) mode is disabled. A single ping is sent out, and the counter
+   * should count the semi-period when it comes in. The counter is reset to make the current value
    * invalid.
    */
   public void ping() {
     setAutomaticMode(false); // turn off automatic round robin if pinging
     // single sensor
-    m_counter.reset(); // reset the m_counter to zero (invalid data now)
+    m_counter.reset(); // reset the counter to zero (invalid data now)
     m_pingChannel.pulse(m_pingChannel.m_channel, (float) kPingTime); // do
     // the
     // ping
@@ -300,7 +300,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
   }
 
   /**
-   * Check if there is a valid range measurement. The ranges are accumulated in a m_counter that
+   * Check if there is a valid range measurement. The ranges are accumulated in a counter that
    * will increment on each edge of the echo (return) signal. If the count is not at least 2, then
    * the range has not yet been measured, and is invalid.
    *
@@ -339,7 +339,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
     if (!pidSource.equals(PIDSourceType.kDisplacement)) {
       throw new IllegalArgumentException("Only displacement PID is allowed for ultrasonics.");
     }
-    this.m_pidSource = pidSource;
+    m_pidSource = pidSource;
   }
 
   @Override
@@ -370,7 +370,7 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
    * @param units The DistanceUnit that should be used.
    */
   public void setDistanceUnits(Unit units) {
-    this.m_units = units;
+    m_units = units;
   }
 
   /**
@@ -383,21 +383,21 @@ public class Ultrasonic extends SensorBase implements PIDSource, LiveWindowSenda
   }
 
   /**
-   * Is the ultrasonic m_enabled.
+   * Is the ultrasonic enabled.
    *
-   * @return true if the ultrasonic is m_enabled
+   * @return true if the ultrasonic is enabled
    */
   public boolean isEnabled() {
     return m_enabled;
   }
 
   /**
-   * Set if the ultrasonic is m_enabled.
+   * Set if the ultrasonic is enabled.
    *
    * @param enable set to true to enable the ultrasonic
    */
   public void setEnabled(boolean enable) {
-    this.m_enabled = enable;
+    m_enabled = enable;
   }
 
   /*

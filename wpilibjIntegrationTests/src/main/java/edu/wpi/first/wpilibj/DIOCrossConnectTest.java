@@ -43,7 +43,7 @@ public class DIOCrossConnectTest extends AbstractInterruptTest {
    * Default constructor for the DIOCrossConnectTest This test is parameterized in order to allow it
    * to be tested using a variety of different input/output pairs without duplicate code.<br> This
    * class takes Integer port values instead of DigitalClasses because it would force them to be
-   * instantiated at the same time which could (untested) cause port binding errors. $
+   * instantiated at the same time which could (untested) cause port binding errors.
    *
    * @param input  The port for the input wire
    * @param output The port for the output wire
@@ -154,7 +154,7 @@ public class DIOCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see
    * edu.wpi.first.wpilibj.AbstractInterruptTest#giveInterruptableSensorBase()
    */
@@ -165,7 +165,7 @@ public class DIOCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see
    * edu.wpi.first.wpilibj.AbstractInterruptTest#freeInterruptableSensorBase()
    */
@@ -176,7 +176,7 @@ public class DIOCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.AbstractInterruptTest#setInterruptHigh()
    */
   @Override
@@ -186,7 +186,7 @@ public class DIOCrossConnectTest extends AbstractInterruptTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.AbstractInterruptTest#setInterruptLow()
    */
   @Override
