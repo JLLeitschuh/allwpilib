@@ -26,9 +26,8 @@ public class Spark extends PWMSpeedController {
    * available from REV Robotics.
    *
    * <p>- 2.003ms = full "forward" - 1.55ms = the "high end" of the deadband range - 1.50ms =
-   * center of
-   * the deadband range (off) - 1.46ms = the "low end" of the deadband range - .999ms = full
-   * "reverse"
+   * center of the deadband range (off) - 1.46ms = the "low end" of the deadband range - .999ms =
+   * full "reverse"
    */
   protected void initSpark() {
     setBounds(2.003, 1.55, 1.50, 1.46, .999);

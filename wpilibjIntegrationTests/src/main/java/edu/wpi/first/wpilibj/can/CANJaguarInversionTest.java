@@ -36,19 +36,19 @@ public class CANJaguarInversionTest extends AbstractCANTest {
 
   @Test
   public void testInvertingVoltageMode() {
-    getME().getM_motor().setVoltageMode(CANJaguar.kQuadEncoder, 360);
+    getME().getMotor().setVoltageMode(CANJaguar.kQuadEncoder, 360);
     inversionTest(m_motorVoltage, m_delayTime);
   }
 
   @Test
   public void testInvertingPercentMode() {
-    getME().getM_motor().setPercentMode(CANJaguar.kQuadEncoder, 360);
+    getME().getMotor().setPercentMode(CANJaguar.kQuadEncoder, 360);
     inversionTest(m_motorPercent, m_delayTime);
   }
 
   @Test
   public void testInvertingSpeedMode() {
-    getME().getM_motor().setSpeedMode(CANJaguar.kQuadEncoder, 360, 0.1, 0.003, 0.01);
+    getME().getMotor().setSpeedMode(CANJaguar.kQuadEncoder, 360, 0.1, 0.003, 0.01);
     inversionTest(m_motorSpeed, m_speedModeDelayTime);
   }
 
@@ -59,7 +59,7 @@ public class CANJaguarInversionTest extends AbstractCANTest {
    * @param delayTime the amount of time to delay between starting a motor and checking the encoder
    */
   private void inversionTest(double setPoint, double delayTime) {
-    final CANJaguar jag = this.getME().getM_motor();
+    final CANJaguar jag = getME().getMotor();
     jag.enableControl();
     jag.setInverted(false);
     jag.set(setPoint);

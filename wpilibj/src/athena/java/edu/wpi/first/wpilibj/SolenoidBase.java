@@ -25,8 +25,8 @@ public abstract class SolenoidBase extends SensorBase {
    * @param moduleNumber The PCM CAN ID
    */
   public SolenoidBase(final int moduleNumber) {
-    this.m_moduleNumber = moduleNumber;
-    this.m_ports = new long[SensorBase.kSolenoidChannels];
+    m_moduleNumber = moduleNumber;
+    m_ports = new long[SensorBase.kSolenoidChannels];
     for (int i = 0; i < SensorBase.kSolenoidChannels; i++) {
       long port = SolenoidJNI.getPortWithModule((byte) moduleNumber, (byte) i);
       m_ports[i] = SolenoidJNI.initializeSolenoidPort(port);
@@ -69,12 +69,12 @@ public abstract class SolenoidBase extends SensorBase {
   }
 
   /**
-   * Reads complete solenoid blacklist for all 8 solenoids as a single byte. $ If a solenoid is
+   * Reads complete solenoid blacklist for all 8 solenoids as a single byte. If a solenoid is
    * shorted, it is added to the blacklist and disabled until power cycle, or until faults are
    * cleared.
    *
    * @return The solenoid blacklist of all 8 solenoids on the module.
-   * @see #clearAllPCMStickyFaults() $
+   * @see #clearAllPCMStickyFaults()
    */
   public byte getPCMSolenoidBlackList() {
     return (byte) SolenoidJNI.getPCMSolenoidBlackList(m_ports[0]);

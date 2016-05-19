@@ -26,9 +26,8 @@ public class VictorSP extends PWMSpeedController {
    * available from CTRE.
    *
    * <p>- 2.004ms = full "forward" - 1.52ms = the "high end" of the deadband range - 1.50ms =
-   * center of
-   * the deadband range (off) - 1.48ms = the "low end" of the deadband range - .997ms = full
-   * "reverse"
+   * center of the deadband range (off) - 1.48ms = the "low end" of the deadband range - .997ms =
+   * full "reverse"
    */
   protected void initVictorSP() {
     setBounds(2.004, 1.52, 1.50, 1.48, .997);

@@ -43,8 +43,8 @@ public class RepeatRule implements TestRule {
     private final Statement m_statement;
 
     private RepeatStatement(int times, Statement statement) {
-      this.m_times = times;
-      this.m_statement = statement;
+      m_times = times;
+      m_statement = statement;
     }
 
     @Override

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 /**
  * WaitUntilCommand - waits until an absolute game time. This will wait until the game clock reaches
- * some value, then continue to the next command. $
+ * some value, then continue to the next command.
  *
  * @author brad
  */

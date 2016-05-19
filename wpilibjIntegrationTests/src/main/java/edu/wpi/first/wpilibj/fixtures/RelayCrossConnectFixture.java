@@ -41,7 +41,7 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
     }
   }
 
-  public Relay getM_relay() {
+  public Relay getRelay() {
     initialize();
     return m_relay;
   }
@@ -51,14 +51,14 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
     return m_inputOne;
   }
 
-  public DigitalInput getM_inputTwo() {
+  public DigitalInput getInputTwo() {
     initialize();
     return m_inputTwo;
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#setup()
    */
   @Override
@@ -69,7 +69,7 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#reset()
    */
   @Override
@@ -80,7 +80,7 @@ public abstract class RelayCrossConnectFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#teardown()
    */
   @Override

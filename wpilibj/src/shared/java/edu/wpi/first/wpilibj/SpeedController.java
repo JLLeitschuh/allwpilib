@@ -43,7 +43,7 @@ public interface SpeedController extends PIDOutput {
   void setInverted(boolean isInverted);
 
   /**
-   * Common interface for returning if a speed controller is in the inverted state or not. $
+   * Common interface for returning if a speed controller is in the inverted state or not.
    *
    * @return isInverted The state of the inversion true is inverted.
    */

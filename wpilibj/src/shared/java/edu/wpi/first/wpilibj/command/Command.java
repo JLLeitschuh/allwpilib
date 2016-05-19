@@ -374,12 +374,12 @@ public abstract class Command implements NamedSendable {
    * @throws IllegalUseOfCommandException if this {@link Command} already is already in a group
    */
   synchronized void setParent(CommandGroup parent) {
-    if (this.m_parent != null) {
+    if (m_parent != null) {
       throw new IllegalUseOfCommandException(
           "Can not give command to a command group after already being put in a command group");
     }
     lockChanges();
-    this.m_parent = parent;
+    m_parent = parent;
     if (m_table != null) {
       m_table.putBoolean("isParented", true);
     }
@@ -480,7 +480,7 @@ public abstract class Command implements NamedSendable {
    * @param interruptible whether or not this command can be interrupted
    */
   protected synchronized void setInterruptible(boolean interruptible) {
-    this.m_interruptible = interruptible;
+    m_interruptible = interruptible;
   }
 
   /**
@@ -564,10 +564,10 @@ public abstract class Command implements NamedSendable {
 
   @Override
   public void initTable(ITable table) {
-    if (this.m_table != null) {
-      this.m_table.removeTableListener(m_listener);
+    if (m_table != null) {
+      m_table.removeTableListener(m_listener);
     }
-    this.m_table = table;
+    m_table = table;
     if (table != null) {
       table.putString("name", getName());
       table.putBoolean("running", isRunning());

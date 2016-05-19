@@ -53,8 +53,8 @@ public class CounterTest extends AbstractComsSetup {
     assert input != null;
     assert output != null;
 
-    this.m_input = input;
-    this.m_output = output;
+    m_input = input;
+    m_output = output;
     // System.out.println("Counter Test: Input: " + input + " Output: " +
     // output);
     if (counter != null) {
@@ -111,8 +111,7 @@ public class CounterTest extends AbstractComsSetup {
     final int count = counter.getCounter().get();
 
     assertTrue("Fake Counter, Input: " + m_input + ", Output: " + m_output + ", did not return "
-        + goal
-        + " instead got: " + count, count == goal);
+        + goal + " instead got: " + count, count == goal);
   }
 
 }

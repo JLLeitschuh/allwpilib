@@ -49,29 +49,29 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#stopMotor()
    */
   protected void stopMotor() {
-    getME().getM_motor().set(kStoppedValue);
+    getME().getMotor().set(kStoppedValue);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorForward()
    */
   protected void runMotorForward() {
-    getME().getM_motor().set(kRunningValue);
+    getME().getMotor().set(kRunningValue);
   }
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.can.AbstractCANTest#runMotorReverse()
    */
   protected void runMotorReverse() {
-    getME().getM_motor().set(-kRunningValue);
+    getME().getMotor().set(-kRunningValue);
   }
 
   @Override
@@ -84,9 +84,9 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
    */
   @Before
   public void setUp() {
-    getME().getM_motor().setVoltageMode(CANJaguar.kQuadEncoder, 360);
-    getME().getM_motor().set(kStoppedValue);
-    getME().getM_motor().enableControl();
+    getME().getMotor().setVoltageMode(CANJaguar.kQuadEncoder, 360);
+    getME().getMotor().set(kStoppedValue);
+    getME().getMotor().enableControl();
 
     /* The motor might still have momentum from the previous test. */
     Timer.delay(kStartupTime);
@@ -96,14 +96,14 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
   public void testRotateForwardToVoltage() {
     setCANJaguar(kMotorTime, Math.PI);
     assertEquals("The output voltage did not match the desired voltage set-point", Math.PI, getME()
-        .getM_motor().getOutputVoltage(), kVoltageTolerance);
+        .getMotor().getOutputVoltage(), kVoltageTolerance);
   }
 
   @Test
   public void testRotateReverseToVoltage() {
     setCANJaguar(kMotorTime, -Math.PI);
     assertEquals("The output voltage did not match the desired voltage set-point", -Math.PI,
-        getME().getM_motor().getOutputVoltage(), kVoltageTolerance);
+        getME().getMotor().getOutputVoltage(), kVoltageTolerance);
   }
 
 
@@ -114,17 +114,17 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
    * @param wait        the PollingWait to to use to wait for the setup to complete with
    */
   private void setupMotorVoltageForTest(final double targetValue, PollingWait wait) {
-    getME().getM_motor().enableControl();
+    getME().getMotor().enableControl();
     setCANJaguar(1, targetValue);
     wait.until(new RunnableAssert(
         "[SETUP] Waiting for the output voltage to match the set output value") {
       @Override
       public void run() throws Exception {
-        getME().getM_motor().set(targetValue);
+        getME().getMotor().set(targetValue);
         assertEquals("[TEST SETUP] The output voltage should have matched the set value",
-            targetValue, getME().getM_motor().getOutputVoltage(), 0.5);
+            targetValue, getME().getMotor().getOutputVoltage(), 0.5);
         assertEquals("[TEST SETUP] The set value did not match the get value", targetValue, getME()
-            .getM_motor().get(), 0.5);
+            .getMotor().get(), 0.5);
       }
     });
   }
@@ -137,10 +137,10 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
 
     setupMotorVoltageForTest(kRunningValue, kWait);
 
-    final double fastSpeed = getME().getM_motor().getSpeed();
+    final double fastSpeed = getME().getMotor().getSpeed();
 
     // when
-    getME().getM_motor().configMaxOutputVoltage(maxVoltage);
+    getME().getMotor().configMaxOutputVoltage(maxVoltage);
 
     setCANJaguar(1, kRunningValue);
     // Then
@@ -149,7 +149,7 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorForward();
         assertThat("Speed did not reduce when the max output voltage was set", fastSpeed,
-            is(greaterThan(getME().getM_motor().getSpeed())));
+            is(greaterThan(getME().getMotor().getSpeed())));
       }
     });
 
@@ -162,7 +162,7 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
 
     setupMotorVoltageForTest(kRunningValue, kWait);
     // when
-    getME().getM_motor().configMaxOutputVoltage(maxVoltage);
+    getME().getMotor().configMaxOutputVoltage(maxVoltage);
 
     setCANJaguar(1, kRunningValue);
     // then
@@ -172,7 +172,7 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorForward();
         assertEquals("Speed did not go to zero when the max output voltage was set to "
-            + maxVoltage, 0, getME().getM_motor().getSpeed(), kEncoderSpeedTolerance);
+            + maxVoltage, 0, getME().getMotor().getSpeed(), kEncoderSpeedTolerance);
       }
     });
   }
@@ -184,10 +184,10 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
     double maxVoltage = 3;
 
     setupMotorVoltageForTest(-kRunningValue, kWait);
-    final double fastSpeed = getME().getM_motor().getSpeed();
+    final double fastSpeed = getME().getMotor().getSpeed();
 
     // when
-    getME().getM_motor().configMaxOutputVoltage(maxVoltage);
+    getME().getMotor().configMaxOutputVoltage(maxVoltage);
     setCANJaguar(1, -kRunningValue);
 
     // then
@@ -197,7 +197,7 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorReverse();
         assertThat("Speed did not reduce when the max output voltage was set", fastSpeed,
-            is(lessThan(getME().getM_motor().getSpeed())));
+            is(lessThan(getME().getMotor().getSpeed())));
       }
     });
   }
@@ -209,7 +209,7 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
     setupMotorVoltageForTest(-kRunningValue, kWait);
 
     // when
-    getME().getM_motor().configMaxOutputVoltage(maxVoltage);
+    getME().getMotor().configMaxOutputVoltage(maxVoltage);
     setCANJaguar(1, -kRunningValue);
 
     // Then
@@ -219,7 +219,7 @@ public class CANVoltageQuadEncoderModeTest extends AbstractCANTest {
       public void run() throws Exception {
         runMotorReverse();
         assertEquals("Speed did not go to zero when the max output voltage was set to "
-            + maxVoltage, 0, getME().getM_motor().getSpeed(), kEncoderSpeedTolerance);
+            + maxVoltage, 0, getME().getMotor().getSpeed(), kEncoderSpeedTolerance);
       }
     });
   }

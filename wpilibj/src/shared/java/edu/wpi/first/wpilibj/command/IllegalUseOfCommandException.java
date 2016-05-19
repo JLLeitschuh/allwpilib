@@ -29,7 +29,7 @@ public class IllegalUseOfCommandException extends RuntimeException {
   }
 
   /**
-   * Instantiates an {@link IllegalUseOfCommandException} with the given message. $
+   * Instantiates an {@link IllegalUseOfCommandException} with the given message.
    *
    * @param message the message
    */

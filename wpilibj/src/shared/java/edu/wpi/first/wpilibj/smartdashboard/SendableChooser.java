@@ -129,7 +129,7 @@ public class SendableChooser implements Sendable {
 
   @Override
   public void initTable(ITable table) {
-    this.m_table = table;
+    m_table = table;
     if (table != null) {
       table.putStringArray(OPTIONS, m_choices.toArray(new String[0]));
       if (m_defaultChoice != null) {

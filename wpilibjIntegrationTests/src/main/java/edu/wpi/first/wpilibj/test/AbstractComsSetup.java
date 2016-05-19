@@ -42,7 +42,7 @@ public abstract class AbstractComsSetup {
    * station. After starting network coms, it will loop until the driver station
    * returns that the robot is enabled, to ensure that tests will be able to run
    * on the hardware.
-   *$
+   *
    */
   static {
     if (!initialized) {
@@ -129,7 +129,7 @@ public abstract class AbstractComsSetup {
 
     /*
      * (non-Javadoc)
-     *$
+     *
      * @see org.junit.rules.TestWatcher#failed(java.lang.Throwable,
      * org.junit.runner.Description)
      */
@@ -141,7 +141,7 @@ public abstract class AbstractComsSetup {
 
     /*
      * (non-Javadoc)
-     *$
+     *
      * @see org.junit.rules.TestWatcher#starting(org.junit.runner.Description)
      */
     @Override

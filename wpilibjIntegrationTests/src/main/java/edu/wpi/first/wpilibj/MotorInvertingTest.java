@@ -71,64 +71,64 @@ public class MotorInvertingTest extends AbstractComsSetup {
 
   @AfterClass
   public static void tearDown() {
-    fixture.getM_motor().setInverted(false);
+    fixture.getMotor().setInverted(false);
     // Clean up the fixture after the test
     fixture.teardown();
   }
 
   @Test
   public void testInvertingPositive() {
-    fixture.getM_motor().setInverted(false);
-    fixture.getM_motor().set(motorspeed);
+    fixture.getMotor().setInverted(false);
+    fixture.getMotor().set(motorspeed);
     Timer.delay(delaytime);
     final boolean initDirection = fixture.getEncoder().getDirection();
-    fixture.getM_motor().setInverted(true);
-    fixture.getM_motor().set(motorspeed);
+    fixture.getMotor().setInverted(true);
+    fixture.getMotor().set(motorspeed);
     Timer.delay(delaytime);
     assertFalse("Inverting with Positive value does not change direction", fixture.getEncoder()
         .getDirection() == initDirection);
-    fixture.getM_motor().set(0);
+    fixture.getMotor().set(0);
   }
 
   @Test
   public void testInvertingNegative() {
-    fixture.getM_motor().setInverted(false);
-    fixture.getM_motor().set(-motorspeed);
+    fixture.getMotor().setInverted(false);
+    fixture.getMotor().set(-motorspeed);
     Timer.delay(delaytime);
     final boolean initDirection = fixture.getEncoder().getDirection();
-    fixture.getM_motor().setInverted(true);
-    fixture.getM_motor().set(-motorspeed);
+    fixture.getMotor().setInverted(true);
+    fixture.getMotor().set(-motorspeed);
     Timer.delay(delaytime);
     assertFalse("Inverting with Negative value does not change direction", fixture.getEncoder()
         .getDirection() == initDirection);
-    fixture.getM_motor().set(0);
+    fixture.getMotor().set(0);
   }
 
   @Test
   public void testInvertingSwitchingPosToNeg() {
-    fixture.getM_motor().setInverted(false);
-    fixture.getM_motor().set(motorspeed);
+    fixture.getMotor().setInverted(false);
+    fixture.getMotor().set(motorspeed);
     Timer.delay(delaytime);
     final boolean initDirection = fixture.getEncoder().getDirection();
-    fixture.getM_motor().setInverted(true);
-    fixture.getM_motor().set(-motorspeed);
+    fixture.getMotor().setInverted(true);
+    fixture.getMotor().set(-motorspeed);
     Timer.delay(delaytime);
     assertTrue("Inverting with Switching value does change direction", fixture.getEncoder()
         .getDirection() == initDirection);
-    fixture.getM_motor().set(0);
+    fixture.getMotor().set(0);
   }
 
   @Test
   public void testInvertingSwitchingNegToPos() {
-    fixture.getM_motor().setInverted(false);
-    fixture.getM_motor().set(-motorspeed);
+    fixture.getMotor().setInverted(false);
+    fixture.getMotor().set(-motorspeed);
     Timer.delay(delaytime);
     final boolean initDirection = fixture.getEncoder().getDirection();
-    fixture.getM_motor().setInverted(true);
-    fixture.getM_motor().set(motorspeed);
+    fixture.getMotor().setInverted(true);
+    fixture.getMotor().set(motorspeed);
     Timer.delay(delaytime);
     assertTrue("Inverting with Switching value does change direction", fixture.getEncoder()
         .getDirection() == initDirection);
-    fixture.getM_motor().set(0);
+    fixture.getMotor().set(0);
   }
 }

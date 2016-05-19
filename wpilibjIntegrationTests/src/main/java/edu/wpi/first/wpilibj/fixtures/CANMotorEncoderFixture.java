@@ -76,7 +76,7 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
     m_potSource.reset();
     m_forwardLimit.set(false);
     m_reverseLimit.set(false);
-    getM_motor().setPercentMode(); // Get the Jaguar into a mode where setting the
+    getMotor().setPercentMode(); // Get the Jaguar into a mode where setting the
     // speed means stop
     return super.reset();
   }
@@ -109,9 +109,9 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
       superTornDown = super.teardown();
     } finally {
       try {
-        if (getM_motor() != null) {
-          getM_motor().disableControl();
-          getM_motor().free();
+        if (getMotor() != null) {
+          getMotor().disableControl();
+          getMotor().free();
         } else {
           wasNull = true;
         }
@@ -151,14 +151,14 @@ public abstract class CANMotorEncoderFixture extends MotorEncoderFixture<CANJagu
    */
   public String printStatus() {
     StringBuilder status = new StringBuilder("CAN Motor Encoder Status: ");
-    if (getM_motor() != null) {
-      status.append("\t" + getM_motor().getDescription() + "\n");
-      status.append("\tFault = " + getM_motor().getFaults() + "\n");
-      status.append("\tValue = " + getM_motor().get() + "\n");
-      status.append("\tOutputVoltage = " + getM_motor().getOutputVoltage() + "\n");
-      status.append("\tPosition = " + getM_motor().getPosition() + "\n");
-      status.append("\tForward Limit Ok = " + getM_motor().getForwardLimitOK() + "\n");
-      status.append("\tReverse Limit Ok = " + getM_motor().getReverseLimitOK() + "\n");
+    if (getMotor() != null) {
+      status.append("\t" + getMotor().getDescription() + "\n");
+      status.append("\tFault = " + getMotor().getFaults() + "\n");
+      status.append("\tValue = " + getMotor().get() + "\n");
+      status.append("\tOutputVoltage = " + getMotor().getOutputVoltage() + "\n");
+      status.append("\tPosition = " + getMotor().getPosition() + "\n");
+      status.append("\tForward Limit Ok = " + getMotor().getForwardLimitOK() + "\n");
+      status.append("\tReverse Limit Ok = " + getMotor().getReverseLimitOK() + "\n");
     } else {
       status.append("\t" + "CANJaguar Motor = null" + "\n");
     }

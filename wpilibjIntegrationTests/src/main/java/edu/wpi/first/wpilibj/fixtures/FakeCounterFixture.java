@@ -27,12 +27,12 @@ public class FakeCounterFixture implements ITestFixture {
   private final Counter m_counter;
 
   /**
-   * Constructs a FakeCounterFixture. $
+   * Constructs a FakeCounterFixture.
    *
    * @param dio A previously allocated DIOCrossConnectFixture (must be freed outside this class)
    */
   public FakeCounterFixture(DIOCrossConnectFixture dio) {
-    this.m_dio = dio;
+    m_dio = dio;
     m_allocated = false;
     m_source = new FakeCounterSource(dio.getOutput());
     m_counter = new Counter(dio.getInput());
@@ -46,7 +46,7 @@ public class FakeCounterFixture implements ITestFixture {
    * @param output the output port
    */
   public FakeCounterFixture(int input, int output) {
-    this.m_dio = new DIOCrossConnectFixture(input, output);
+    m_dio = new DIOCrossConnectFixture(input, output);
     m_allocated = true;
     m_source = new FakeCounterSource(m_dio.getOutput());
     m_counter = new Counter(m_dio.getInput());
@@ -73,7 +73,7 @@ public class FakeCounterFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#setup()
    */
   @Override
@@ -84,7 +84,7 @@ public class FakeCounterFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#reset()
    */
   @Override
@@ -95,7 +95,7 @@ public class FakeCounterFixture implements ITestFixture {
 
   /*
    * (non-Javadoc)
-   *$
+   *
    * @see edu.wpi.first.wpilibj.fixtures.ITestFixture#teardown()
    */
   @Override

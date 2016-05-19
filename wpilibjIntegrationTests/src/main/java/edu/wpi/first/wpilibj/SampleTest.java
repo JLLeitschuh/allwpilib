@@ -21,9 +21,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Sample test for a sample PID controller. This demonstrates the general pattern of how to create a
- * test and use testing fixtures and categories. $ All tests must extend from {@link
+ * test and use testing fixtures and categories. All tests must extend from {@link
  * AbstractComsSetup} in order to ensure that Network Communications are set up before the tests are
- * run. $
+ * run.
  *
  * @author Fredric Silberberg
  */

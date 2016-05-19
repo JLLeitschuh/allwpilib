@@ -19,7 +19,7 @@ public class FakeCounterSource {
 
   private Thread m_task;
   private int m_count;
-  private int m_miliSec;
+  private int m_milliSec;
   private DigitalOutput m_output;
   private boolean m_allocated;
 
@@ -38,9 +38,9 @@ public class FakeCounterSource {
       m_encoder.m_output.set(false);
       try {
         for (int i = 0; i < m_encoder.m_count; i++) {
-          Thread.sleep(m_encoder.m_miliSec);
+          Thread.sleep(m_encoder.m_milliSec);
           m_encoder.m_output.set(true);
-          Thread.sleep(m_encoder.m_miliSec);
+          Thread.sleep(m_encoder.m_milliSec);
           m_encoder.m_output.set(false);
         }
       } catch (InterruptedException ex) {
@@ -87,7 +87,7 @@ public class FakeCounterSource {
    * Common initailization code.
    */
   private void initEncoder() {
-    m_miliSec = 1;
+    m_milliSec = 1;
     m_task = new EncoderThread(this);
     m_output.set(false);
   }
@@ -132,9 +132,9 @@ public class FakeCounterSource {
   /**
    * Specify the rate to send pulses.
    *
-   * @param miliSec The rate to send out pulses at
+   * @param milliSec The rate to send out pulses at
    */
-  public void setRate(int miliSec) {
-    m_miliSec = miliSec;
+  public void setRate(int milliSec) {
+    m_milliSec = milliSec;
   }
 }

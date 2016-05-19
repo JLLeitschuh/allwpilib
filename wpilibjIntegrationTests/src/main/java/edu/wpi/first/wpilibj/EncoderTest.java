@@ -66,17 +66,17 @@ public class EncoderTest extends AbstractComsSetup {
    * @param flip    whether or not these set of values require the encoder to be reversed (0 or 1)
    */
   public EncoderTest(int inputA, int outputA, int inputB, int outputB, int flip) {
-    this.m_inputA = inputA;
-    this.m_inputB = inputB;
-    this.m_outputA = outputA;
-    this.m_outputB = outputB;
+    m_inputA = inputA;
+    m_inputB = inputB;
+    m_outputA = outputA;
+    m_outputB = outputB;
 
     // If the encoder from a previous test is allocated then we must free its
     // members
     if (encoder != null) {
       encoder.teardown();
     }
-    this.m_flip = flip == 0;
+    m_flip = flip == 0;
     encoder = new FakeEncoderFixture(inputA, outputA, inputB, outputB);
   }
 
@@ -146,7 +146,6 @@ public class EncoderTest extends AbstractComsSetup {
    */
   private String errorMessage(int goal, int trueValue) {
     return "Encoder ({In,Out}): {" + m_inputA + ", " + m_outputA + "},{" + m_inputB + ", "
-        + m_outputB
-        + "} Returned: " + trueValue + ", Wanted: " + goal;
+        + m_outputB + "} Returned: " + trueValue + ", Wanted: " + goal;
   }
 }

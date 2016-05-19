@@ -28,7 +28,7 @@ public class PrintCommand extends Command {
    */
   public PrintCommand(String message) {
     super("Print(\"" + message + "\"");
-    this.m_message = message;
+    m_message = message;
   }
 
   protected void initialize() {

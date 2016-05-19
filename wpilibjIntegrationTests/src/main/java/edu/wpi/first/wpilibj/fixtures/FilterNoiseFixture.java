@@ -126,7 +126,7 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
     private Random m_gen = new Random();
 
     NoiseGenerator(double stdDev) {
-      this.m_stdDev = stdDev;
+      m_stdDev = stdDev;
     }
 
     @SuppressWarnings("ParameterName")

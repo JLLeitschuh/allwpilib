@@ -23,8 +23,8 @@ public class NetworkButton extends Button {
   }
 
   public NetworkButton(NetworkTable table, String field) {
-    this.m_table = table;
-    this.m_field = field;
+    m_table = table;
+    m_field = field;
   }
 
   public boolean get() {

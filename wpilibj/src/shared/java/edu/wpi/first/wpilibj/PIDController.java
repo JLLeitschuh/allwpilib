@@ -37,15 +37,15 @@ public class PIDController implements PIDInterface, LiveWindowSendable, Controll
   private double m_minimumOutput = -1.0; // |minimum output|
   private double m_maximumInput = 0.0; // maximum input - limit setpoint to this
   private double m_minimumInput = 0.0; // minimum input - limit setpoint to this
-  private boolean m_continuous = false; // do the endpoints wrap around? eg.
-  // Absolute encoder
+  // do the endpoints wrap around? eg. Absolute encoder
+  private boolean m_continuous = false;
   private boolean m_enabled = false; // is the pid controller enabled
-  private double m_prevError = 0.0; // the prior error (used to compute
-  // velocity)
-  private double m_totalError = 0.0; // the sum of the errors for use in the
-  // integral calc
-  private Tolerance m_tolerance; // the tolerance object used to check if on
-  // target
+  // the prior error (used to compute velocity)
+  private double m_prevError = 0.0;
+  // the sum of the errors for use in the integral calc
+  private double m_totalError = 0.0;
+  // the tolerance object used to check if on target
+  private Tolerance m_tolerance;
   private int m_bufLength = 1;
   private Queue<Double> m_buf;
   private double m_bufTotal = 0.0;
@@ -99,7 +99,7 @@ public class PIDController implements PIDInterface, LiveWindowSendable, Controll
     private final double m_value;
 
     AbsoluteTolerance(double value) {
-      this.m_value = value;
+      m_value = value;
     }
 
     @Override
@@ -228,7 +228,7 @@ public class PIDController implements PIDInterface, LiveWindowSendable, Controll
       m_pidInput = null;
       m_controlLoop = null;
     }
-    if (this.m_table != null) {
+    if (m_table != null) {
       m_table.removeTableListener(m_listener);
     }
   }
@@ -460,7 +460,7 @@ public class PIDController implements PIDInterface, LiveWindowSendable, Controll
    * shortest route to the setpoint.
    */
   public synchronized void setContinuous() {
-    this.setContinuous(true);
+    setContinuous(true);
   }
 
   /**
@@ -746,10 +746,10 @@ public class PIDController implements PIDInterface, LiveWindowSendable, Controll
 
   @Override
   public void initTable(ITable table) {
-    if (this.m_table != null) {
-      this.m_table.removeTableListener(m_listener);
+    if (m_table != null) {
+      m_table.removeTableListener(m_listener);
     }
-    this.m_table = table;
+    m_table = table;
     if (table != null) {
       table.putNumber("p", getP());
       table.putNumber("i", getI());

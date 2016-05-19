@@ -37,7 +37,7 @@ public class Timer {
    * the robots This returns the time since the enable signal sent from the Driver Station At the
    * beginning of autonomous, the time is reset to 0.0 seconds At the beginning of teleop, the time
    * is reset to +15.0 seconds If the robot is disabled, this returns 0.0 seconds Warning: This is
-   * not an official time (so it cannot be used to argue with referees) $
+   * not an official time (so it cannot be used to argue with referees)
    *
    * @return Match time in seconds since the beginning of autonomous
    */

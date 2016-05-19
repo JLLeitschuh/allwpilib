@@ -27,11 +27,11 @@ public class SPI extends SensorBase {
     private int m_value;
 
     Port(int value) {
-      this.m_value = value;
+      m_value = value;
     }
 
     public int getValue() {
-      return this.m_value;
+      return m_value;
     }
   }
 
@@ -48,10 +48,10 @@ public class SPI extends SensorBase {
    * @param port the physical SPI port
    */
   public SPI(Port port) {
-    this.m_port = (byte) port.getValue();
+    m_port = (byte) port.getValue();
     devices++;
 
-    SPIJNI.spiInitialize(this.m_port);
+    SPIJNI.spiInitialize(m_port);
 
     UsageReporting.report(tResourceType.kResourceType_SPI, devices);
   }
@@ -78,8 +78,8 @@ public class SPI extends SensorBase {
    * first.
    */
   public final void setMSBFirst() {
-    this.m_bitOrder = 1;
-    SPIJNI.spiSetOpts(m_port, this.m_bitOrder, this.m_dataOnTrailing, this.m_clockPolarity);
+    m_bitOrder = 1;
+    SPIJNI.spiSetOpts(m_port, m_bitOrder, m_dataOnTrailing, m_clockPolarity);
   }
 
   /**
@@ -87,8 +87,8 @@ public class SPI extends SensorBase {
    * first.
    */
   public final void setLSBFirst() {
-    this.m_bitOrder = 0;
-    SPIJNI.spiSetOpts(m_port, this.m_bitOrder, this.m_dataOnTrailing, this.m_clockPolarity);
+    m_bitOrder = 0;
+    SPIJNI.spiSetOpts(m_port, m_bitOrder, m_dataOnTrailing, m_clockPolarity);
   }
 
   /**
@@ -96,8 +96,8 @@ public class SPI extends SensorBase {
    * or clock idle high.
    */
   public final void setClockActiveLow() {
-    this.m_clockPolarity = 1;
-    SPIJNI.spiSetOpts(m_port, this.m_bitOrder, this.m_dataOnTrailing, this.m_clockPolarity);
+    m_clockPolarity = 1;
+    SPIJNI.spiSetOpts(m_port, m_bitOrder, m_dataOnTrailing, m_clockPolarity);
   }
 
   /**
@@ -105,24 +105,24 @@ public class SPI extends SensorBase {
    * or clock idle low.
    */
   public final void setClockActiveHigh() {
-    this.m_clockPolarity = 0;
-    SPIJNI.spiSetOpts(m_port, this.m_bitOrder, this.m_dataOnTrailing, this.m_clockPolarity);
+    m_clockPolarity = 0;
+    SPIJNI.spiSetOpts(m_port, m_bitOrder, m_dataOnTrailing, m_clockPolarity);
   }
 
   /**
    * Configure that the data is stable on the falling edge and the data changes on the rising edge.
    */
   public final void setSampleDataOnFalling() {
-    this.m_dataOnTrailing = 1;
-    SPIJNI.spiSetOpts(m_port, this.m_bitOrder, this.m_dataOnTrailing, this.m_clockPolarity);
+    m_dataOnTrailing = 1;
+    SPIJNI.spiSetOpts(m_port, m_bitOrder, m_dataOnTrailing, m_clockPolarity);
   }
 
   /**
    * Configure that the data is stable on the rising edge and the data changes on the falling edge.
    */
   public final void setSampleDataOnRising() {
-    this.m_dataOnTrailing = 0;
-    SPIJNI.spiSetOpts(m_port, this.m_bitOrder, this.m_dataOnTrailing, this.m_clockPolarity);
+    m_dataOnTrailing = 0;
+    SPIJNI.spiSetOpts(m_port, m_bitOrder, m_dataOnTrailing, m_clockPolarity);
   }
 
   /**
@@ -177,8 +177,8 @@ public class SPI extends SensorBase {
    *
    * <p>If the receive FIFO is empty, there is no active transfer, and initiate is false, errors.
    *
-   * @param initiate If true, this m_function pushes "0" into the transmit buffer and initiates a
-   *                 transfer. If false, this m_function assumes that data is already in the receive
+   * @param initiate If true, this function pushes "0" into the transmit buffer and initiates a
+   *                 transfer. If false, this function assumes that data is already in the receive
    *                 FIFO from a previous write.
    */
   public int read(boolean initiate, byte[] dataReceived, int size) {
@@ -201,8 +201,8 @@ public class SPI extends SensorBase {
    *
    * <p>If the receive FIFO is empty, there is no active transfer, and initiate is false, errors.
    *
-   * @param initiate     If true, this m_function pushes "0" into the transmit buffer and initiates
-   *                     a transfer. If false, this m_function assumes that data is already in the
+   * @param initiate     If true, this function pushes "0" into the transmit buffer and initiates
+   *                     a transfer. If false, this function assumes that data is already in the
    *                     receive FIFO from a previous write.
    * @param dataReceived The buffer to be filled with the received data. Must be created using
    *                     ByteBuffer.allocateDirect().
@@ -356,7 +356,7 @@ public class SPI extends SensorBase {
   /**
    * Read the accumulated value and the number of accumulated values atomically.
    *
-   * <p>This m_function reads the value and count atomically. This can be used for averaging.
+   * <p>This function reads the value and count atomically. This can be used for averaging.
    *
    * @param result AccumulatorResult object to store the results in.
    */

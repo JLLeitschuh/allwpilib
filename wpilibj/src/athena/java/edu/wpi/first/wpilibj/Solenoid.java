@@ -25,11 +25,11 @@ import edu.wpi.first.wpilibj.util.CheckedAllocationException;
  */
 public class Solenoid extends SolenoidBase implements LiveWindowSendable {
 
-  private final int m_channel; // /< The m_channel to control.
+  private final int m_channel; // /< The channel to control.
   private long m_solenoidPort;
 
   /**
-   * Common m_function to implement constructor behavior.
+   * Common function to implement constructor behavior.
    */
   private synchronized void initSolenoid() {
     checkSolenoidModule(m_moduleNumber);
@@ -38,7 +38,7 @@ public class Solenoid extends SolenoidBase implements LiveWindowSendable {
     try {
       allocated.allocate(m_moduleNumber * kSolenoidChannels + m_channel);
     } catch (CheckedAllocationException ex) {
-      throw new AllocationException("Solenoid m_channel " + m_channel + " on module "
+      throw new AllocationException("Solenoid channel " + m_channel + " on module "
           + m_moduleNumber + " is already allocated");
     }
 
@@ -52,7 +52,7 @@ public class Solenoid extends SolenoidBase implements LiveWindowSendable {
   /**
    * Constructor using the default PCM ID (0)
    *
-   * @param channel The m_channel on the PCM to control (0..7).
+   * @param channel The channel on the PCM to control (0..7).
    */
   public Solenoid(final int channel) {
     super(getDefaultSolenoidModule());
@@ -64,11 +64,11 @@ public class Solenoid extends SolenoidBase implements LiveWindowSendable {
    * Constructor.
    *
    * @param moduleNumber The CAN ID of the PCM the solenoid is attached to.
-   * @param channel      The m_channel on the PCM to control (0..7).
+   * @param channel      The channel on the PCM to control (0..7).
    */
   public Solenoid(final int moduleNumber, final int channel) {
     super(moduleNumber);
-    this.m_channel = channel;
+    m_channel = channel;
     initSolenoid();
   }
 
