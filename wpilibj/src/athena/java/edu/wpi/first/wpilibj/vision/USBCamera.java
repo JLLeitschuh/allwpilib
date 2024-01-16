@@ -131,7 +131,7 @@ public class USBCamera {
       if (fps > foundFps)
         continue;
       String format = m.group("format");
-      boolean isJpeg = format.equals("jpeg") || format.equals("JPEG");
+      boolean isJpeg = "jpeg".equals(format) || "JPEG".equals(format);
       if ((m_useJpeg && !isJpeg) || (!m_useJpeg && isJpeg))
         continue;
       foundMode = mode;

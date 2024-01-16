@@ -154,9 +154,9 @@ public abstract class RobotBase {
     if (propVal == null) {
       return defaultValue;
     }
-    if (propVal.equalsIgnoreCase("false")) {
+    if ("false".equalsIgnoreCase(propVal)) {
       return false;
-    } else if (propVal.equalsIgnoreCase("true")) {
+    } else if ("true".equalsIgnoreCase(propVal)) {
       return true;
     } else {
       throw new IllegalStateException(propVal);
