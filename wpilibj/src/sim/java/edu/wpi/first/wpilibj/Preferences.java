@@ -396,9 +396,9 @@ public class Preferences {
         if (value == null) {
             return backup;
         } else {
-            if (value.equalsIgnoreCase("true")) {
+            if ("true".equalsIgnoreCase(value)) {
                 return true;
-            } else if (value.equalsIgnoreCase("false")) {
+            } else if ("false".equalsIgnoreCase(value)) {
                 return false;
             } else {
                 throw new IncompatibleTypeException(value, "boolean");
