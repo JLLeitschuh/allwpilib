@@ -66,7 +66,9 @@ public abstract class TiltPanCameraFixture implements ITestFixture {
   @Override
   public boolean reset() {
 	if(gyro != null)
-    gyro.reset();
+    {
+        gyro.reset();
+    }
     return true;
   }
 
