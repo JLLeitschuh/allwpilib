@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 
 //
 // base class for all JNI wrappers
@@ -24,7 +25,7 @@ public class JNIWrapper {
         InputStream is = JNIWrapper.class.getResourceAsStream("/linux-arm/libwpilibJavaJNI.so");
         if (is != null) {
           // create temporary file
-          jniLibrary = File.createTempFile("libwpilibJavaJNI", ".so");
+          jniLibrary = Files.createTempFile("libwpilibJavaJNI", ".so").toFile();
           // flag for delete on exit
           jniLibrary.deleteOnExit();
 
