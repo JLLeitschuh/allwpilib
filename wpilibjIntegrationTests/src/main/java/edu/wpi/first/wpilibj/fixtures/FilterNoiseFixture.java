@@ -8,6 +8,7 @@
 package edu.wpi.first.wpilibj.fixtures;
 
 import java.lang.reflect.ParameterizedType;
+import java.security.SecureRandom;
 import java.util.logging.Logger;
 import java.util.Random;
 
@@ -125,7 +126,7 @@ public abstract class FilterNoiseFixture<T extends PIDSource> implements ITestFi
     private double count = -TestBench.kFilterStep;
 
     private double stdDev;
-    private Random gen = new Random();
+    private Random gen = new SecureRandom();
 
     NoiseGenerator(double stdDev) {
       this.stdDev = stdDev;
